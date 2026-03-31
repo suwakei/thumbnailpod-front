@@ -16,6 +16,10 @@
 | CI/CD ワークフロー・デプロイフロー・GitHub Actions を変更・理解したいとき                                           | `.claude/docs/02-development-docs/07-cicd-design.md`                  |
 | Shadcn UI のコンポーネント（Button・Form・Dialog・Toast 等）の使い方を確認したいとき                                | `.claude/docs/03-library-docs/01-shadcn-doc.md`                       |
 | Next.js App Router の実装パターン（Server/Client Component 使い分け・データフェッチ・エラー処理等）を確認したいとき | `.claude/docs/03-library-docs/02-app-router-pattern.md`               |
+| 画面遷移・ページ一覧・リダイレクトルール・ナビゲーション構造を確認したいとき                                        | `.claude/docs/02-development-docs/11-screen-transition-design.md`     |
+| メタデータ・robots.txt・OGP・Core Web Vitals など SEO に関わる実装をするとき                                        | `.claude/docs/02-development-docs/12-seo-requirements.md`             |
+| UI レイアウト・コンポーネント設計・ローディング/エラー表示・フォームバリデーション UI を実装するとき                | `.claude/docs/02-development-docs/13-frontend-design.md`              |
+| E2E テスト（Playwright）のシナリオ・POM・認証フィクスチャ・CI 設定を確認したいとき                                  | `.claude/docs/02-development-docs/14-e2e-test-design.md`              |
 
 ## ワークフロー・オーケストレーション — 計画モード・サブエージェント・自己改善・検証・洗練さ・バグ修正のルール
 

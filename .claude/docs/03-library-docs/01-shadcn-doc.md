@@ -788,20 +788,28 @@ function DatePicker() {
 
 ## カスタマイズ方針
 
-- `cn()` ユーティリティ（`clsx` + `tailwind-merge`）でクラスをマージする
+- スタイルは CSS Modules で管理する。`clsx` で条件付きクラスをマージする
 - 生成されたコンポーネントファイルは直接編集してプロジェクト固有のデフォルト値を設定できる
 
-```ts
-// lib/utils.ts（shadcn init で自動生成）
-import { type ClassValue, clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
-
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
-```
-
 ```tsx
-// コンポーネントでの使い方
-<Button className={cn("w-full", isLoading && "opacity-50")}>生成する</Button>
+// components/ui/Button.tsx
+import clsx from "clsx";
+import styles from "./Button.module.css";
+
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: "default" | "secondary" | "destructive" | "ghost";
+}
+
+export default function Button({
+  variant = "default",
+  className,
+  ...props
+}: ButtonProps) {
+  return (
+    <button
+      className={clsx(styles.button, styles[variant], className)}
+      {...props}
+    />
+  );
+}
 ```
