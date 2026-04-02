@@ -1,66 +1,190 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+'use client';
 
-export default function Home() {
+import { useState } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'sonner';
+import {
+  Sparkles,
+  Clock,
+  ImageIcon,
+  ArrowRight,
+  Loader2,
+} from 'lucide-react';
+import Link from 'next/link';
+import AppShell from '@/components/layout/AppShell';
+import Card from '@/components/ui/Card';
+import Button from '@/components/ui/Button';
+import Textarea from '@/components/ui/Textarea';
+import Select from '@/components/ui/Select';
+import StatusBadge from '@/components/ui/StatusBadge';
+import EmptyState from '@/components/ui/EmptyState';
+import Skeleton from '@/components/ui/Skeleton';
+import { createGenerationJob, getHistory, getStyleModels, getMyPlan } from '@/lib/api';
+import styles from './page.module.css';
+
+export default function DashboardPage() {
+  const queryClient = useQueryClient();
+  const [prompt, setPrompt] = useState('');
+  const [styleModelId, setStyleModelId] = useState('');
+
+  const { data: history, isLoading: historyLoading } = useQuery({
+    queryKey: ['history', { limit: 6, offset: 0 }],
+    queryFn: () => getHistory(6, 0),
+  });
+
+  const { data: modelsData } = useQuery({
+    queryKey: ['styleModels'],
+    queryFn: getStyleModels,
+  });
+
+  const { data: planInfo } = useQuery({
+    queryKey: ['myPlan'],
+    queryFn: getMyPlan,
+  });
+
+  const generateMutation = useMutation({
+    mutationFn: () =>
+      createGenerationJob(prompt, styleModelId || undefined),
+    onSuccess: () => {
+      toast.success('サムネイル生成を開始しました');
+      setPrompt('');
+      queryClient.invalidateQueries({ queryKey: ['history'] });
+    },
+    onError: () => {
+      toast.error('生成に失敗しました');
+    },
+  });
+
+  const readyModels = (modelsData?.models || []).filter(
+    (m) => m.status === 'ready',
+  );
+
+  const styleOptions = [
+    { value: '', label: 'スタイルモデルなし' },
+    ...readyModels.map((m) => ({ value: m.id, label: m.name })),
+  ];
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.tsx file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+    <AppShell>
+      <div className={styles.page}>
+        <header className={styles.header}>
+          <div>
+            <h1 className={styles.title}>Dashboard</h1>
+            <p className={styles.subtitle}>サムネイルを生成して管理する</p>
+          </div>
+          {planInfo && (
+            <div className={styles.quota}>
+              <span className={styles.quotaLabel}>今月の生成</span>
+              <span className={styles.quotaValue}>
+                {planInfo.generationCountMonth}
+                <span className={styles.quotaMax}> / {planInfo.monthlyLimit}</span>
+              </span>
+            </div>
+          )}
+        </header>
+
+        <Card variant="highlighted" padding="lg">
+          <div className={styles.generateForm}>
+            <div className={styles.formHeader}>
+              <Sparkles size={20} className={styles.formIcon} />
+              <h2 className={styles.formTitle}>新しいサムネイルを生成</h2>
+            </div>
+            <Textarea
+              placeholder="サムネイルの内容を説明してください... 例: 「衝撃のニュース！赤い背景に驚く表情の人物、大きな白文字タイトル」"
+              value={prompt}
+              onChange={(e) => setPrompt(e.target.value)}
+              rows={3}
             />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+            <div className={styles.formActions}>
+              <Select
+                options={styleOptions}
+                value={styleModelId}
+                onChange={(e) => setStyleModelId(e.target.value)}
+              />
+              <Button
+                onClick={() => generateMutation.mutate()}
+                loading={generateMutation.isPending}
+                disabled={!prompt.trim()}
+              >
+                <Sparkles size={16} />
+                生成する
+              </Button>
+            </div>
+          </div>
+        </Card>
+
+        <section className={styles.recentSection}>
+          <div className={styles.sectionHeader}>
+            <h2 className={styles.sectionTitle}>
+              <Clock size={18} />
+              最近の生成
+            </h2>
+            <Link href="/history" className={styles.viewAll}>
+              すべて見る
+              <ArrowRight size={14} />
+            </Link>
+          </div>
+
+          {historyLoading ? (
+            <div className={styles.grid}>
+              {Array.from({ length: 6 }).map((_, i) => (
+                <Card key={i} padding="none">
+                  <Skeleton height={160} borderRadius="0" />
+                  <div style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: 8 }}>
+                    <Skeleton height={14} width="70%" />
+                    <Skeleton height={12} width="40%" />
+                  </div>
+                </Card>
+              ))}
+            </div>
+          ) : history && history.jobs.length > 0 ? (
+            <div className={styles.grid}>
+              {history.jobs.map((job) => (
+                <Link
+                  key={job.id}
+                  href={`/history/${job.id}`}
+                  className={styles.jobCardLink}
+                >
+                  <Card variant="interactive" padding="none">
+                    <div className={styles.jobThumb}>
+                      {job.status === 'completed' ? (
+                        <div className={styles.thumbPlaceholder}>
+                          <ImageIcon size={24} />
+                        </div>
+                      ) : job.status === 'processing' ? (
+                        <div className={styles.thumbProcessing}>
+                          <Loader2 size={24} className={styles.spinIcon} />
+                        </div>
+                      ) : (
+                        <div className={styles.thumbPlaceholder}>
+                          <ImageIcon size={24} />
+                        </div>
+                      )}
+                    </div>
+                    <div className={styles.jobInfo}>
+                      <p className={styles.jobPrompt}>{job.prompt}</p>
+                      <div className={styles.jobMeta}>
+                        <StatusBadge status={job.status} />
+                        <span className={styles.jobDate}>
+                          {new Date(job.createdAt).toLocaleDateString('ja-JP')}
+                        </span>
+                      </div>
+                    </div>
+                  </Card>
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <Card>
+              <EmptyState
+                icon={ImageIcon}
+                title="まだ生成履歴がありません"
+                description="上のフォームからサムネイルを生成してみましょう"
+              />
+            </Card>
+          )}
+        </section>
+      </div>
+    </AppShell>
   );
 }
