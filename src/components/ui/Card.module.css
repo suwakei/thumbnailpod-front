@@ -16,7 +16,15 @@
   box-shadow: var(--shadow-glow);
 }
 
-.padnone { padding: 0; }
-.padsm { padding: var(--space-md); }
-.padmd { padding: var(--space-lg); }
-.padlg { padding: var(--space-xl); }
+.padnone {
+  padding: 0;
+}
+.padsm {
+  padding: var(--space-md);
+}
+.padmd {
+  padding: var(--space-lg);
+}
+.padlg {
+  padding: var(--space-xl);
+}

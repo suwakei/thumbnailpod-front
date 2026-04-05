@@ -23,7 +23,9 @@
   background: var(--status-pending-bg);
   border-color: rgba(245, 166, 35, 0.2);
 }
-.pending .dot { background: var(--status-pending); }
+.pending .dot {
+  background: var(--status-pending);
+}
 
 .processing {
   color: var(--status-processing);
@@ -40,19 +42,32 @@
   background: var(--status-completed-bg);
   border-color: rgba(52, 211, 153, 0.2);
 }
-.completed .dot { background: var(--status-completed); }
+.completed .dot {
+  background: var(--status-completed);
+}
 
 .failed {
   color: var(--status-failed);
   background: var(--status-failed-bg);
   border-color: rgba(248, 113, 113, 0.2);
 }
-.failed .dot { background: var(--status-failed); }
+.failed .dot {
+  background: var(--status-failed);
+}
 
-.training { composes: processing; }
-.ready { composes: completed; }
+.training {
+  composes: processing;
+}
+.ready {
+  composes: completed;
+}
 
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
 }

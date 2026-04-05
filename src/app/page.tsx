@@ -1,66 +1,64 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { toast } from 'sonner';
+import { useState } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
+import { Sparkles, Clock, ImageIcon, ArrowRight, Loader2 } from "lucide-react";
+import Link from "next/link";
+import AppShell from "@/components/layout/AppShell";
+import Card from "@/components/ui/Card";
+import Button from "@/components/ui/Button";
+import Textarea from "@/components/ui/Textarea";
+import Select from "@/components/ui/Select";
+import StatusBadge from "@/components/ui/StatusBadge";
+import EmptyState from "@/components/ui/EmptyState";
+import Skeleton from "@/components/ui/Skeleton";
 import {
-  Sparkles,
-  Clock,
-  ImageIcon,
-  ArrowRight,
-  Loader2,
-} from 'lucide-react';
-import Link from 'next/link';
-import AppShell from '@/components/layout/AppShell';
-import Card from '@/components/ui/Card';
-import Button from '@/components/ui/Button';
-import Textarea from '@/components/ui/Textarea';
-import Select from '@/components/ui/Select';
-import StatusBadge from '@/components/ui/StatusBadge';
-import EmptyState from '@/components/ui/EmptyState';
-import Skeleton from '@/components/ui/Skeleton';
-import { createGenerationJob, getHistory, getStyleModels, getMyPlan } from '@/lib/api';
-import styles from './page.module.css';
+  createGenerationJob,
+  getHistory,
+  getStyleModels,
+  getMyPlan,
+} from "@/lib/api";
+import styles from "./page.module.css";
 
 export default function DashboardPage() {
   const queryClient = useQueryClient();
-  const [prompt, setPrompt] = useState('');
-  const [styleModelId, setStyleModelId] = useState('');
+  const [prompt, setPrompt] = useState("");
+  const [styleModelId, setStyleModelId] = useState("");
 
   const { data: history, isLoading: historyLoading } = useQuery({
-    queryKey: ['history', { limit: 6, offset: 0 }],
+    queryKey: ["history", { limit: 6, offset: 0 }],
     queryFn: () => getHistory(6, 0),
   });
 
   const { data: modelsData } = useQuery({
-    queryKey: ['styleModels'],
+    queryKey: ["styleModels"],
     queryFn: getStyleModels,
   });
 
   const { data: planInfo } = useQuery({
-    queryKey: ['myPlan'],
+    queryKey: ["myPlan"],
     queryFn: getMyPlan,
   });
 
   const generateMutation = useMutation({
-    mutationFn: () =>
-      createGenerationJob(prompt, styleModelId || undefined),
+    mutationFn: () => createGenerationJob(prompt, styleModelId || undefined),
     onSuccess: () => {
-      toast.success('サムネイル生成を開始しました');
-      setPrompt('');
-      queryClient.invalidateQueries({ queryKey: ['history'] });
+      toast.success("サムネイル生成を開始しました");
+      setPrompt("");
+      queryClient.invalidateQueries({ queryKey: ["history"] });
     },
     onError: () => {
-      toast.error('生成に失敗しました');
+      toast.error("生成に失敗しました");
     },
   });
 
   const readyModels = (modelsData?.models || []).filter(
-    (m) => m.status === 'ready',
+    (m) => m.status === "ready",
   );
 
   const styleOptions = [
-    { value: '', label: 'スタイルモデルなし' },
+    { value: "", label: "スタイルモデルなし" },
     ...readyModels.map((m) => ({ value: m.id, label: m.name })),
   ];
 
@@ -77,7 +75,10 @@ export default function DashboardPage() {
               <span className={styles.quotaLabel}>今月の生成</span>
               <span className={styles.quotaValue}>
                 {planInfo.generationCountMonth}
-                <span className={styles.quotaMax}> / {planInfo.monthlyLimit}</span>
+                <span className={styles.quotaMax}>
+                  {" "}
+                  / {planInfo.monthlyLimit}
+                </span>
               </span>
             </div>
           )}
@@ -130,7 +131,14 @@ export default function DashboardPage() {
               {Array.from({ length: 6 }).map((_, i) => (
                 <Card key={i} padding="none">
                   <Skeleton height={160} borderRadius="0" />
-                  <div style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: 8 }}>
+                  <div
+                    style={{
+                      padding: "16px",
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: 8,
+                    }}
+                  >
                     <Skeleton height={14} width="70%" />
                     <Skeleton height={12} width="40%" />
                   </div>
@@ -147,11 +155,11 @@ export default function DashboardPage() {
                 >
                   <Card variant="interactive" padding="none">
                     <div className={styles.jobThumb}>
-                      {job.status === 'completed' ? (
+                      {job.status === "completed" ? (
                         <div className={styles.thumbPlaceholder}>
                           <ImageIcon size={24} />
                         </div>
-                      ) : job.status === 'processing' ? (
+                      ) : job.status === "processing" ? (
                         <div className={styles.thumbProcessing}>
                           <Loader2 size={24} className={styles.spinIcon} />
                         </div>
@@ -166,7 +174,7 @@ export default function DashboardPage() {
                       <div className={styles.jobMeta}>
                         <StatusBadge status={job.status} />
                         <span className={styles.jobDate}>
-                          {new Date(job.createdAt).toLocaleDateString('ja-JP')}
+                          {new Date(job.createdAt).toLocaleDateString("ja-JP")}
                         </span>
                       </div>
                     </div>

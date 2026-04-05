@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { forwardRef } from 'react';
-import { ChevronDown } from 'lucide-react';
-import styles from './Select.module.css';
+import { forwardRef } from "react";
+import { ChevronDown } from "lucide-react";
+import styles from "./Select.module.css";
 
 interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   label?: string;
@@ -12,7 +12,7 @@ interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
 
 const Select = forwardRef<HTMLSelectElement, SelectProps>(
   ({ label, error, options, className, id, ...props }, ref) => {
-    const selectId = id || label?.toLowerCase().replace(/\s+/g, '-');
+    const selectId = id || label?.toLowerCase().replace(/\s+/g, "-");
 
     return (
       <div className={styles.field}>
@@ -25,7 +25,7 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
           <select
             ref={ref}
             id={selectId}
-            className={`${styles.select} ${error ? styles.selectError : ''} ${className || ''}`}
+            className={`${styles.select} ${error ? styles.selectError : ""} ${className || ""}`}
             {...props}
           >
             {options.map((opt) => (
@@ -42,5 +42,5 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
   },
 );
 
-Select.displayName = 'Select';
+Select.displayName = "Select";
 export default Select;

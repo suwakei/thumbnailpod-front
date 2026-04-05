@@ -1,59 +1,53 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { toast } from 'sonner';
-import {
-  Palette,
-  Plus,
-  Trash2,
-  Brain,
-  ImageIcon,
-} from 'lucide-react';
-import AppShell from '@/components/layout/AppShell';
-import Card from '@/components/ui/Card';
-import Button from '@/components/ui/Button';
-import Input from '@/components/ui/Input';
-import StatusBadge from '@/components/ui/StatusBadge';
-import EmptyState from '@/components/ui/EmptyState';
-import Modal from '@/components/ui/Modal';
-import Skeleton from '@/components/ui/Skeleton';
-import { getStyleModels, createLearnJob, deleteStyleModel } from '@/lib/api';
-import styles from './page.module.css';
+import { useState } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
+import { Palette, Plus, Trash2, Brain, ImageIcon } from "lucide-react";
+import AppShell from "@/components/layout/AppShell";
+import Card from "@/components/ui/Card";
+import Button from "@/components/ui/Button";
+import Input from "@/components/ui/Input";
+import StatusBadge from "@/components/ui/StatusBadge";
+import EmptyState from "@/components/ui/EmptyState";
+import Modal from "@/components/ui/Modal";
+import Skeleton from "@/components/ui/Skeleton";
+import { getStyleModels, createLearnJob, deleteStyleModel } from "@/lib/api";
+import styles from "./page.module.css";
 
 export default function StylePage() {
   const queryClient = useQueryClient();
   const [showCreate, setShowCreate] = useState(false);
-  const [newName, setNewName] = useState('');
+  const [newName, setNewName] = useState("");
   const [deleteId, setDeleteId] = useState<string | null>(null);
 
   const { data, isLoading } = useQuery({
-    queryKey: ['styleModels'],
+    queryKey: ["styleModels"],
     queryFn: getStyleModels,
   });
 
   const createMutation = useMutation({
     mutationFn: () => createLearnJob(newName, []),
     onSuccess: () => {
-      toast.success('スタイル学習を開始しました');
+      toast.success("スタイル学習を開始しました");
       setShowCreate(false);
-      setNewName('');
-      queryClient.invalidateQueries({ queryKey: ['styleModels'] });
+      setNewName("");
+      queryClient.invalidateQueries({ queryKey: ["styleModels"] });
     },
     onError: () => {
-      toast.error('学習の開始に失敗しました');
+      toast.error("学習の開始に失敗しました");
     },
   });
 
   const deleteMutation = useMutation({
     mutationFn: (id: string) => deleteStyleModel(id),
     onSuccess: () => {
-      toast.success('モデルを削除しました');
+      toast.success("モデルを削除しました");
       setDeleteId(null);
-      queryClient.invalidateQueries({ queryKey: ['styleModels'] });
+      queryClient.invalidateQueries({ queryKey: ["styleModels"] });
     },
     onError: () => {
-      toast.error('削除に失敗しました');
+      toast.error("削除に失敗しました");
     },
   });
 
@@ -101,7 +95,7 @@ export default function StylePage() {
                     <span>{model.sourceVideoCount} 枚から学習</span>
                   </div>
                   <time className={styles.metaDate}>
-                    {new Date(model.createdAt).toLocaleDateString('ja-JP')}
+                    {new Date(model.createdAt).toLocaleDateString("ja-JP")}
                   </time>
                 </div>
                 <div className={styles.modelActions}>

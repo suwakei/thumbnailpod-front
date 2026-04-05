@@ -1,4 +1,4 @@
-import styles from './Skeleton.module.css';
+import styles from "./Skeleton.module.css";
 
 interface SkeletonProps {
   width?: string | number;
@@ -15,7 +15,7 @@ export default function Skeleton({
 }: SkeletonProps) {
   return (
     <div
-      className={`${styles.skeleton} ${className || ''}`}
+      className={`${styles.skeleton} ${className || ""}`}
       style={{ width, height, borderRadius }}
     />
   );

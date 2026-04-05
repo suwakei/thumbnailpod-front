@@ -1,4 +1,4 @@
-import { http, HttpResponse } from 'msw';
+import { http, HttpResponse } from "msw";
 import {
   mockUser,
   mockPlanInfo,
@@ -7,14 +7,14 @@ import {
   mockStyleModels,
   mockYouTubeVideos,
   mockLayers,
-} from './data';
+} from "./data";
 
-const BASE = 'http://localhost:8080/api/v1';
+const BASE = "http://localhost:8080/api/v1";
 
 export const handlers = [
   // Auth
   http.get(`${BASE}/auth/youtube/url`, () => {
-    return HttpResponse.json({ url: '/login?mock=true' });
+    return HttpResponse.json({ url: "/login?mock=true" });
   }),
 
   http.post(`${BASE}/auth/youtube/callback`, () => {
@@ -26,7 +26,7 @@ export const handlers = [
   }),
 
   http.post(`${BASE}/auth/refresh`, () => {
-    return HttpResponse.json({ access_token: 'mock-token' });
+    return HttpResponse.json({ access_token: "mock-token" });
   }),
 
   http.delete(`${BASE}/auth/logout`, () => {
@@ -45,15 +45,15 @@ export const handlers = [
   // Generate
   http.post(`${BASE}/generate`, () => {
     return HttpResponse.json(
-      { job_id: `job-${Date.now()}`, status: 'pending' },
+      { job_id: `job-${Date.now()}`, status: "pending" },
       { status: 201 },
     );
   }),
 
   http.get(`${BASE}/generate/history`, ({ request }) => {
     const url = new URL(request.url);
-    const limit = Number(url.searchParams.get('limit') || 20);
-    const offset = Number(url.searchParams.get('offset') || 0);
+    const limit = Number(url.searchParams.get("limit") || 20);
+    const offset = Number(url.searchParams.get("offset") || 0);
     const sliced = mockJobs.slice(offset, offset + limit);
     return HttpResponse.json({
       jobs: sliced,
@@ -66,9 +66,7 @@ export const handlers = [
   http.get(`${BASE}/generate/:jobId`, ({ params }) => {
     const job = mockJobs.find((j) => j.id === params.jobId);
     if (!job) {
-      return HttpResponse.json(
-        { ...mockJobDetail, job_id: params.jobId },
-      );
+      return HttpResponse.json({ ...mockJobDetail, job_id: params.jobId });
     }
     return HttpResponse.json({
       job_id: job.id,
@@ -76,7 +74,7 @@ export const handlers = [
       prompt: job.prompt,
       created_at: job.created_at,
       image_url: null,
-      thumbnail_id: job.status === 'completed' ? `thumb-${job.id}` : null,
+      thumbnail_id: job.status === "completed" ? `thumb-${job.id}` : null,
       error: job.error_message,
     });
   }),
@@ -85,7 +83,10 @@ export const handlers = [
   http.post(`${BASE}/generate/:jobId/segment`, ({ params }) => {
     return HttpResponse.json({
       job_id: params.jobId,
-      layers: mockLayers.map((l) => ({ label: l.label, s3_key: `s3/${l.label}.png` })),
+      layers: mockLayers.map((l) => ({
+        label: l.label,
+        s3_key: `s3/${l.label}.png`,
+      })),
     });
   }),
 
@@ -112,13 +113,13 @@ export const handlers = [
 
   // Download
   http.get(`${BASE}/thumbnails/:id/download`, () => {
-    return HttpResponse.json({ download_url: '#mock-download' });
+    return HttpResponse.json({ download_url: "#mock-download" });
   }),
 
   // Style
   http.post(`${BASE}/style/learn`, () => {
     return HttpResponse.json(
-      { model_id: `model-${Date.now()}`, status: 'pending' },
+      { model_id: `model-${Date.now()}`, status: "pending" },
       { status: 201 },
     );
   }),
@@ -142,6 +143,6 @@ export const handlers = [
   }),
 
   http.put(`${BASE}/youtube/videos/:videoId/thumbnail`, () => {
-    return HttpResponse.json({ status: 'ok' });
+    return HttpResponse.json({ status: "ok" });
   }),
 ];

@@ -1,10 +1,17 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Sparkles, MonitorPlay, ArrowRight, Shield, Zap, Palette } from 'lucide-react';
-import { getOAuthURL } from '@/lib/api';
-import Button from '@/components/ui/Button';
-import styles from './page.module.css';
+import { useState } from "react";
+import {
+  Sparkles,
+  MonitorPlay,
+  ArrowRight,
+  Shield,
+  Zap,
+  Palette,
+} from "lucide-react";
+import { getOAuthURL } from "@/lib/api";
+import Button from "@/components/ui/Button";
+import styles from "./page.module.css";
 
 export default function LoginPage() {
   const [loading, setLoading] = useState(false);

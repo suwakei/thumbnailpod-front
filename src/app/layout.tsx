@@ -1,10 +1,11 @@
-import type { Metadata } from 'next';
-import './globals.css';
-import Providers from '@/lib/providers';
+import type { Metadata } from "next";
+import "./globals.css";
+import Providers from "@/lib/providers";
 
 export const metadata: Metadata = {
-  title: 'ThumbnailPod — AI Thumbnail Studio',
-  description: 'Generate YouTube thumbnails that match your unique style with AI',
+  title: "ThumbnailPod — AI Thumbnail Studio",
+  description:
+    "Generate YouTube thumbnails that match your unique style with AI",
 };
 
 export default function RootLayout({

@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   Sparkles,
   Clock,
@@ -9,15 +9,15 @@ import {
   Settings,
   MonitorPlay,
   LayoutDashboard,
-} from 'lucide-react';
-import styles from './Sidebar.module.css';
+} from "lucide-react";
+import styles from "./Sidebar.module.css";
 
 const navItems = [
-  { href: '/', label: 'Dashboard', icon: LayoutDashboard },
-  { href: '/history', label: 'History', icon: Clock },
-  { href: '/style', label: 'Style Models', icon: Palette },
-  { href: '/youtube', label: 'YouTube', icon: MonitorPlay },
-  { href: '/settings', label: 'Settings', icon: Settings },
+  { href: "/", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/history", label: "History", icon: Clock },
+  { href: "/style", label: "Style Models", icon: Palette },
+  { href: "/youtube", label: "YouTube", icon: MonitorPlay },
+  { href: "/settings", label: "Settings", icon: Settings },
 ];
 
 interface SidebarProps {
@@ -44,8 +44,8 @@ export default function Sidebar({ channelName, plan }: SidebarProps) {
         <div className={styles.section}>Main</div>
         {navItems.map((item) => {
           const isActive =
-            item.href === '/'
-              ? pathname === '/'
+            item.href === "/"
+              ? pathname === "/"
               : pathname.startsWith(item.href);
           const Icon = item.icon;
 
@@ -65,11 +65,11 @@ export default function Sidebar({ channelName, plan }: SidebarProps) {
       <div className={styles.footer}>
         <Link href="/settings" className={styles.userCard}>
           <div className={styles.avatar}>
-            {(channelName || 'U')[0].toUpperCase()}
+            {(channelName || "U")[0].toUpperCase()}
           </div>
           <div>
-            <div className={styles.userName}>{channelName || 'User'}</div>
-            <div className={styles.userPlan}>{plan || 'free'} plan</div>
+            <div className={styles.userName}>{channelName || "User"}</div>
+            <div className={styles.userPlan}>{plan || "free"} plan</div>
           </div>
         </Link>
       </div>

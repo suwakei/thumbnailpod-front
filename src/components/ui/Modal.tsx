@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useEffect, useRef } from 'react';
-import { X } from 'lucide-react';
-import styles from './Modal.module.css';
+import { useEffect, useRef } from "react";
+import { X } from "lucide-react";
+import styles from "./Modal.module.css";
 
 interface ModalProps {
   open: boolean;
@@ -30,16 +30,20 @@ export default function Modal({ open, onClose, title, children }: ModalProps) {
     if (!dialog) return;
 
     const handleClose = () => onClose();
-    dialog.addEventListener('close', handleClose);
-    return () => dialog.removeEventListener('close', handleClose);
+    dialog.addEventListener("close", handleClose);
+    return () => dialog.removeEventListener("close", handleClose);
   }, [onClose]);
 
   if (!open) return null;
 
   return (
-    <dialog ref={dialogRef} className={styles.dialog} onClick={(e) => {
-      if (e.target === dialogRef.current) onClose();
-    }}>
+    <dialog
+      ref={dialogRef}
+      className={styles.dialog}
+      onClick={(e) => {
+        if (e.target === dialogRef.current) onClose();
+      }}
+    >
       <div className={styles.content}>
         <div className={styles.header}>
           <h2 className={styles.title}>{title}</h2>

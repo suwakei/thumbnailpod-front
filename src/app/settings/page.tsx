@@ -1,43 +1,44 @@
-'use client';
+"use client";
 
-import { useQuery, useMutation } from '@tanstack/react-query';
-import { toast } from 'sonner';
-import { useRouter } from 'next/navigation';
-import {
-  Settings,
-  User,
-  CreditCard,
-  LogOut,
-  Crown,
-  Zap,
-} from 'lucide-react';
-import AppShell from '@/components/layout/AppShell';
-import Card from '@/components/ui/Card';
-import Button from '@/components/ui/Button';
-import Skeleton from '@/components/ui/Skeleton';
-import { getMe, getMyPlan, logout } from '@/lib/api';
-import styles from './page.module.css';
+import { useQuery, useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import { Settings, User, CreditCard, LogOut, Crown, Zap } from "lucide-react";
+import AppShell from "@/components/layout/AppShell";
+import Card from "@/components/ui/Card";
+import Button from "@/components/ui/Button";
+import Skeleton from "@/components/ui/Skeleton";
+import { getMe, getMyPlan, logout } from "@/lib/api";
+import styles from "./page.module.css";
 
-const planFeatures: Record<string, { label: string; color: string; features: string[] }> = {
+const planFeatures: Record<
+  string,
+  { label: string; color: string; features: string[] }
+> = {
   free: {
-    label: 'Free',
-    color: 'var(--text-tertiary)',
-    features: ['月5回の生成', '基本スタイル学習', 'PNG ダウンロード'],
+    label: "Free",
+    color: "var(--text-tertiary)",
+    features: ["月5回の生成", "基本スタイル学習", "PNG ダウンロード"],
   },
   creator: {
-    label: 'Creator',
-    color: 'var(--accent)',
-    features: ['月50回の生成', '高度なスタイル学習', 'PSD/ZIP ダウンロード', 'YouTube直接更新'],
+    label: "Creator",
+    color: "var(--accent)",
+    features: [
+      "月50回の生成",
+      "高度なスタイル学習",
+      "PSD/ZIP ダウンロード",
+      "YouTube直接更新",
+    ],
   },
   pro: {
-    label: 'Pro',
-    color: 'var(--action)',
-    features: ['月200回の生成', '全スタイル機能', '優先処理', 'API アクセス'],
+    label: "Pro",
+    color: "var(--action)",
+    features: ["月200回の生成", "全スタイル機能", "優先処理", "API アクセス"],
   },
   business: {
-    label: 'Business',
-    color: '#c084fc',
-    features: ['無制限生成', 'チーム機能', '専用サポート', 'カスタムモデル'],
+    label: "Business",
+    color: "#c084fc",
+    features: ["無制限生成", "チーム機能", "専用サポート", "カスタムモデル"],
   },
 };
 
@@ -45,26 +46,26 @@ export default function SettingsPage() {
   const router = useRouter();
 
   const { data: user, isLoading: userLoading } = useQuery({
-    queryKey: ['me'],
+    queryKey: ["me"],
     queryFn: getMe,
   });
 
   const { data: planInfo, isLoading: planLoading } = useQuery({
-    queryKey: ['myPlan'],
+    queryKey: ["myPlan"],
     queryFn: getMyPlan,
   });
 
   const logoutMutation = useMutation({
     mutationFn: logout,
     onSuccess: () => {
-      router.push('/login');
+      router.push("/login");
     },
     onError: () => {
-      toast.error('ログアウトに失敗しました');
+      toast.error("ログアウトに失敗しました");
     },
   });
 
-  const currentPlan = planFeatures[planInfo?.plan || 'free'];
+  const currentPlan = planFeatures[planInfo?.plan || "free"];
 
   return (
     <AppShell>
@@ -98,10 +99,10 @@ export default function SettingsPage() {
                 <div className={styles.infoRow}>
                   <dt>登録日</dt>
                   <dd>
-                    {new Date(user.createdAt).toLocaleDateString('ja-JP', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric',
+                    {new Date(user.createdAt).toLocaleDateString("ja-JP", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
                     })}
                   </dd>
                 </div>
@@ -126,7 +127,10 @@ export default function SettingsPage() {
             ) : planInfo ? (
               <div className={styles.planInfo}>
                 <div className={styles.planHeader}>
-                  <div className={styles.planBadge} style={{ color: currentPlan.color }}>
+                  <div
+                    className={styles.planBadge}
+                    style={{ color: currentPlan.color }}
+                  >
                     <Crown size={16} />
                     {currentPlan.label}
                   </div>
@@ -143,7 +147,9 @@ export default function SettingsPage() {
                       className={styles.progressFill}
                       style={{
                         width: `${Math.min(
-                          (planInfo.generationCountMonth / planInfo.monthlyLimit) * 100,
+                          (planInfo.generationCountMonth /
+                            planInfo.monthlyLimit) *
+                            100,
                           100,
                         )}%`,
                       }}

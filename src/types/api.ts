@@ -1,26 +1,27 @@
 export const JobStatus = {
-  Pending: 'pending',
-  Processing: 'processing',
-  Completed: 'completed',
-  Failed: 'failed',
+  Pending: "pending",
+  Processing: "processing",
+  Completed: "completed",
+  Failed: "failed",
 } as const;
 export type JobStatus = (typeof JobStatus)[keyof typeof JobStatus];
 
 export const Plan = {
-  Free: 'free',
-  Creator: 'creator',
-  Pro: 'pro',
-  Business: 'business',
+  Free: "free",
+  Creator: "creator",
+  Pro: "pro",
+  Business: "business",
 } as const;
 export type Plan = (typeof Plan)[keyof typeof Plan];
 
 export const StyleModelStatus = {
-  Pending: 'pending',
-  Training: 'training',
-  Ready: 'ready',
-  Failed: 'failed',
+  Pending: "pending",
+  Training: "training",
+  Ready: "ready",
+  Failed: "failed",
 } as const;
-export type StyleModelStatus = (typeof StyleModelStatus)[keyof typeof StyleModelStatus];
+export type StyleModelStatus =
+  (typeof StyleModelStatus)[keyof typeof StyleModelStatus];
 
 export interface User {
   id: string;
