@@ -9,15 +9,22 @@ import {
   Settings,
   MonitorPlay,
   LayoutDashboard,
+  FileText,
+  Heart,
+  Webhook,
 } from 'lucide-react';
+import { ROUTES } from '@/consts';
 import styles from './Sidebar.module.css';
 
 const navItems = [
-  { href: '/', label: 'Dashboard', icon: LayoutDashboard },
-  { href: '/history', label: 'History', icon: Clock },
-  { href: '/style', label: 'Style Models', icon: Palette },
-  { href: '/youtube', label: 'YouTube', icon: MonitorPlay },
-  { href: '/settings', label: 'Settings', icon: Settings },
+  { href: ROUTES.dashboard, label: 'Dashboard', icon: LayoutDashboard },
+  { href: ROUTES.history, label: 'History', icon: Clock },
+  { href: ROUTES.favorites, label: 'Favorites', icon: Heart },
+  { href: ROUTES.templates, label: 'Templates', icon: FileText },
+  { href: ROUTES.style, label: 'Style Models', icon: Palette },
+  { href: ROUTES.youtube, label: 'YouTube', icon: MonitorPlay },
+  { href: ROUTES.webhooks, label: 'Webhooks', icon: Webhook },
+  { href: ROUTES.settings, label: 'Settings', icon: Settings },
 ];
 
 interface SidebarProps {
@@ -63,7 +70,7 @@ export default function Sidebar({ channelName, plan }: SidebarProps) {
       </nav>
 
       <div className={styles.footer}>
-        <Link href="/settings" className={styles.userCard}>
+        <Link href={ROUTES.settings} className={styles.userCard}>
           <div className={styles.avatar}>
             {(channelName || 'U')[0].toUpperCase()}
           </div>

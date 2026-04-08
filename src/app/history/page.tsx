@@ -17,19 +17,20 @@ import StatusBadge from '@/components/ui/StatusBadge';
 import EmptyState from '@/components/ui/EmptyState';
 import Skeleton from '@/components/ui/Skeleton';
 import { getHistory } from '@/lib/api';
+import { ROUTES, PAGE_SIZE, JOB_STATUS, DATE_LOCALE } from '@/consts';
 import styles from './page.module.css';
 
-const PAGE_SIZE = 12;
+const HISTORY_PAGE_SIZE = PAGE_SIZE.historyGrid;
 
 export default function HistoryPage() {
   const [page, setPage] = useState(0);
 
   const { data, isLoading } = useQuery({
-    queryKey: ['history', { limit: PAGE_SIZE, offset: page * PAGE_SIZE }],
-    queryFn: () => getHistory(PAGE_SIZE, page * PAGE_SIZE),
+    queryKey: ['history', { limit: HISTORY_PAGE_SIZE, offset: page * HISTORY_PAGE_SIZE }],
+    queryFn: () => getHistory(HISTORY_PAGE_SIZE, page * HISTORY_PAGE_SIZE),
   });
 
-  const totalPages = data ? Math.ceil(data.totalCount / PAGE_SIZE) : 0;
+  const totalPages = data ? Math.ceil(data.totalCount / HISTORY_PAGE_SIZE) : 0;
 
   return (
     <AppShell>
@@ -43,7 +44,7 @@ export default function HistoryPage() {
 
         {isLoading ? (
           <div className={styles.grid}>
-            {Array.from({ length: PAGE_SIZE }).map((_, i) => (
+            {Array.from({ length: HISTORY_PAGE_SIZE }).map((_, i) => (
               <Card key={i} padding="none">
                 <Skeleton height={160} borderRadius="0" />
                 <div style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -59,12 +60,12 @@ export default function HistoryPage() {
               {data.jobs.map((job) => (
                 <Link
                   key={job.id}
-                  href={`/history/${job.id}`}
+                  href={ROUTES.historyDetail(job.id)}
                   className={styles.cardLink}
                 >
                   <Card variant="interactive" padding="none">
                     <div className={styles.thumb}>
-                      {job.status === 'processing' ? (
+                      {job.status === JOB_STATUS.processing ? (
                         <div className={styles.thumbProcessing}>
                           <Loader2 size={24} className={styles.spin} />
                         </div>
@@ -79,7 +80,7 @@ export default function HistoryPage() {
                       <div className={styles.meta}>
                         <StatusBadge status={job.status} />
                         <time className={styles.date}>
-                          {new Date(job.createdAt).toLocaleDateString('ja-JP', {
+                          {new Date(job.createdAt).toLocaleDateString(DATE_LOCALE, {
                             year: 'numeric',
                             month: 'short',
                             day: 'numeric',
@@ -125,7 +126,7 @@ export default function HistoryPage() {
               title="生成履歴がありません"
               description="ダッシュボードからサムネイルを生成してみましょう"
             >
-              <Link href="/">
+              <Link href={ROUTES.dashboard}>
                 <Button>ダッシュボードへ</Button>
               </Link>
             </EmptyState>

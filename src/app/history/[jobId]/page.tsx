@@ -25,6 +25,13 @@ import {
   getLayers,
   getDownloadURL,
 } from '@/lib/api';
+import {
+  ROUTES,
+  JOB_STATUS,
+  JOB_POLLING_INTERVAL_MS,
+  DATE_LOCALE,
+  DOWNLOAD_FORMAT,
+} from '@/consts';
 import styles from './page.module.css';
 
 interface PageProps {
@@ -41,14 +48,14 @@ export default function JobDetailPage({ params }: PageProps) {
     queryFn: () => getJobStatus(jobId),
     refetchInterval: (query) => {
       const status = query.state.data?.status;
-      return status === 'pending' || status === 'processing' ? 3000 : false;
+      return status === JOB_STATUS.pending || status === JOB_STATUS.processing ? JOB_POLLING_INTERVAL_MS : false;
     },
   });
 
   const { data: layersData } = useQuery({
     queryKey: ['layers', jobId],
     queryFn: () => getLayers(jobId),
-    enabled: job?.status === 'completed',
+    enabled: job?.status === JOB_STATUS.completed,
   });
 
   const segmentMutation = useMutation({
@@ -97,7 +104,7 @@ export default function JobDetailPage({ params }: PageProps) {
     <AppShell>
       <div className={styles.page}>
         <div className={styles.topBar}>
-          <Link href="/history" className={styles.back}>
+          <Link href={ROUTES.history} className={styles.back}>
             <ArrowLeft size={16} />
             履歴に戻る
           </Link>
@@ -126,18 +133,18 @@ export default function JobDetailPage({ params }: PageProps) {
             {activeTab === 'preview' ? (
               <Card padding="none">
                 <div className={styles.preview}>
-                  {job.status === 'completed' && job.imageUrl ? (
+                  {job.status === JOB_STATUS.completed && job.imageUrl ? (
                     <img
                       src={job.imageUrl}
                       alt="Generated thumbnail"
                       className={styles.previewImg}
                     />
-                  ) : job.status === 'processing' ? (
+                  ) : job.status === JOB_STATUS.processing ? (
                     <div className={styles.previewLoading}>
                       <Loader2 size={32} className={styles.spin} />
                       <p>生成中...</p>
                     </div>
-                  ) : job.status === 'failed' ? (
+                  ) : job.status === JOB_STATUS.failed ? (
                     <div className={styles.previewError}>
                       <p>生成に失敗しました</p>
                       {job.error && (
@@ -177,7 +184,7 @@ export default function JobDetailPage({ params }: PageProps) {
                 ) : (
                   <div className={styles.noLayers}>
                     <p>レイヤーデータがありません</p>
-                    {job.status === 'completed' && (
+                    {job.status === JOB_STATUS.completed && (
                       <Button
                         variant="secondary"
                         size="sm"
@@ -220,7 +227,7 @@ export default function JobDetailPage({ params }: PageProps) {
                 <div className={styles.detailRow}>
                   <dt>作成日</dt>
                   <dd>
-                    {new Date(job.createdAt).toLocaleDateString('ja-JP', {
+                    {new Date(job.createdAt).toLocaleDateString(DATE_LOCALE, {
                       year: 'numeric',
                       month: 'long',
                       day: 'numeric',
@@ -236,14 +243,14 @@ export default function JobDetailPage({ params }: PageProps) {
               </dl>
             </Card>
 
-            {job.status === 'completed' && job.thumbnailId && (
+            {job.status === JOB_STATUS.completed && job.thumbnailId && (
               <Card padding="md">
                 <h3 className={styles.sideTitle}>ダウンロード</h3>
                 <div className={styles.downloadActions}>
                   <Button
                     variant="secondary"
                     size="sm"
-                    onClick={() => handleDownload('png')}
+                    onClick={() => handleDownload(DOWNLOAD_FORMAT.png)}
                   >
                     <FileImage size={14} />
                     PNG
@@ -251,7 +258,7 @@ export default function JobDetailPage({ params }: PageProps) {
                   <Button
                     variant="secondary"
                     size="sm"
-                    onClick={() => handleDownload('psd')}
+                    onClick={() => handleDownload(DOWNLOAD_FORMAT.psd)}
                   >
                     <FileImage size={14} />
                     PSD
@@ -259,7 +266,7 @@ export default function JobDetailPage({ params }: PageProps) {
                   <Button
                     variant="secondary"
                     size="sm"
-                    onClick={() => handleDownload('zip')}
+                    onClick={() => handleDownload(DOWNLOAD_FORMAT.zip)}
                   >
                     <FileArchive size={14} />
                     ZIP

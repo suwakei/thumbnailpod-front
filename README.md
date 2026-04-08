@@ -144,8 +144,8 @@ src/
 ### 前提条件
 
 - **Node.js** `>= 20`
-- **npm** `>= 10`
-- バックエンド API が起動していること（または `NEXT_PUBLIC_API_BASE_URL` に開発用 URL を指定）
+- **pnpm**（`npm install -g pnpm` でインストール。PATH にない場合は `npx pnpm` で代替可能）
+- バックエンド API が起動していること（`next.config.ts` の rewrites で `localhost:8080` に自動プロキシされるため、環境変数設定は不要）
 
 ### 1. リポジトリのクローン
 
@@ -157,16 +157,20 @@ cd thumbnailpod-front
 ### 2. 依存関係のインストール
 
 ```bash
-npm install
+pnpm install
+
+# pnpm が PATH にない場合:
+npx pnpm install
 ```
 
-### 3. 環境変数の設定
+### 3. 環境変数の設定（任意）
 
-`.env.local` をルートに作成し、以下を設定します。
+ローカル開発時は `next.config.ts` の rewrites により `/api/v1/*` が `http://localhost:8080` に自動プロキシされるため、環境変数の設定は**不要**です。
+
+本番環境や別のバックエンドを指定したい場合のみ `.env.local` を作成します。
 
 ```bash
 cp .env.local.example .env.local   # テンプレートがある場合
-# または手動で作成
 ```
 
 ```env
@@ -182,7 +186,10 @@ NEXT_PUBLIC_APP_URL=http://localhost:3000
 ### 4. 開発サーバーの起動
 
 ```bash
-npm run dev
+pnpm dev
+
+# pnpm が PATH にない場合:
+npx pnpm dev
 ```
 
 [http://localhost:3000](http://localhost:3000) をブラウザで開きます。
@@ -193,13 +200,13 @@ npm run dev
 
 | コマンド              | 説明                                          |
 | --------------------- | --------------------------------------------- |
-| `npm run dev`         | 開発サーバーを起動（ホットリロード付き）      |
-| `npm run build`       | プロダクションビルドを生成                    |
-| `npm run start`       | ビルド済みアプリをローカルで起動              |
-| `npm run lint`        | ESLint による静的解析                         |
+| `pnpm dev`            | 開発サーバーを起動（ホットリロード付き）      |
+| `pnpm build`          | プロダクションビルドを生成                    |
+| `pnpm start`          | ビルド済みアプリをローカルで起動              |
+| `pnpm lint`           | ESLint による静的解析                         |
 | `npx tsc --noEmit`    | TypeScript 型チェック                         |
-| `npm test`            | Vitest でユニット・コンポーネントテストを実行 |
-| `npm test -- --run`   | テストを一度だけ実行（CI 用）                 |
+| `pnpm test`           | Vitest でユニット・コンポーネントテストを実行 |
+| `pnpm test -- --run`  | テストを一度だけ実行（CI 用）                 |
 | `npx playwright test` | Playwright で E2E テストを実行                |
 
 ---
@@ -210,13 +217,13 @@ npm run dev
 
 ```bash
 # ウォッチモードで実行
-npm test
+pnpm test
 
 # 一度だけ実行
-npm test -- --run
+pnpm test -- --run
 
 # カバレッジ付きで実行
-npm test -- --coverage
+pnpm test -- --coverage
 ```
 
 テストファイルはテスト対象と同じディレクトリに配置します。

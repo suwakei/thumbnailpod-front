@@ -17,6 +17,7 @@ import EmptyState from '@/components/ui/EmptyState';
 import Modal from '@/components/ui/Modal';
 import Skeleton from '@/components/ui/Skeleton';
 import { getYouTubeVideos, updateVideoThumbnail, getHistory } from '@/lib/api';
+import { PAGE_SIZE, JOB_STATUS, EXTERNAL_URLS, DATE_LOCALE } from '@/consts';
 import type { YouTubeVideo } from '@/types/api';
 import styles from './page.module.css';
 
@@ -31,8 +32,8 @@ export default function YouTubePage() {
   });
 
   const { data: historyData } = useQuery({
-    queryKey: ['history', { limit: 50, offset: 0 }],
-    queryFn: () => getHistory(50, 0),
+    queryKey: ['history', { limit: PAGE_SIZE.youtubeHistory, offset: 0 }],
+    queryFn: () => getHistory(PAGE_SIZE.youtubeHistory, 0),
     enabled: replaceTarget !== null,
   });
 
@@ -54,7 +55,7 @@ export default function YouTubePage() {
 
   const videos = videosData?.videos || [];
   const completedJobs = (historyData?.jobs || []).filter(
-    (j) => j.status === 'completed',
+    (j) => j.status === JOB_STATUS.completed,
   );
 
   return (
@@ -105,7 +106,7 @@ export default function YouTubePage() {
                   <div className={styles.videoInfo}>
                     <h3 className={styles.videoTitle}>{video.title}</h3>
                     <time className={styles.videoDate}>
-                      {new Date(video.publishedAt).toLocaleDateString('ja-JP', {
+                      {new Date(video.publishedAt).toLocaleDateString(DATE_LOCALE, {
                         year: 'numeric',
                         month: 'short',
                         day: 'numeric',
@@ -122,7 +123,7 @@ export default function YouTubePage() {
                       サムネイル差し替え
                     </Button>
                     <a
-                      href={`https://youtube.com/watch?v=${video.videoId}`}
+                      href={EXTERNAL_URLS.youtubeWatch(video.videoId)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className={styles.extLink}
@@ -162,7 +163,7 @@ export default function YouTubePage() {
                 <p className={styles.jobListLabel}>適用するサムネイルを選択:</p>
                 {completedJobs.length > 0 ? (
                   <div className={styles.jobGrid}>
-                    {completedJobs.slice(0, 12).map((job) => (
+                    {completedJobs.slice(0, PAGE_SIZE.youtubeJobPicker).map((job) => (
                       <button
                         key={job.id}
                         className={`${styles.jobOption} ${selectedJobId === job.id ? styles.jobOptionSelected : ''}`}

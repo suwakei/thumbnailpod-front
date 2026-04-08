@@ -19,6 +19,7 @@ import EmptyState from '@/components/ui/EmptyState';
 import Modal from '@/components/ui/Modal';
 import Skeleton from '@/components/ui/Skeleton';
 import { getStyleModels, createLearnJob, deleteStyleModel } from '@/lib/api';
+import { DATE_LOCALE } from '@/consts';
 import styles from './page.module.css';
 
 export default function StylePage() {
@@ -101,7 +102,7 @@ export default function StylePage() {
                     <span>{model.sourceVideoCount} 枚から学習</span>
                   </div>
                   <time className={styles.metaDate}>
-                    {new Date(model.createdAt).toLocaleDateString('ja-JP')}
+                    {new Date(model.createdAt).toLocaleDateString(DATE_LOCALE)}
                   </time>
                 </div>
                 <div className={styles.modelActions}>

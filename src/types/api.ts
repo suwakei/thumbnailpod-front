@@ -97,3 +97,64 @@ export interface EditRecord {
   resultLayers: Record<string, string>;
   createdAt: string;
 }
+
+export interface Template {
+  id: string;
+  userId: string;
+  name: string;
+  prompt: string;
+  styleModelId: string | null;
+  sourceJobId: string | null;
+  previewS3Key: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface Favorite {
+  id: string;
+  userId: string;
+  jobId: string;
+  createdAt: string;
+}
+
+export interface FavoriteWithJob extends Favorite {
+  job?: GenerationJob;
+}
+
+export interface FavoritesResponse {
+  favorites: FavoriteWithJob[];
+  totalCount: number;
+  limit: number;
+  offset: number;
+}
+
+export interface Webhook {
+  id: string;
+  userId: string;
+  url: string;
+  events: string[];
+  secret: string;
+  active: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface BillingInfo {
+  plan: Plan;
+  stripeCustomerId: string | null;
+  stripeSubscriptionId: string | null;
+  currentPeriodEnd: string | null;
+}
+
+export interface Analytics {
+  totalGenerations: number;
+  totalStyles: number;
+  totalFavorites: number;
+  generationsThisWeek: number;
+  lastGenerationAt: string | null;
+}
+
+export interface PresignedUpload {
+  uploadUrl: string;
+  s3Key: string;
+}

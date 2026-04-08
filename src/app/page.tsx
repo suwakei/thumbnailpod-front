@@ -20,6 +20,7 @@ import StatusBadge from '@/components/ui/StatusBadge';
 import EmptyState from '@/components/ui/EmptyState';
 import Skeleton from '@/components/ui/Skeleton';
 import { createGenerationJob, getHistory, getStyleModels, getMyPlan } from '@/lib/api';
+import { ROUTES, PAGE_SIZE, JOB_STATUS, STYLE_MODEL_STATUS, DATE_LOCALE } from '@/consts';
 import styles from './page.module.css';
 
 export default function DashboardPage() {
@@ -28,8 +29,8 @@ export default function DashboardPage() {
   const [styleModelId, setStyleModelId] = useState('');
 
   const { data: history, isLoading: historyLoading } = useQuery({
-    queryKey: ['history', { limit: 6, offset: 0 }],
-    queryFn: () => getHistory(6, 0),
+    queryKey: ['history', { limit: PAGE_SIZE.dashboardRecent, offset: 0 }],
+    queryFn: () => getHistory(PAGE_SIZE.dashboardRecent, 0),
   });
 
   const { data: modelsData } = useQuery({
@@ -56,7 +57,7 @@ export default function DashboardPage() {
   });
 
   const readyModels = (modelsData?.models || []).filter(
-    (m) => m.status === 'ready',
+    (m) => m.status === STYLE_MODEL_STATUS.ready,
   );
 
   const styleOptions = [
@@ -119,7 +120,7 @@ export default function DashboardPage() {
               <Clock size={18} />
               最近の生成
             </h2>
-            <Link href="/history" className={styles.viewAll}>
+            <Link href={ROUTES.history} className={styles.viewAll}>
               すべて見る
               <ArrowRight size={14} />
             </Link>
@@ -127,7 +128,7 @@ export default function DashboardPage() {
 
           {historyLoading ? (
             <div className={styles.grid}>
-              {Array.from({ length: 6 }).map((_, i) => (
+              {Array.from({ length: PAGE_SIZE.dashboardRecent }).map((_, i) => (
                 <Card key={i} padding="none">
                   <Skeleton height={160} borderRadius="0" />
                   <div style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -142,16 +143,16 @@ export default function DashboardPage() {
               {history.jobs.map((job) => (
                 <Link
                   key={job.id}
-                  href={`/history/${job.id}`}
+                  href={ROUTES.historyDetail(job.id)}
                   className={styles.jobCardLink}
                 >
                   <Card variant="interactive" padding="none">
                     <div className={styles.jobThumb}>
-                      {job.status === 'completed' ? (
+                      {job.status === JOB_STATUS.completed ? (
                         <div className={styles.thumbPlaceholder}>
                           <ImageIcon size={24} />
                         </div>
-                      ) : job.status === 'processing' ? (
+                      ) : job.status === JOB_STATUS.processing ? (
                         <div className={styles.thumbProcessing}>
                           <Loader2 size={24} className={styles.spinIcon} />
                         </div>
@@ -166,7 +167,7 @@ export default function DashboardPage() {
                       <div className={styles.jobMeta}>
                         <StatusBadge status={job.status} />
                         <span className={styles.jobDate}>
-                          {new Date(job.createdAt).toLocaleDateString('ja-JP')}
+                          {new Date(job.createdAt).toLocaleDateString(DATE_LOCALE)}
                         </span>
                       </div>
                     </div>

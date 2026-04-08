@@ -164,3 +164,25 @@ export const mockLayers = [
   { label: 'person_layer', url: '' },
   { label: 'background_layer', url: '' },
 ];
+
+export const mockTemplates = [
+  { id: 'tpl-001', user_id: 'user-001', name: 'ニュース速報テンプレート', prompt: '衝撃ニュース！赤背景に大文字タイトル', style_model_id: 'model-001', source_job_id: 'job-001', preview_s3_key: null, created_at: '2026-03-01T10:00:00Z', updated_at: '2026-03-01T10:00:00Z' },
+  { id: 'tpl-002', user_id: 'user-001', name: 'ゲーム実況テンプレート', prompt: 'ゲーム実況、暗い背景にネオンカラー', style_model_id: null, source_job_id: null, preview_s3_key: null, created_at: '2026-03-15T10:00:00Z', updated_at: '2026-03-15T10:00:00Z' },
+];
+
+export const mockFavorites = [
+  { id: 'fav-001', user_id: 'user-001', job_id: 'job-001', created_at: '2026-04-01T15:00:00Z' },
+  { id: 'fav-002', user_id: 'user-001', job_id: 'job-002', created_at: '2026-03-30T10:00:00Z' },
+];
+
+export const mockWebhooks = [
+  { id: 'wh-001', user_id: 'user-001', url: 'https://example.com/webhook', events: ['job.completed', 'job.failed'], secret: 'whsec_test_123', active: true, created_at: '2026-03-20T10:00:00Z', updated_at: '2026-03-20T10:00:00Z' },
+];
+
+export const mockBillingInfo = {
+  plan: 'creator', stripe_customer_id: 'cus_mock123', stripe_subscription_id: 'sub_mock456', current_period_end: '2026-05-01T00:00:00Z',
+};
+
+export const mockAnalytics = {
+  total_generations: 47, total_styles: 3, total_favorites: 12, generations_this_week: 8, last_generation_at: '2026-04-02T10:30:00Z',
+};

@@ -161,7 +161,66 @@
   flex-shrink: 0;
 }
 
+/* Analytics Grid */
+.analyticsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-md);
+}
+
+.statCard {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: var(--space-md);
+  background: var(--bg-elevated);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+}
+
+.statHeader {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.statIcon {
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.statLabel {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  font-weight: 500;
+}
+
+.statValue {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+/* Billing */
+.billingInfo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.billingAction {
+  display: flex;
+}
+
 /* Danger Zone */
+.dangerDivider {
+  height: 1px;
+  background: var(--border-subtle);
+  margin: var(--space-md) 0;
+}
+
 .dangerZone {
   display: flex;
   align-items: center;
@@ -182,6 +241,25 @@
   margin-top: 2px;
 }
 
+/* Delete Modal */
+.deleteModalContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.deleteWarning {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.deleteActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-sm);
+}
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
@@ -193,6 +271,10 @@
   }
 
   .planFeatures {
+    grid-template-columns: 1fr;
+  }
+
+  .analyticsGrid {
     grid-template-columns: 1fr;
   }
 

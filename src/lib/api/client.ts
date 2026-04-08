@@ -1,4 +1,7 @@
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080/api/v1';
+import { env } from '@/envs';
+import { HTTP_STATUS } from '@/consts';
+
+const API_BASE = env.apiBaseUrl;
 
 export class ApiError extends Error {
   constructor(
@@ -55,7 +58,7 @@ async function request<T>(
     },
   });
 
-  if (res.status === 204) {
+  if (res.status === HTTP_STATUS.noContent) {
     return undefined as T;
   }
 

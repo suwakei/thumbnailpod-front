@@ -3,6 +3,7 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from 'sonner';
 import { useState, useEffect } from 'react';
+import { QUERY_DEFAULTS } from '@/consts';
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   const [mswReady, setMswReady] = useState(process.env.NODE_ENV !== 'development');
@@ -20,9 +21,9 @@ export default function Providers({ children }: { children: React.ReactNode }) {
       new QueryClient({
         defaultOptions: {
           queries: {
-            staleTime: 30 * 1000,
-            retry: 1,
-            refetchOnWindowFocus: false,
+            staleTime: QUERY_DEFAULTS.staleTimeMs,
+            retry: QUERY_DEFAULTS.retry,
+            refetchOnWindowFocus: QUERY_DEFAULTS.refetchOnWindowFocus,
           },
         },
       }),
