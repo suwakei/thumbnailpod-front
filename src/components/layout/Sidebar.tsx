@@ -12,6 +12,7 @@ import {
   FileText,
   Heart,
   Webhook,
+  Shield,
 } from 'lucide-react';
 import { ROUTES } from '@/consts';
 import styles from './Sidebar.module.css';
@@ -24,6 +25,7 @@ const navItems = [
   { href: ROUTES.style, label: 'Style Models', icon: Palette },
   { href: ROUTES.youtube, label: 'YouTube', icon: MonitorPlay },
   { href: ROUTES.webhooks, label: 'Webhooks', icon: Webhook },
+  { href: ROUTES.admin, label: 'Admin', icon: Shield },
   { href: ROUTES.settings, label: 'Settings', icon: Settings },
 ];
 
