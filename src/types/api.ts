@@ -158,3 +158,35 @@ export interface PresignedUpload {
   uploadUrl: string;
   s3Key: string;
 }
+
+// === Admin ===
+export interface AdminServiceHealth {
+  status: string;
+  version?: string;
+  latencyMs?: number;
+}
+
+export interface AdminHealthResponse {
+  status: string;
+  services: Record<string, AdminServiceHealth>;
+  checkedAt: string;
+}
+
+export interface AdminJobStats {
+  total: number;
+  pending: number;
+  processing: number;
+  completed: number;
+  failed: number;
+}
+
+export interface AdminStatsResponse {
+  users: { total: number };
+  jobs: AdminJobStats;
+  styleModels: { total: number };
+}
+
+export interface MaintenanceStatus {
+  maintenance: boolean;
+  message: string;
+}

@@ -1,0 +1,375 @@
+.page {
+  padding: var(--space-xl);
+  max-width: 1120px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+  animation: fadeIn 0.4s var(--ease-out);
+}
+
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+
+.headerLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: var(--text-tertiary);
+}
+
+/* Section */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sectionTitle {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Health Grid */
+.healthGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--space-md);
+}
+
+.healthCard {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.healthDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.healthDotOk {
+  composes: healthDot;
+  background: var(--status-completed);
+  box-shadow: 0 0 8px rgba(52, 211, 153, 0.4);
+}
+
+.healthDotError {
+  composes: healthDot;
+  background: var(--status-failed);
+  box-shadow: 0 0 8px rgba(248, 113, 113, 0.4);
+}
+
+.healthDotUnknown {
+  composes: healthDot;
+  background: var(--text-tertiary);
+}
+
+.healthInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.healthName {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-transform: capitalize;
+}
+
+.healthMeta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text-tertiary);
+}
+
+.healthStatus {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.healthStatusOk {
+  composes: healthStatus;
+  color: var(--status-completed);
+}
+
+.healthStatusError {
+  composes: healthStatus;
+  color: var(--status-failed);
+}
+
+.healthLatency {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.checkedAt {
+  font-size: 12px;
+  color: var(--text-tertiary);
+}
+
+/* Stats Grid */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--space-md);
+}
+
+.statCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.statLabel {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.statValue {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.statValueAccent {
+  composes: statValue;
+  color: var(--accent);
+}
+
+/* Job Breakdown */
+.jobBreakdown {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.breakdownRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm) 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.breakdownRow:last-child {
+  border-bottom: none;
+}
+
+.breakdownLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.breakdownDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.breakdownDotPending {
+  composes: breakdownDot;
+  background: var(--status-pending);
+}
+
+.breakdownDotProcessing {
+  composes: breakdownDot;
+  background: var(--status-processing);
+}
+
+.breakdownDotCompleted {
+  composes: breakdownDot;
+  background: var(--status-completed);
+}
+
+.breakdownDotFailed {
+  composes: breakdownDot;
+  background: var(--status-failed);
+}
+
+.breakdownCount {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* Bar */
+.barContainer {
+  width: 100%;
+  height: 6px;
+  background: var(--bg-elevated);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  display: flex;
+}
+
+.barSegment {
+  height: 100%;
+  transition: width 0.4s var(--ease-out);
+}
+
+.barCompleted {
+  composes: barSegment;
+  background: var(--status-completed);
+}
+
+.barProcessing {
+  composes: barSegment;
+  background: var(--status-processing);
+}
+
+.barPending {
+  composes: barSegment;
+  background: var(--status-pending);
+}
+
+.barFailed {
+  composes: barSegment;
+  background: var(--status-failed);
+}
+
+/* Maintenance */
+.maintenanceSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.maintenanceStatus {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.maintenanceBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-radius: var(--radius-full);
+}
+
+.maintenanceOn {
+  composes: maintenanceBadge;
+  color: var(--status-pending);
+  background: var(--status-pending-bg);
+  border: 1px solid rgba(245, 166, 35, 0.2);
+}
+
+.maintenanceOff {
+  composes: maintenanceBadge;
+  color: var(--status-completed);
+  background: var(--status-completed-bg);
+  border: 1px solid rgba(52, 211, 153, 0.2);
+}
+
+.maintenanceForm {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.maintenanceActions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.maintenanceMessage {
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+/* Skeleton grid */
+.skeletonGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--space-md);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .page {
+    padding: var(--space-md);
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .healthGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .statsGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .maintenanceActions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+@media (max-width: 480px) {
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+}

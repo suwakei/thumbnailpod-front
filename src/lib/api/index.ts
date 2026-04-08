@@ -15,6 +15,9 @@ import type {
   BillingInfo,
   Analytics,
   PresignedUpload,
+  AdminHealthResponse,
+  AdminStatsResponse,
+  MaintenanceStatus,
 } from '@/types/api';
 
 // === Auth ===
@@ -185,4 +188,17 @@ export async function deleteAccount() {
 // === Batch ===
 export async function createBatchJobs(prompts: { prompt: string; styleModelId?: string }[]) {
   return post<{ jobs: { jobId: string; status: string }[] }>(API_PATHS.generate.batch, { prompts });
+}
+
+// === Admin ===
+export async function getAdminHealth(): Promise<AdminHealthResponse> {
+  return get(API_PATHS.admin.health);
+}
+
+export async function getAdminStats(): Promise<AdminStatsResponse> {
+  return get(API_PATHS.admin.stats);
+}
+
+export async function toggleMaintenance(enabled: boolean, message: string): Promise<MaintenanceStatus> {
+  return post(API_PATHS.admin.maintenance, { enabled, message });
 }

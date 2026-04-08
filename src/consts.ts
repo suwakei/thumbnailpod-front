@@ -12,6 +12,7 @@ export const ROUTES = {
   favorites: '/favorites',
   webhooks: '/webhooks',
   billing: '/billing',
+  admin: '/admin',
 } as const;
 
 // === API endpoint paths ===
@@ -80,6 +81,11 @@ export const API_PATHS = {
     videos: '/youtube/videos',
     videoThumbnail: (videoId: string) =>
       `/youtube/videos/${videoId}/thumbnail`,
+  },
+  admin: {
+    health: '/admin/health',
+    stats: '/admin/stats',
+    maintenance: '/admin/maintenance',
   },
 } as const;
 
