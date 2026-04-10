@@ -25,17 +25,22 @@ const navItems = [
   { href: ROUTES.style, label: 'Style Models', icon: Palette },
   { href: ROUTES.youtube, label: 'YouTube', icon: MonitorPlay },
   { href: ROUTES.webhooks, label: 'Webhooks', icon: Webhook },
-  { href: ROUTES.admin, label: 'Admin', icon: Shield },
   { href: ROUTES.settings, label: 'Settings', icon: Settings },
 ];
+
+const adminItem = { href: ROUTES.admin, label: 'Admin', icon: Shield };
 
 interface SidebarProps {
   channelName?: string;
   plan?: string;
+  role?: string;
 }
 
-export default function Sidebar({ channelName, plan }: SidebarProps) {
+export default function Sidebar({ channelName, plan, role }: SidebarProps) {
   const pathname = usePathname();
+  const isAdmin = role === 'admin';
+
+  const items = isAdmin ? [...navItems, adminItem] : navItems;
 
   return (
     <aside className={styles.sidebar}>
@@ -51,7 +56,7 @@ export default function Sidebar({ channelName, plan }: SidebarProps) {
 
       <nav className={styles.nav}>
         <div className={styles.section}>Main</div>
-        {navItems.map((item) => {
+        {items.map((item) => {
           const isActive =
             item.href === '/'
               ? pathname === '/'

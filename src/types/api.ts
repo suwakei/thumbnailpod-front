@@ -22,10 +22,17 @@ export const StyleModelStatus = {
 } as const;
 export type StyleModelStatus = (typeof StyleModelStatus)[keyof typeof StyleModelStatus];
 
+export const UserRole = {
+  User: 'user',
+  Admin: 'admin',
+} as const;
+export type UserRole = (typeof UserRole)[keyof typeof UserRole];
+
 export interface User {
   id: string;
   channelId: string;
   channelName: string;
+  role: UserRole;
   plan: Plan;
   createdAt: string;
 }

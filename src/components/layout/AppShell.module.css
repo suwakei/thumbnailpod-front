@@ -40,6 +40,24 @@
   padding: 32px;
 }
 
+.loadingScreen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.spinner {
+  color: var(--text-tertiary);
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
 @media (max-width: 768px) {
   .main {
     margin-left: 0;

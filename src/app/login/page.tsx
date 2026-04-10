@@ -14,7 +14,8 @@ export default function LoginPage() {
     try {
       const { url } = await getOAuthURL();
       window.location.href = url;
-    } catch {
+    } catch (err) {
+      console.error('OAuth URL fetch failed:', err);
       setLoading(false);
     }
   }

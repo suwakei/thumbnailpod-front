@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import {
   Shield,
@@ -12,14 +13,15 @@ import {
   Briefcase,
   Palette,
   Wrench,
+  Loader2,
 } from 'lucide-react';
 import AppShell from '@/components/layout/AppShell';
 import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 import Skeleton from '@/components/ui/Skeleton';
-import { getAdminHealth, getAdminStats, toggleMaintenance } from '@/lib/api';
-import { DATE_LOCALE } from '@/consts';
+import { getMe, getAdminHealth, getAdminStats, toggleMaintenance } from '@/lib/api';
+import { ROUTES, DATE_LOCALE } from '@/consts';
 import styles from './page.module.css';
 
 const SERVICE_DISPLAY_NAMES: Record<string, string> = {
@@ -30,8 +32,17 @@ const SERVICE_DISPLAY_NAMES: Record<string, string> = {
 };
 
 export default function AdminPage() {
+  const router = useRouter();
   const queryClient = useQueryClient();
   const [maintenanceMessage, setMaintenanceMessage] = useState('');
+
+  const { data: me, isLoading: meLoading } = useQuery({
+    queryKey: ['me'],
+    queryFn: getMe,
+    retry: false,
+  });
+
+  const isAdmin = me?.role === 'admin';
 
   const {
     data: health,
@@ -41,6 +52,7 @@ export default function AdminPage() {
     queryKey: ['adminHealth'],
     queryFn: getAdminHealth,
     refetchInterval: 30_000,
+    enabled: isAdmin,
   });
 
   const {
@@ -49,6 +61,7 @@ export default function AdminPage() {
   } = useQuery({
     queryKey: ['adminStats'],
     queryFn: getAdminStats,
+    enabled: isAdmin,
   });
 
   const maintenanceMutation = useMutation({
@@ -66,6 +79,27 @@ export default function AdminPage() {
       toast.error('メンテナンスモードの切り替えに失敗しました');
     },
   });
+
+  // 未ログイン → /login、admin以外 → /
+  useEffect(() => {
+    if (meLoading) return;
+    if (!me) {
+      router.replace(ROUTES.login);
+    } else if (me.role !== 'admin') {
+      router.replace(ROUTES.dashboard);
+    }
+  }, [me, meLoading, router]);
+
+  // ローディング中 or 権限なし → ローダー表示
+  if (meLoading || !isAdmin) {
+    return (
+      <AppShell>
+        <div className={styles.page} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}>
+          <Loader2 size={32} style={{ animation: 'spin 0.8s linear infinite', color: 'var(--text-tertiary)' }} />
+        </div>
+      </AppShell>
+    );
+  }
 
   const isMaintenanceOn = health?.status === 'maintenance';
 

@@ -13,6 +13,7 @@ export const ROUTES = {
   webhooks: '/webhooks',
   billing: '/billing',
   admin: '/admin',
+  landing: '/landing',
 } as const;
 
 // === API endpoint paths ===
@@ -147,16 +148,49 @@ export const DOWNLOAD_FORMAT = {
 // === Plan definitions ===
 export const PLAN_FEATURES: Record<
   string,
-  { label: string; color: string; features: string[] }
+  {
+    label: string;
+    color: string;
+    price: string;
+    priceSub?: string;
+    annualPrice?: string;
+    annualPriceSub?: string;
+    annualMonthly?: string;
+    features: string[];
+  }
 > = {
   free: {
     label: 'Free',
     color: 'var(--text-tertiary)',
+    price: '¥0',
+    priceSub: '永久無料',
+    annualPrice: '¥0',
+    annualPriceSub: '永久無料',
     features: ['月5回の生成', '基本スタイル学習', 'PNG ダウンロード'],
+  },
+  beginner: {
+    label: 'Beginner',
+    color: 'var(--status-completed)',
+    price: '¥980',
+    priceSub: '/月',
+    annualPrice: '¥9,800',
+    annualPriceSub: '/年',
+    annualMonthly: '約 ¥820/月',
+    features: [
+      '月20回の生成',
+      '基本スタイル学習',
+      'PNG ダウンロード',
+      'テンプレート保存',
+    ],
   },
   creator: {
     label: 'Creator',
     color: 'var(--accent)',
+    price: '¥2,980',
+    priceSub: '/月',
+    annualPrice: '¥29,800',
+    annualPriceSub: '/年',
+    annualMonthly: '約 ¥2,480/月',
     features: [
       '月50回の生成',
       '高度なスタイル学習',
@@ -167,6 +201,11 @@ export const PLAN_FEATURES: Record<
   pro: {
     label: 'Pro',
     color: 'var(--action)',
+    price: '¥7,980',
+    priceSub: '/月',
+    annualPrice: '¥79,800',
+    annualPriceSub: '/年',
+    annualMonthly: '¥6,650/月',
     features: [
       '月200回の生成',
       '全スタイル機能',
@@ -177,6 +216,11 @@ export const PLAN_FEATURES: Record<
   business: {
     label: 'Business',
     color: '#c084fc',
+    price: '¥19,800',
+    priceSub: '/月',
+    annualPrice: '¥198,000',
+    annualPriceSub: '/年',
+    annualMonthly: '¥16,500/月',
     features: [
       '無制限生成',
       'チーム機能',
