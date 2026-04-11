@@ -22,7 +22,8 @@ function CallbackHandler() {
     const state = searchParams.get("state");
 
     if (!code || !state) {
-      setError("認証パラメータが不足しています");
+      // Defer state update to avoid synchronous setState in effect
+      queueMicrotask(() => setError("認証パラメータが不足しています"));
       return;
     }
 
