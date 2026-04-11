@@ -53,10 +53,15 @@ export async function getMyPlan(): Promise<PlanInfo> {
 export async function createGenerationJob(
   prompt: string,
   styleModelId?: string,
+  referenceImageKeys?: string[],
 ) {
   return post<{ jobId: string; status: string }>(API_PATHS.generate.create, {
     prompt,
     styleModelId,
+    referenceImageKeys:
+      referenceImageKeys && referenceImageKeys.length > 0
+        ? referenceImageKeys
+        : undefined,
   });
 }
 
