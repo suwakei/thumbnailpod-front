@@ -196,9 +196,7 @@ export default function DashboardPage() {
             <div className={styles.bannerContent}>
               <Sparkles size={16} className={styles.bannerIcon} />
               <div>
-                <p className={styles.bannerTitle}>
-                  サムネイルを生成しました！
-                </p>
+                <p className={styles.bannerTitle}>サムネイルを生成しました！</p>
                 <p className={styles.bannerDesc}>
                   気に入らなかったらすぐ編集できます
                 </p>
