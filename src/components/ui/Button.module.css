@@ -6,9 +6,9 @@
   font-family: var(--font-display);
   font-weight: 500;
   border: none;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-full);
   cursor: pointer;
-  transition: all 0.2s var(--ease-out);
+  transition: all 0.15s ease;
   white-space: nowrap;
   position: relative;
   overflow: hidden;
@@ -20,18 +20,17 @@
 }
 
 /* Sizes */
-.sm { padding: 6px 14px; font-size: 12px; border-radius: var(--radius-sm); }
+.sm { padding: 6px 14px; font-size: 12px; }
 .md { padding: 10px 20px; font-size: 14px; }
 .lg { padding: 14px 28px; font-size: 15px; }
 
 /* Variants */
 .primary {
   background: var(--accent);
-  color: var(--text-inverse);
+  color: #fff;
 }
 .primary:hover:not(:disabled) {
   background: var(--accent-hover);
-  box-shadow: var(--shadow-glow);
 }
 
 .secondary {
@@ -47,10 +46,10 @@
 .danger {
   background: var(--status-failed-bg);
   color: var(--status-failed);
-  border: 1px solid rgba(248, 113, 113, 0.2);
+  border: 1px solid rgba(255, 78, 69, 0.2);
 }
 .danger:hover:not(:disabled) {
-  background: rgba(248, 113, 113, 0.18);
+  background: rgba(255, 78, 69, 0.18);
 }
 
 .ghost {
@@ -66,7 +65,7 @@
   padding: 8px;
   background: transparent;
   color: var(--text-secondary);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-full);
 }
 .icon:hover:not(:disabled) {
   background: var(--bg-hover);

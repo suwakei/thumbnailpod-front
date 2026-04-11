@@ -1,6 +1,5 @@
 /* ============================================================
-   Landing Page — ThumbnailPod
-   Dark cinematic aesthetic with Electric Cyan + Warm Coral
+   Landing Page — ThumbnailPod (YouTube Dark Style)
    ============================================================ */
 
 .page {
@@ -24,7 +23,7 @@
   left: -12%;
   width: 700px;
   height: 700px;
-  background: radial-gradient(circle, rgba(0, 212, 255, 0.07) 0%, transparent 65%);
+  background: radial-gradient(circle, rgba(255, 0, 0, 0.04) 0%, transparent 65%);
   animation: orbFloat 18s ease-in-out infinite alternate;
 }
 
@@ -34,7 +33,7 @@
   right: -8%;
   width: 600px;
   height: 600px;
-  background: radial-gradient(circle, rgba(255, 107, 74, 0.05) 0%, transparent 65%);
+  background: radial-gradient(circle, rgba(62, 166, 255, 0.03) 0%, transparent 65%);
   animation: orbFloat 22s ease-in-out infinite alternate-reverse;
 }
 
@@ -45,15 +44,15 @@
   transform: translate(-50%, -50%);
   width: 900px;
   height: 900px;
-  background: radial-gradient(circle, rgba(0, 212, 255, 0.03) 0%, transparent 50%);
+  background: radial-gradient(circle, rgba(255, 0, 0, 0.02) 0%, transparent 50%);
 }
 
 .bgGrid {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+    linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
   background-size: 72px 72px;
   mask-image: radial-gradient(ellipse 70% 50% at 50% 30%, black 10%, transparent 100%);
 }
@@ -69,8 +68,7 @@
   position: sticky;
   top: 0;
   z-index: 100;
-  backdrop-filter: blur(16px) saturate(1.4);
-  background: rgba(8, 8, 11, 0.72);
+  background: rgba(15, 15, 15, 0.9);
   border-bottom: 1px solid var(--border-subtle);
 }
 
@@ -78,7 +76,7 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 var(--space-xl);
-  height: 64px;
+  height: 56px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -93,20 +91,18 @@
 .logoMark {
   width: 32px;
   height: 32px;
-  border-radius: var(--radius-sm);
-  background: linear-gradient(135deg, var(--accent), #0088cc);
+  border-radius: var(--radius-full);
+  background: var(--accent);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--text-inverse);
-  box-shadow: 0 0 20px rgba(0, 212, 255, 0.15);
+  color: #fff;
 }
 
 .logoText {
   font-family: var(--font-display);
   font-size: 17px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
+  font-weight: 500;
   color: var(--text-primary);
 }
 
@@ -122,7 +118,6 @@
   font-weight: 500;
   color: var(--text-secondary);
   transition: color 0.2s;
-  letter-spacing: 0.01em;
 }
 
 .navLink:hover {
@@ -136,12 +131,12 @@
   padding: 8px 20px;
   font-family: var(--font-display);
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--text-primary);
   background: var(--bg-elevated);
   border: 1px solid var(--border-default);
   border-radius: var(--radius-full);
-  transition: all 0.25s var(--ease-out);
+  transition: all 0.2s ease;
   cursor: pointer;
 }
 
@@ -153,7 +148,6 @@
 .loginBtn:hover:not(:disabled) {
   background: var(--bg-hover);
   border-color: var(--border-strong);
-  box-shadow: 0 0 16px rgba(0, 212, 255, 0.08);
 }
 
 .googleIcon {
@@ -181,33 +175,29 @@
   padding: 6px 16px;
   font-family: var(--font-display);
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--accent);
   background: var(--accent-muted);
-  border: 1px solid rgba(0, 212, 255, 0.12);
   border-radius: var(--radius-full);
   margin-bottom: var(--space-xl);
-  animation: fadeUp 0.6s var(--ease-out) both;
+  animation: fadeUp 0.6s ease both;
 }
 
 .heroTitle {
   font-family: var(--font-display);
   font-size: clamp(36px, 6vw, 64px);
-  font-weight: 800;
+  font-weight: 700;
   line-height: 1.1;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.02em;
   color: var(--text-primary);
   margin-bottom: var(--space-lg);
-  animation: fadeUp 0.6s var(--ease-out) 0.08s both;
+  animation: fadeUp 0.6s ease 0.08s both;
 }
 
 .heroAccent {
-  background: linear-gradient(135deg, var(--accent), #66e0ff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--accent);
 }
 
 .heroSub {
@@ -216,14 +206,14 @@
   color: var(--text-secondary);
   max-width: 560px;
   margin-bottom: var(--space-2xl);
-  animation: fadeUp 0.6s var(--ease-out) 0.16s both;
+  animation: fadeUp 0.6s ease 0.16s both;
 }
 
 .heroCta {
   display: flex;
   align-items: center;
   gap: var(--space-md);
-  animation: fadeUp 0.6s var(--ease-out) 0.24s both;
+  animation: fadeUp 0.6s ease 0.24s both;
 }
 
 .ctaPrimary {
@@ -234,14 +224,13 @@
   padding: 14px 32px;
   font-family: var(--font-display);
   font-size: 15px;
-  font-weight: 600;
-  color: var(--text-inverse);
+  font-weight: 500;
+  color: #fff;
   background: var(--accent);
   border: none;
   border-radius: var(--radius-full);
   cursor: pointer;
-  transition: all 0.25s var(--ease-out);
-  box-shadow: 0 0 32px rgba(0, 212, 255, 0.2);
+  transition: all 0.2s ease;
 }
 
 .ctaPrimary:disabled {
@@ -251,7 +240,6 @@
 
 .ctaPrimary:hover:not(:disabled) {
   background: var(--accent-hover);
-  box-shadow: 0 0 48px rgba(0, 212, 255, 0.35);
   transform: translateY(-1px);
 }
 
@@ -278,16 +266,16 @@
   width: 100%;
   max-width: 780px;
   margin-top: 72px;
-  animation: fadeUp 0.8s var(--ease-out) 0.36s both;
+  animation: fadeUp 0.8s ease 0.36s both;
 }
 
 .mockEditor {
   position: relative;
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-lg);
   border: 1px solid var(--border-default);
   background: var(--bg-surface);
   overflow: hidden;
-  box-shadow: var(--shadow-lg), 0 0 60px rgba(0, 212, 255, 0.06);
+  box-shadow: var(--shadow-lg);
 }
 
 .mockToolbar {
@@ -335,17 +323,17 @@
 }
 
 .mockLayer[data-label="background"] {
-  background: linear-gradient(160deg, #1a1a3e 0%, #0d0d1f 100%);
+  background: linear-gradient(160deg, #1a1a2e 0%, #0f0f0f 100%);
 }
 
 .mockLayer[data-label="person"] {
-  background: linear-gradient(180deg, transparent 0%, rgba(0, 212, 255, 0.04) 100%);
-  border-left: 1px dashed rgba(0, 212, 255, 0.15);
-  border-right: 1px dashed rgba(0, 212, 255, 0.15);
+  background: linear-gradient(180deg, transparent 0%, rgba(255, 0, 0, 0.03) 100%);
+  border-left: 1px dashed rgba(255, 0, 0, 0.15);
+  border-right: 1px dashed rgba(255, 0, 0, 0.15);
 }
 
 .mockLayer[data-label="text"] {
-  background: linear-gradient(135deg, rgba(255, 107, 74, 0.03) 0%, transparent 100%);
+  background: linear-gradient(135deg, rgba(62, 166, 255, 0.03) 0%, transparent 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -359,8 +347,7 @@
   flex-direction: column;
   gap: 4px;
   padding: 10px;
-  background: rgba(15, 15, 20, 0.88);
-  backdrop-filter: blur(12px);
+  background: rgba(15, 15, 15, 0.88);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
 }
@@ -388,7 +375,7 @@
   transform: translateX(-50%);
   width: 60%;
   height: 80px;
-  background: radial-gradient(ellipse, rgba(0, 212, 255, 0.12) 0%, transparent 70%);
+  background: radial-gradient(ellipse, rgba(255, 0, 0, 0.06) 0%, transparent 70%);
   pointer-events: none;
 }
 
@@ -407,8 +394,8 @@
 .sectionTitle {
   font-family: var(--font-display);
   font-size: clamp(26px, 4vw, 40px);
-  font-weight: 800;
-  letter-spacing: -0.03em;
+  font-weight: 700;
+  letter-spacing: -0.02em;
   color: var(--text-primary);
   margin-bottom: var(--space-md);
 }
@@ -448,29 +435,29 @@
   background: var(--bg-surface);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
-  transition: all 0.3s var(--ease-out);
+  transition: all 0.2s ease;
 }
 
 .featureCard:hover {
   border-color: var(--border-default);
-  transform: translateY(-3px);
+  transform: translateY(-2px);
   box-shadow: var(--shadow-md);
 }
 
 .featureCard[data-accent="cyan"] .featureIcon {
-  background: var(--accent-muted);
-  color: var(--accent);
+  background: var(--action-muted);
+  color: var(--action);
 }
 
 .featureCard[data-accent="coral"] .featureIcon {
-  background: var(--action-muted);
-  color: var(--action);
+  background: var(--accent-muted);
+  color: var(--accent);
 }
 
 .featureIcon {
   width: 42px;
   height: 42px;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-full);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -480,7 +467,7 @@
 .featureTitle {
   font-family: var(--font-display);
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 500;
   color: var(--text-primary);
   margin-bottom: 6px;
 }
@@ -522,13 +509,10 @@
 .stepNum {
   font-family: var(--font-display);
   font-size: 48px;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: -0.04em;
   line-height: 1;
-  background: linear-gradient(180deg, var(--text-tertiary) 0%, rgba(96, 96, 112, 0.2) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--bg-active);
   margin-bottom: var(--space-md);
   display: block;
 }
@@ -536,7 +520,7 @@
 .stepTitle {
   font-family: var(--font-display);
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 500;
   color: var(--text-primary);
   margin-bottom: 6px;
 }
@@ -594,7 +578,7 @@
   border: none;
   border-radius: var(--radius-full);
   cursor: pointer;
-  transition: all 0.25s var(--ease-out);
+  transition: all 0.2s ease;
 }
 
 .billingOption:hover {
@@ -602,20 +586,18 @@
 }
 
 .billingOptionActive {
-  color: var(--text-inverse);
+  color: #fff;
   background: var(--accent);
-  box-shadow: 0 0 12px rgba(0, 212, 255, 0.2);
 }
 
 .billingOptionActive:hover {
-  color: var(--text-inverse);
+  color: #fff;
 }
 
 .billingSave {
   padding: 2px 8px;
   font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.02em;
+  font-weight: 500;
   color: var(--status-completed);
   background: var(--status-completed-bg);
   border-radius: var(--radius-full);
@@ -638,7 +620,7 @@
   border-radius: var(--radius-lg);
   display: flex;
   flex-direction: column;
-  transition: all 0.3s var(--ease-out);
+  transition: all 0.2s ease;
 }
 
 .planCard:hover {
@@ -647,8 +629,7 @@
 }
 
 .planCardFeatured {
-  border-color: var(--border-accent);
-  box-shadow: 0 0 32px rgba(0, 212, 255, 0.08);
+  border-color: var(--accent);
 }
 
 .planBadge {
@@ -658,10 +639,10 @@
   padding: 3px 12px;
   font-family: var(--font-display);
   font-size: 10px;
-  font-weight: 700;
+  font-weight: 500;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--text-inverse);
+  color: #fff;
   background: var(--accent);
   border-radius: var(--radius-full);
 }
@@ -669,7 +650,7 @@
 .planName {
   font-family: var(--font-display);
   font-size: 20px;
-  font-weight: 700;
+  font-weight: 500;
   margin-bottom: var(--space-sm);
 }
 
@@ -683,7 +664,7 @@
 .planPrice {
   font-family: var(--font-display);
   font-size: 28px;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: -0.02em;
   color: var(--text-primary);
 }
@@ -738,13 +719,13 @@
   padding: 10px;
   font-family: var(--font-display);
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--text-secondary);
   background: var(--bg-elevated);
   border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-full);
   cursor: pointer;
-  transition: all 0.2s var(--ease-out);
+  transition: all 0.2s ease;
 }
 
 .planBtn:disabled {
@@ -759,15 +740,14 @@
 
 .planBtnPrimary {
   composes: planBtn;
-  color: var(--text-inverse);
+  color: #fff;
   background: var(--accent);
   border-color: var(--accent);
 }
 
 .planBtnPrimary:hover {
   background: var(--accent-hover);
-  box-shadow: var(--shadow-glow);
-  color: var(--text-inverse);
+  color: #fff;
 }
 
 /* ===== Footer CTA ===== */
@@ -788,8 +768,8 @@
 .footerCtaTitle {
   font-family: var(--font-display);
   font-size: clamp(24px, 3.5vw, 36px);
-  font-weight: 800;
-  letter-spacing: -0.03em;
+  font-weight: 700;
+  letter-spacing: -0.02em;
   color: var(--text-primary);
 }
 
@@ -817,7 +797,7 @@
   gap: 8px;
   font-family: var(--font-display);
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--text-secondary);
 }
 

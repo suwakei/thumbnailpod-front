@@ -16,18 +16,16 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 32px;
-  background: rgba(8, 8, 11, 0.8);
-  backdrop-filter: blur(12px);
+  padding: 12px 24px;
+  background: var(--bg-root);
   border-bottom: 1px solid var(--border-subtle);
 }
 
 .headerTitle {
   font-family: var(--font-display);
   font-size: 20px;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--text-primary);
-  letter-spacing: -0.01em;
 }
 
 .headerSub {
@@ -37,7 +35,7 @@
 }
 
 .content {
-  padding: 32px;
+  padding: 24px;
 }
 
 .loadingScreen {
