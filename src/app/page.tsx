@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { Sparkles, Clock, ImageIcon, ArrowRight, Loader2 } from "lucide-react";
@@ -13,12 +13,15 @@ import Select from "@/components/ui/Select";
 import StatusBadge from "@/components/ui/StatusBadge";
 import EmptyState from "@/components/ui/EmptyState";
 import Skeleton from "@/components/ui/Skeleton";
+import ImageUploader from "@/components/features/ImageUploader";
+import type { UploadedImage } from "@/components/features/ImageUploader";
 import {
   createGenerationJob,
   getHistory,
   getStyleModels,
   getMyPlan,
 } from "@/lib/api";
+import { uploadFiles } from "@/lib/upload";
 import {
   ROUTES,
   PAGE_SIZE,
@@ -32,6 +35,8 @@ export default function DashboardPage() {
   const queryClient = useQueryClient();
   const [prompt, setPrompt] = useState("");
   const [styleModelId, setStyleModelId] = useState("");
+  const [refImages, setRefImages] = useState<UploadedImage[]>([]);
+  const [isUploading, setIsUploading] = useState(false);
 
   const { data: history, isLoading: historyLoading } = useQuery({
     queryKey: ["history", { limit: PAGE_SIZE.dashboardRecent, offset: 0 }],
@@ -49,16 +54,66 @@ export default function DashboardPage() {
   });
 
   const generateMutation = useMutation({
-    mutationFn: () => createGenerationJob(prompt, styleModelId || undefined),
+    mutationFn: async () => {
+      let imageKeys: string[] | undefined;
+
+      // Upload reference images first
+      if (refImages.length > 0) {
+        setIsUploading(true);
+        try {
+          const pendingFiles = refImages
+            .filter((img) => img.status !== "done")
+            .map((img) => img.file);
+          const alreadyUploaded = refImages
+            .filter((img) => img.status === "done" && img.s3Key)
+            .map((img) => img.s3Key as string);
+
+          if (pendingFiles.length > 0) {
+            const results = await uploadFiles(pendingFiles, (index, status) => {
+              setRefImages((prev) => {
+                const pending = prev.filter((img) => img.status !== "done");
+                if (pending[index]) {
+                  return prev.map((img) =>
+                    img.id === pending[index].id
+                      ? { ...img, status }
+                      : img,
+                  );
+                }
+                return prev;
+              });
+            });
+            imageKeys = [
+              ...alreadyUploaded,
+              ...results.map((r) => r.s3Key),
+            ];
+          } else {
+            imageKeys = alreadyUploaded;
+          }
+        } finally {
+          setIsUploading(false);
+        }
+      }
+
+      return createGenerationJob(
+        prompt,
+        styleModelId || undefined,
+        imageKeys,
+      );
+    },
     onSuccess: () => {
       toast.success("サムネイル生成を開始しました");
       setPrompt("");
+      setRefImages([]);
       queryClient.invalidateQueries({ queryKey: ["history"] });
     },
     onError: () => {
       toast.error("生成に失敗しました");
     },
   });
+
+  const handleImagesChange = useCallback((images: UploadedImage[]) => {
+    setRefImages(images);
+  }, []);
 
   const readyModels = (modelsData?.models || []).filter(
     (m) => m.status === STYLE_MODEL_STATUS.ready,
@@ -103,6 +158,12 @@ export default function DashboardPage() {
               onChange={(e) => setPrompt(e.target.value)}
               rows={3}
             />
+            <ImageUploader
+              images={refImages}
+              onImagesChange={handleImagesChange}
+              maxFiles={5}
+              disabled={generateMutation.isPending}
+            />
             <div className={styles.formActions}>
               <Select
                 options={styleOptions}
@@ -115,7 +176,7 @@ export default function DashboardPage() {
                 disabled={!prompt.trim()}
               >
                 <Sparkles size={16} />
-                生成する
+                {isUploading ? "アップロード中..." : "生成する"}
               </Button>
             </div>
           </div>
