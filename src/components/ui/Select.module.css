@@ -5,7 +5,6 @@
 }
 
 .label {
-  font-family: var(--font-display);
   font-size: 13px;
   font-weight: 500;
   color: var(--text-secondary);
@@ -18,20 +17,19 @@
 .select {
   width: 100%;
   padding: 10px 36px 10px 14px;
-  background: var(--bg-elevated);
+  background: var(--bg-root);
   border: 1px solid var(--border-default);
   border-radius: var(--radius-md);
   color: var(--text-primary);
   font-size: 14px;
   appearance: none;
   cursor: pointer;
-  transition: all 0.15s var(--ease-out);
+  transition: border-color 0.15s var(--ease-out);
 }
 
 .select:focus {
   outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px var(--accent-muted);
+  border-color: var(--action);
 }
 
 .selectError {

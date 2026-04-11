@@ -5,7 +5,6 @@
 }
 
 .label {
-  font-family: var(--font-display);
   font-size: 13px;
   font-weight: 500;
   color: var(--text-secondary);
@@ -13,7 +12,7 @@
 
 .textarea {
   padding: 10px 14px;
-  background: var(--bg-elevated);
+  background: var(--bg-root);
   border: 1px solid var(--border-default);
   border-radius: var(--radius-md);
   color: var(--text-primary);
@@ -21,7 +20,7 @@
   font-family: inherit;
   min-height: 100px;
   resize: vertical;
-  transition: all 0.15s var(--ease-out);
+  transition: border-color 0.15s var(--ease-out);
 }
 
 .textarea::placeholder {
@@ -30,8 +29,7 @@
 
 .textarea:focus {
   outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px var(--accent-muted);
+  border-color: var(--action);
 }
 
 .textareaError {

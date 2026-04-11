@@ -5,6 +5,7 @@
   justify-content: center;
   position: relative;
   overflow: hidden;
+  background: var(--bg-root);
 }
 
 .bg {
@@ -15,13 +16,13 @@
 
 .gradient1 {
   position: absolute;
-  top: -30%;
-  left: -20%;
-  width: 60%;
-  height: 60%;
+  top: -20%;
+  left: -10%;
+  width: 50%;
+  height: 50%;
   background: radial-gradient(
     ellipse,
-    rgba(0, 212, 255, 0.08) 0%,
+    rgba(255, 0, 0, 0.04) 0%,
     transparent 70%
   );
 }
@@ -34,23 +35,13 @@
   height: 50%;
   background: radial-gradient(
     ellipse,
-    rgba(255, 107, 74, 0.06) 0%,
+    rgba(62, 166, 255, 0.03) 0%,
     transparent 70%
   );
 }
 
 .grid {
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-  background-size: 64px 64px;
-  mask-image: radial-gradient(
-    ellipse 60% 60% at 50% 50%,
-    black 20%,
-    transparent 100%
-  );
+  display: none;
 }
 
 .container {
@@ -59,11 +50,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 48px;
+  gap: 40px;
   padding: 32px;
-  max-width: 480px;
+  max-width: 420px;
   width: 100%;
-  animation: fadeUp 0.6s var(--ease-out) both;
+  animation: fadeUp 0.4s var(--ease-out) both;
 }
 
 .hero {
@@ -75,41 +66,38 @@
 }
 
 .logoMark {
-  width: 56px;
-  height: 56px;
-  border-radius: var(--radius-lg);
-  background: linear-gradient(135deg, var(--accent), #0088cc);
+  width: 48px;
+  height: 34px;
+  border-radius: var(--radius-md);
+  background: var(--accent);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--text-inverse);
-  box-shadow: 0 0 40px rgba(0, 212, 255, 0.2);
+  color: #fff;
   margin-bottom: 8px;
 }
 
 .title {
   font-family: var(--font-display);
-  font-size: 42px;
-  font-weight: 800;
+  font-size: 36px;
+  font-weight: 700;
   color: var(--text-primary);
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
   line-height: 1;
 }
 
 .subtitle {
-  font-family: var(--font-display);
-  font-size: 12px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  color: var(--accent);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-tertiary);
+  letter-spacing: 0.02em;
 }
 
 .description {
-  font-size: 15px;
+  font-size: 14px;
   color: var(--text-secondary);
-  line-height: 1.7;
-  margin-top: 8px;
+  line-height: 1.6;
+  margin-top: 4px;
 }
 
 .loginCard {
@@ -122,6 +110,7 @@
 
 .googleBtn {
   width: 100%;
+  border-radius: var(--radius-full) !important;
 }
 
 .hint {
@@ -132,12 +121,12 @@
 .features {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
   width: 100%;
-  padding: 24px;
+  padding: 20px;
   background: var(--bg-surface);
   border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-lg);
 }
 
 .feature {
@@ -149,7 +138,7 @@
 .featureIcon {
   width: 36px;
   height: 36px;
-  border-radius: var(--radius-md);
+  border-radius: 50%;
   background: var(--accent-muted);
   display: flex;
   align-items: center;
@@ -159,9 +148,8 @@
 }
 
 .featureTitle {
-  font-family: var(--font-display);
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--text-primary);
 }
 
@@ -174,7 +162,7 @@
 @keyframes fadeUp {
   from {
     opacity: 0;
-    transform: translateY(16px);
+    transform: translateY(12px);
   }
   to {
     opacity: 1;
@@ -184,7 +172,7 @@
 
 @media (max-width: 480px) {
   .title {
-    font-size: 32px;
+    font-size: 28px;
   }
 
   .description br {

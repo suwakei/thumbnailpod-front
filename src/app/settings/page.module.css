@@ -1,11 +1,11 @@
 .page {
-  padding: var(--space-xl);
+  padding: var(--space-lg);
   max-width: 720px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: var(--space-xl);
-  animation: fadeIn 0.4s var(--ease-out);
+  gap: var(--space-lg);
+  animation: fadeIn 0.3s var(--ease-out);
 }
 
 .header {
@@ -20,10 +20,9 @@
 
 .title {
   font-family: var(--font-display);
-  font-size: 28px;
-  font-weight: 700;
+  font-size: 24px;
+  font-weight: 500;
   color: var(--text-primary);
-  letter-spacing: -0.02em;
 }
 
 /* Sections */
@@ -34,12 +33,11 @@
 }
 
 .sectionTitle {
-  font-family: var(--font-display);
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 12px;
+  font-weight: 500;
   color: var(--text-tertiary);
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.05em;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -66,7 +64,7 @@
 .infoRow dd {
   font-size: 14px;
   color: var(--text-primary);
-  font-weight: 500;
+  font-weight: 400;
 }
 
 .mono {
@@ -103,9 +101,8 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  font-family: var(--font-display);
-  font-size: 20px;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 500;
 }
 
 /* Usage */
@@ -124,16 +121,16 @@
 
 .progressTrack {
   width: 100%;
-  height: 6px;
-  background: var(--bg-active);
-  border-radius: 3px;
+  height: 4px;
+  background: var(--bg-elevated);
+  border-radius: 2px;
   overflow: hidden;
 }
 
 .progressFill {
   height: 100%;
   background: var(--accent);
-  border-radius: 3px;
+  border-radius: 2px;
   transition: width 0.5s var(--ease-out);
 }
 
@@ -157,7 +154,7 @@
 }
 
 .featureItem svg {
-  color: var(--accent);
+  color: var(--status-completed);
   flex-shrink: 0;
 }
 
@@ -170,9 +167,8 @@
 }
 
 .dangerTitle {
-  font-family: var(--font-display);
-  font-size: 15px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 500;
   color: var(--text-primary);
 }
 
@@ -185,11 +181,9 @@
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(8px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 

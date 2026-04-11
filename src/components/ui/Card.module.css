@@ -2,18 +2,16 @@
   background: var(--bg-surface);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
-  transition: all 0.2s var(--ease-out);
+  transition: all 0.15s var(--ease-out);
 }
 
 .interactive:hover {
   border-color: var(--border-default);
-  box-shadow: var(--shadow-md);
-  transform: translateY(-1px);
+  background: var(--bg-elevated);
 }
 
 .highlighted {
   border-color: var(--border-accent);
-  box-shadow: var(--shadow-glow);
 }
 
 .padnone {
