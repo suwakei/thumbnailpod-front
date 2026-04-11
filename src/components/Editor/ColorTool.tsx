@@ -54,11 +54,7 @@ export default function ColorTool({
         </button>
       </div>
 
-      {disabled && (
-        <p className={styles.hint}>
-          レイヤーを選択してください
-        </p>
-      )}
+      {disabled && <p className={styles.hint}>レイヤーを選択してください</p>}
 
       <div className={styles.sliderGroup}>
         <div className={styles.sliderRow}>

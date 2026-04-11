@@ -104,11 +104,7 @@ export default function LayerPanel({
                     }}
                     title={layer.locked ? "ロック解除" : "ロック"}
                   >
-                    {layer.locked ? (
-                      <Lock size={14} />
-                    ) : (
-                      <Unlock size={14} />
-                    )}
+                    {layer.locked ? <Lock size={14} /> : <Unlock size={14} />}
                   </button>
                 </div>
               </div>
@@ -141,8 +137,7 @@ export default function LayerPanel({
                         onReorder(layer.id, "up");
                       }}
                       disabled={
-                        layer.order ===
-                        Math.max(...layers.map((l) => l.order))
+                        layer.order === Math.max(...layers.map((l) => l.order))
                       }
                       title="前面へ"
                     >
@@ -156,8 +151,7 @@ export default function LayerPanel({
                         onReorder(layer.id, "down");
                       }}
                       disabled={
-                        layer.order ===
-                        Math.min(...layers.map((l) => l.order))
+                        layer.order === Math.min(...layers.map((l) => l.order))
                       }
                       title="背面へ"
                     >

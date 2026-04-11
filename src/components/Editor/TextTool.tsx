@@ -85,7 +85,16 @@ export default function TextTool({
       fontStyle,
       textAlign,
     });
-  }, [newText, fontSize, fontFamily, fill, fontWeight, fontStyle, textAlign, onAddText]);
+  }, [
+    newText,
+    fontSize,
+    fontFamily,
+    fill,
+    fontWeight,
+    fontStyle,
+    textAlign,
+    onAddText,
+  ]);
 
   const handleUpdate = useCallback(
     (partial: Partial<TextOptions>) => {

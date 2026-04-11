@@ -14,12 +14,7 @@ import ColorTool from "@/components/Editor/ColorTool";
 import LayerPanel from "@/components/Editor/LayerPanel";
 import Toolbar from "@/components/Editor/Toolbar";
 import Skeleton from "@/components/ui/Skeleton";
-import {
-  getJobStatus,
-  getLayers,
-  editThumbnail,
-  segmentJob,
-} from "@/lib/api";
+import { getJobStatus, getLayers, editThumbnail, segmentJob } from "@/lib/api";
 import { ROUTES, JOB_STATUS } from "@/consts";
 import {
   EditorTool,
@@ -109,7 +104,10 @@ export default function EditorPage({ params }: PageProps) {
   // Keyboard shortcuts
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
-      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
+      if (
+        e.target instanceof HTMLInputElement ||
+        e.target instanceof HTMLTextAreaElement
+      ) {
         return;
       }
 
@@ -199,17 +197,13 @@ export default function EditorPage({ params }: PageProps) {
 
   const handleToggleVisibility = useCallback((layerId: string) => {
     setLayers((prev) =>
-      prev.map((l) =>
-        l.id === layerId ? { ...l, visible: !l.visible } : l,
-      ),
+      prev.map((l) => (l.id === layerId ? { ...l, visible: !l.visible } : l)),
     );
   }, []);
 
   const handleToggleLock = useCallback((layerId: string) => {
     setLayers((prev) =>
-      prev.map((l) =>
-        l.id === layerId ? { ...l, locked: !l.locked } : l,
-      ),
+      prev.map((l) => (l.id === layerId ? { ...l, locked: !l.locked } : l)),
     );
   }, []);
 
@@ -239,8 +233,7 @@ export default function EditorPage({ params }: PageProps) {
     setState((s) => ({
       ...s,
       isDirty: true,
-      selectedLayerId:
-        s.selectedLayerId === layerId ? null : s.selectedLayerId,
+      selectedLayerId: s.selectedLayerId === layerId ? null : s.selectedLayerId,
     }));
   }, []);
 
@@ -341,10 +334,11 @@ export default function EditorPage({ params }: PageProps) {
           <div className={styles.errorContainer}>
             <Loader2 size={32} className={styles.spin} />
             <p>サムネイル生成が完了していません</p>
-            <p className={styles.subText}>
-              ステータス: {job.status}
-            </p>
-            <Link href={ROUTES.historyDetail(jobId)} className={styles.backLink}>
+            <p className={styles.subText}>ステータス: {job.status}</p>
+            <Link
+              href={ROUTES.historyDetail(jobId)}
+              className={styles.backLink}
+            >
               ジョブ詳細に戻る
             </Link>
           </div>
@@ -456,11 +450,7 @@ export default function EditorPage({ params }: PageProps) {
                   onOpacityChange={handleOpacityChange}
                 />
               )}
-              {rightPanel === "text" && (
-                <TextTool
-                  onAddText={handleAddText}
-                />
-              )}
+              {rightPanel === "text" && <TextTool onAddText={handleAddText} />}
               {rightPanel === "color" && (
                 <ColorTool
                   selectedLayerId={state.selectedLayerId}

@@ -223,9 +223,7 @@ export default function GuidePage() {
                     </div>
                     <div>
                       <strong>移動ツール</strong>
-                      <p>
-                        キャンバス全体をドラッグしてパン（移動）できます。
-                      </p>
+                      <p>キャンバス全体をドラッグしてパン（移動）できます。</p>
                     </div>
                   </div>
                   <div className={styles.toolItem}>
@@ -281,14 +279,23 @@ export default function GuidePage() {
               <div className={styles.shortcutGroup}>
                 <h3 className={styles.shortcutGroupTitle}>操作</h3>
                 <Shortcut keys="Ctrl + Z" description="元に戻す（Undo）" />
-                <Shortcut keys="Ctrl + Shift + Z" description="やり直し（Redo）" />
+                <Shortcut
+                  keys="Ctrl + Shift + Z"
+                  description="やり直し（Redo）"
+                />
                 <Shortcut keys="Ctrl + S" description="保存" />
               </div>
               <div className={styles.shortcutGroup}>
                 <h3 className={styles.shortcutGroupTitle}>ビュー</h3>
-                <Shortcut keys="マウスホイール" description="ズームイン/アウト" />
+                <Shortcut
+                  keys="マウスホイール"
+                  description="ズームイン/アウト"
+                />
                 <Shortcut keys="ツールバー [+] [-]" description="段階ズーム" />
-                <Shortcut keys="ツールバー [fit]" description="画面に合わせる" />
+                <Shortcut
+                  keys="ツールバー [fit]"
+                  description="画面に合わせる"
+                />
               </div>
             </div>
           </Card>

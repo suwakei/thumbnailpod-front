@@ -136,7 +136,11 @@ export default function Toolbar({
           disabled={isSaving || !isDirty}
           title="保存 (Ctrl+S)"
         >
-          {isSaving ? <Loader2 size={16} className={styles.spinner} /> : <Save size={16} />}
+          {isSaving ? (
+            <Loader2 size={16} className={styles.spinner} />
+          ) : (
+            <Save size={16} />
+          )}
           {isSaving ? "保存中..." : "保存"}
         </button>
       </div>
