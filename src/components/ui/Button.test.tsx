@@ -6,7 +6,9 @@ import Button from "./Button";
 describe("Button", () => {
   it("テキストを表示する", () => {
     render(<Button>クリック</Button>);
-    expect(screen.getByRole("button", { name: "クリック" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "クリック" }),
+    ).toBeInTheDocument();
   });
 
   it("クリックイベントが発火する", async () => {

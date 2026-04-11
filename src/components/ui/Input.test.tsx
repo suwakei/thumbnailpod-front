@@ -36,8 +36,6 @@ describe("Input", () => {
 
   it("placeholder を表示する", () => {
     render(<Input placeholder="入力してください" />);
-    expect(
-      screen.getByPlaceholderText("入力してください"),
-    ).toBeInTheDocument();
+    expect(screen.getByPlaceholderText("入力してください")).toBeInTheDocument();
   });
 });

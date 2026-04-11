@@ -9,16 +9,12 @@ describe("Card", () => {
   });
 
   it("className を追加できる", () => {
-    const { container } = render(
-      <Card className="custom">テスト</Card>,
-    );
+    const { container } = render(<Card className="custom">テスト</Card>);
     expect(container.firstChild).toHaveClass("custom");
   });
 
   it("padding=none で padding なしになる", () => {
-    const { container } = render(
-      <Card padding="none">テスト</Card>,
-    );
+    const { container } = render(<Card padding="none">テスト</Card>);
     expect(container.firstChild).toHaveClass("padnone");
   });
 });

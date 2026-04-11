@@ -28,7 +28,9 @@ describe("EmptyState", () => {
         <button>作成する</button>
       </EmptyState>,
     );
-    expect(screen.getByRole("button", { name: "作成する" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "作成する" }),
+    ).toBeInTheDocument();
   });
 
   it("description が未指定の場合は説明文を表示しない", () => {

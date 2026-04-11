@@ -4,7 +4,9 @@ import userEvent from "@testing-library/user-event";
 import LoginPage from "./page";
 
 vi.mock("@/lib/api", () => ({
-  getOAuthURL: vi.fn().mockResolvedValue({ url: "https://accounts.google.com/oauth" }),
+  getOAuthURL: vi
+    .fn()
+    .mockResolvedValue({ url: "https://accounts.google.com/oauth" }),
 }));
 
 describe("LoginPage", () => {
