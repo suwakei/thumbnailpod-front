@@ -13,6 +13,7 @@ import {
   Heart,
   Webhook,
   Shield,
+  BookOpen,
 } from "lucide-react";
 import { ROUTES } from "@/consts";
 import styles from "./Sidebar.module.css";
@@ -25,6 +26,7 @@ const navItems = [
   { href: ROUTES.style, label: "Style Models", icon: Palette },
   { href: ROUTES.youtube, label: "YouTube", icon: MonitorPlay },
   { href: ROUTES.webhooks, label: "Webhooks", icon: Webhook },
+  { href: ROUTES.guide, label: "使い方", icon: BookOpen },
   { href: ROUTES.settings, label: "Settings", icon: Settings },
 ];
 

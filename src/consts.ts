@@ -14,6 +14,7 @@ export const ROUTES = {
   webhooks: "/webhooks",
   billing: "/billing",
   admin: "/admin",
+  guide: "/guide",
   landing: "/landing",
 } as const;
 
