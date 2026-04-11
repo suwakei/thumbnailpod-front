@@ -1,5 +1,5 @@
-import { get, post, put, del } from './client';
-import { API_PATHS } from '@/consts';
+import { get, post, put, del } from "./client";
+import { API_PATHS } from "@/consts";
 import type {
   User,
   PlanInfo,
@@ -18,7 +18,7 @@ import type {
   AdminHealthResponse,
   AdminStatsResponse,
   MaintenanceStatus,
-} from '@/types/api';
+} from "@/types/api";
 
 // === Auth ===
 export async function getOAuthURL(): Promise<{ url: string }> {
@@ -50,7 +50,10 @@ export async function getMyPlan(): Promise<PlanInfo> {
 }
 
 // === Generate ===
-export async function createGenerationJob(prompt: string, styleModelId?: string) {
+export async function createGenerationJob(
+  prompt: string,
+  styleModelId?: string,
+) {
   return post<{ jobId: string; status: string }>(API_PATHS.generate.create, {
     prompt,
     styleModelId,
@@ -61,15 +64,19 @@ export async function getJobStatus(jobId: string): Promise<JobDetail> {
   return get(API_PATHS.generate.status(jobId));
 }
 
-export async function getHistory(limit = 20, offset = 0): Promise<HistoryResponse> {
+export async function getHistory(
+  limit = 20,
+  offset = 0,
+): Promise<HistoryResponse> {
   return get(API_PATHS.generate.history(limit, offset));
 }
 
 // === Segment / Layers ===
 export async function segmentJob(jobId: string) {
-  return post<{ jobId: string; layers: Array<{ label: string; s3Key: string }> }>(
-    API_PATHS.generate.segment(jobId),
-  );
+  return post<{
+    jobId: string;
+    layers: Array<{ label: string; s3Key: string }>;
+  }>(API_PATHS.generate.segment(jobId));
 }
 
 export async function getLayers(jobId: string) {
@@ -80,10 +87,11 @@ export async function getLayers(jobId: string) {
 
 // === Edit ===
 export async function editThumbnail(jobId: string, operations: unknown[]) {
-  return post<{ jobId: string; layers: Record<string, string>; unchangedLayers: string[] }>(
-    API_PATHS.generate.edit(jobId),
-    { operations },
-  );
+  return post<{
+    jobId: string;
+    layers: Record<string, string>;
+    unchangedLayers: string[];
+  }>(API_PATHS.generate.edit(jobId), { operations });
 }
 
 export async function getEditHistory(jobId: string) {
@@ -91,7 +99,11 @@ export async function getEditHistory(jobId: string) {
 }
 
 // === Download ===
-export async function getDownloadURL(thumbnailId: string, format = 'png', layer?: string) {
+export async function getDownloadURL(
+  thumbnailId: string,
+  format = "png",
+  layer?: string,
+) {
   return get<{ downloadUrl: string }>(
     API_PATHS.thumbnails.download(thumbnailId, format, layer),
   );
@@ -99,7 +111,10 @@ export async function getDownloadURL(thumbnailId: string, format = 'png', layer?
 
 // === Style ===
 export async function createLearnJob(name: string, imageUrls: string[]) {
-  return post<{ modelId: string; status: string }>(API_PATHS.style.learn, { name, imageUrls });
+  return post<{ modelId: string; status: string }>(API_PATHS.style.learn, {
+    name,
+    imageUrls,
+  });
 }
 
 export async function getStyleModels() {
@@ -119,13 +134,28 @@ export async function getYouTubeVideos() {
   return get<{ videos: YouTubeVideo[] }>(API_PATHS.youtube.videos);
 }
 
-export async function updateVideoThumbnail(videoId: string, thumbnailId: string) {
-  return put<{ status: string }>(API_PATHS.youtube.videoThumbnail(videoId), { thumbnailId });
+export async function updateVideoThumbnail(
+  videoId: string,
+  thumbnailId: string,
+) {
+  return put<{ status: string }>(API_PATHS.youtube.videoThumbnail(videoId), {
+    thumbnailId,
+  });
 }
 
 // === Templates ===
-export async function createTemplate(name: string, prompt: string, styleModelId?: string, sourceJobId?: string) {
-  return post<Template>(API_PATHS.templates.create, { name, prompt, styleModelId, sourceJobId });
+export async function createTemplate(
+  name: string,
+  prompt: string,
+  styleModelId?: string,
+  sourceJobId?: string,
+) {
+  return post<Template>(API_PATHS.templates.create, {
+    name,
+    prompt,
+    styleModelId,
+    sourceJobId,
+  });
 }
 export async function getTemplates() {
   return get<{ templates: Template[] }>(API_PATHS.templates.list);
@@ -133,7 +163,10 @@ export async function getTemplates() {
 export async function getTemplate(templateId: string): Promise<Template> {
   return get(API_PATHS.templates.get(templateId));
 }
-export async function updateTemplate(templateId: string, data: { name?: string; prompt?: string; styleModelId?: string }) {
+export async function updateTemplate(
+  templateId: string,
+  data: { name?: string; prompt?: string; styleModelId?: string },
+) {
   return put<Template>(API_PATHS.templates.update(templateId), data);
 }
 export async function deleteTemplate(templateId: string) {
@@ -141,7 +174,10 @@ export async function deleteTemplate(templateId: string) {
 }
 
 // === Favorites ===
-export async function getFavorites(limit = 20, offset = 0): Promise<FavoritesResponse> {
+export async function getFavorites(
+  limit = 20,
+  offset = 0,
+): Promise<FavoritesResponse> {
   return get(API_PATHS.favorites.list(limit, offset));
 }
 export async function addFavorite(jobId: string) {
@@ -158,7 +194,10 @@ export async function createWebhook(url: string, events: string[]) {
 export async function getWebhooks() {
   return get<{ webhooks: Webhook[] }>(API_PATHS.webhooks.list);
 }
-export async function updateWebhook(webhookId: string, data: { url?: string; events?: string[]; active?: boolean }) {
+export async function updateWebhook(
+  webhookId: string,
+  data: { url?: string; events?: string[]; active?: boolean },
+) {
   return put<Webhook>(API_PATHS.webhooks.update(webhookId), data);
 }
 export async function deleteWebhook(webhookId: string) {
@@ -171,8 +210,14 @@ export async function getBillingInfo(): Promise<BillingInfo> {
 }
 
 // === Upload ===
-export async function getPresignedUploadURL(filename: string, contentType: string) {
-  return post<PresignedUpload>(API_PATHS.upload.presign, { filename, contentType });
+export async function getPresignedUploadURL(
+  filename: string,
+  contentType: string,
+) {
+  return post<PresignedUpload>(API_PATHS.upload.presign, {
+    filename,
+    contentType,
+  });
 }
 
 // === Analytics ===
@@ -186,8 +231,13 @@ export async function deleteAccount() {
 }
 
 // === Batch ===
-export async function createBatchJobs(prompts: { prompt: string; styleModelId?: string }[]) {
-  return post<{ jobs: { jobId: string; status: string }[] }>(API_PATHS.generate.batch, { prompts });
+export async function createBatchJobs(
+  prompts: { prompt: string; styleModelId?: string }[],
+) {
+  return post<{ jobs: { jobId: string; status: string }[] }>(
+    API_PATHS.generate.batch,
+    { prompts },
+  );
 }
 
 // === Admin ===
@@ -199,6 +249,9 @@ export async function getAdminStats(): Promise<AdminStatsResponse> {
   return get(API_PATHS.admin.stats);
 }
 
-export async function toggleMaintenance(enabled: boolean, message: string): Promise<MaintenanceStatus> {
+export async function toggleMaintenance(
+  enabled: boolean,
+  message: string,
+): Promise<MaintenanceStatus> {
   return post(API_PATHS.admin.maintenance, { enabled, message });
 }

@@ -1,32 +1,36 @@
-import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import { Inbox } from 'lucide-react';
-import EmptyState from './EmptyState';
+import { describe, it, expect } from "vitest";
+import { render, screen } from "@testing-library/react";
+import { Inbox } from "lucide-react";
+import EmptyState from "./EmptyState";
 
-describe('EmptyState', () => {
-  it('renders title', () => {
+describe("EmptyState", () => {
+  it("renders title", () => {
     render(<EmptyState icon={Inbox} title="No items" />);
-    expect(screen.getByText('No items')).toBeInTheDocument();
+    expect(screen.getByText("No items")).toBeInTheDocument();
   });
 
-  it('renders description', () => {
+  it("renders description", () => {
     render(
-      <EmptyState icon={Inbox} title="No items" description="Try creating one" />,
+      <EmptyState
+        icon={Inbox}
+        title="No items"
+        description="Try creating one"
+      />,
     );
-    expect(screen.getByText('Try creating one')).toBeInTheDocument();
+    expect(screen.getByText("Try creating one")).toBeInTheDocument();
   });
 
-  it('renders children as actions', () => {
+  it("renders children as actions", () => {
     render(
       <EmptyState icon={Inbox} title="No items">
         <button>Create</button>
       </EmptyState>,
     );
-    expect(screen.getByRole('button', { name: 'Create' })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Create" })).toBeInTheDocument();
   });
 
-  it('does not render description if not provided', () => {
+  it("does not render description if not provided", () => {
     const { container } = render(<EmptyState icon={Inbox} title="Empty" />);
-    expect(container.querySelector('p')).toBeNull();
+    expect(container.querySelector("p")).toBeNull();
   });
 });

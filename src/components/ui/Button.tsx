@@ -1,17 +1,17 @@
-'use client';
+"use client";
 
-import { Loader2 } from 'lucide-react';
-import styles from './Button.module.css';
+import { Loader2 } from "lucide-react";
+import styles from "./Button.module.css";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'danger' | 'ghost' | 'icon';
-  size?: 'sm' | 'md' | 'lg';
+  variant?: "primary" | "secondary" | "danger" | "ghost" | "icon";
+  size?: "sm" | "md" | "lg";
   loading?: boolean;
 }
 
 export default function Button({
-  variant = 'primary',
-  size = 'md',
+  variant = "primary",
+  size = "md",
   loading = false,
   children,
   className,
@@ -20,7 +20,7 @@ export default function Button({
 }: ButtonProps) {
   return (
     <button
-      className={`${styles.button} ${styles[variant]} ${styles[size]} ${loading ? styles.loading : ''} ${className || ''}`}
+      className={`${styles.button} ${styles[variant]} ${styles[size]} ${loading ? styles.loading : ""} ${className || ""}`}
       disabled={disabled || loading}
       {...props}
     >

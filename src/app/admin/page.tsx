@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
-import { toast } from 'sonner';
+import { useState, useEffect } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 import {
   Shield,
   Activity,
@@ -14,52 +14,54 @@ import {
   Palette,
   Wrench,
   Loader2,
-} from 'lucide-react';
-import AppShell from '@/components/layout/AppShell';
-import Card from '@/components/ui/Card';
-import Button from '@/components/ui/Button';
-import Input from '@/components/ui/Input';
-import Skeleton from '@/components/ui/Skeleton';
-import { getMe, getAdminHealth, getAdminStats, toggleMaintenance } from '@/lib/api';
-import { ROUTES, DATE_LOCALE } from '@/consts';
-import styles from './page.module.css';
+} from "lucide-react";
+import AppShell from "@/components/layout/AppShell";
+import Card from "@/components/ui/Card";
+import Button from "@/components/ui/Button";
+import Input from "@/components/ui/Input";
+import Skeleton from "@/components/ui/Skeleton";
+import {
+  getMe,
+  getAdminHealth,
+  getAdminStats,
+  toggleMaintenance,
+} from "@/lib/api";
+import { ROUTES, DATE_LOCALE } from "@/consts";
+import styles from "./page.module.css";
 
 const SERVICE_DISPLAY_NAMES: Record<string, string> = {
-  backend: 'Backend API',
-  database: 'Database',
-  ai_service: 'AI Service',
-  redis: 'Redis',
+  backend: "Backend API",
+  database: "Database",
+  ai_service: "AI Service",
+  redis: "Redis",
 };
 
 export default function AdminPage() {
   const router = useRouter();
   const queryClient = useQueryClient();
-  const [maintenanceMessage, setMaintenanceMessage] = useState('');
+  const [maintenanceMessage, setMaintenanceMessage] = useState("");
 
   const { data: me, isLoading: meLoading } = useQuery({
-    queryKey: ['me'],
+    queryKey: ["me"],
     queryFn: getMe,
     retry: false,
   });
 
-  const isAdmin = me?.role === 'admin';
+  const isAdmin = me?.role === "admin";
 
   const {
     data: health,
     isLoading: healthLoading,
     refetch: refetchHealth,
   } = useQuery({
-    queryKey: ['adminHealth'],
+    queryKey: ["adminHealth"],
     queryFn: getAdminHealth,
     refetchInterval: 30_000,
     enabled: isAdmin,
   });
 
-  const {
-    data: stats,
-    isLoading: statsLoading,
-  } = useQuery({
-    queryKey: ['adminStats'],
+  const { data: stats, isLoading: statsLoading } = useQuery({
+    queryKey: ["adminStats"],
     queryFn: getAdminStats,
     enabled: isAdmin,
   });
@@ -70,13 +72,13 @@ export default function AdminPage() {
     onSuccess: (data) => {
       toast.success(
         data.maintenance
-          ? 'メンテナンスモードを有効にしました'
-          : 'メンテナンスモードを解除しました',
+          ? "メンテナンスモードを有効にしました"
+          : "メンテナンスモードを解除しました",
       );
-      queryClient.invalidateQueries({ queryKey: ['adminHealth'] });
+      queryClient.invalidateQueries({ queryKey: ["adminHealth"] });
     },
     onError: () => {
-      toast.error('メンテナンスモードの切り替えに失敗しました');
+      toast.error("メンテナンスモードの切り替えに失敗しました");
     },
   });
 
@@ -85,7 +87,7 @@ export default function AdminPage() {
     if (meLoading) return;
     if (!me) {
       router.replace(ROUTES.login);
-    } else if (me.role !== 'admin') {
+    } else if (me.role !== "admin") {
       router.replace(ROUTES.dashboard);
     }
   }, [me, meLoading, router]);
@@ -94,14 +96,28 @@ export default function AdminPage() {
   if (meLoading || !isAdmin) {
     return (
       <AppShell>
-        <div className={styles.page} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}>
-          <Loader2 size={32} style={{ animation: 'spin 0.8s linear infinite', color: 'var(--text-tertiary)' }} />
+        <div
+          className={styles.page}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            minHeight: "60vh",
+          }}
+        >
+          <Loader2
+            size={32}
+            style={{
+              animation: "spin 0.8s linear infinite",
+              color: "var(--text-tertiary)",
+            }}
+          />
         </div>
       </AppShell>
     );
   }
 
-  const isMaintenanceOn = health?.status === 'maintenance';
+  const isMaintenanceOn = health?.status === "maintenance";
 
   const jobTotal = stats?.jobs.total || 0;
   const getBarPercent = (count: number) =>
@@ -154,10 +170,10 @@ export default function AdminPage() {
             <>
               <div className={styles.healthGrid}>
                 {Object.entries(health.services).map(([key, service]) => {
-                  const isOk = service.status === 'ok';
+                  const isOk = service.status === "ok";
                   const dotClass = isOk
                     ? styles.healthDotOk
-                    : service.status === 'error'
+                    : service.status === "error"
                       ? styles.healthDotError
                       : styles.healthDotUnknown;
                   const statusClass = isOk
@@ -194,7 +210,8 @@ export default function AdminPage() {
                 })}
               </div>
               <span className={styles.checkedAt}>
-                Last checked: {new Date(health.checkedAt).toLocaleString(DATE_LOCALE)}
+                Last checked:{" "}
+                {new Date(health.checkedAt).toLocaleString(DATE_LOCALE)}
               </span>
             </>
           ) : null}
@@ -256,16 +273,22 @@ export default function AdminPage() {
               {/* Job Status Breakdown */}
               <Card padding="lg">
                 <div className={styles.jobBreakdown}>
-                  <span className={styles.sectionTitle}>Job Status Breakdown</span>
+                  <span className={styles.sectionTitle}>
+                    Job Status Breakdown
+                  </span>
 
                   <div className={styles.barContainer}>
                     <div
                       className={styles.barCompleted}
-                      style={{ width: `${getBarPercent(stats.jobs.completed)}%` }}
+                      style={{
+                        width: `${getBarPercent(stats.jobs.completed)}%`,
+                      }}
                     />
                     <div
                       className={styles.barProcessing}
-                      style={{ width: `${getBarPercent(stats.jobs.processing)}%` }}
+                      style={{
+                        width: `${getBarPercent(stats.jobs.processing)}%`,
+                      }}
                     />
                     <div
                       className={styles.barPending}
@@ -337,9 +360,9 @@ export default function AdminPage() {
                 )}
               </div>
 
-              {health?.status === 'maintenance' && (
+              {health?.status === "maintenance" && (
                 <p className={styles.maintenanceMessage}>
-                  &ldquo;{maintenanceMessage || 'メンテナンス中です'}&rdquo;
+                  &ldquo;{maintenanceMessage || "メンテナンス中です"}&rdquo;
                 </p>
               )}
 

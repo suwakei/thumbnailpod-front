@@ -20,9 +20,18 @@
 }
 
 /* Sizes */
-.sm { padding: 6px 14px; font-size: 12px; }
-.md { padding: 10px 20px; font-size: 14px; }
-.lg { padding: 14px 28px; font-size: 15px; }
+.sm {
+  padding: 6px 14px;
+  font-size: 12px;
+}
+.md {
+  padding: 10px 20px;
+  font-size: 14px;
+}
+.lg {
+  padding: 14px 28px;
+  font-size: 15px;
+}
 
 /* Variants */
 .primary {
@@ -81,5 +90,7 @@
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }

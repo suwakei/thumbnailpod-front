@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useQuery, useMutation } from '@tanstack/react-query';
-import { toast } from 'sonner';
-import { useRouter } from 'next/navigation';
+import { useState } from "react";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 import {
   Settings,
   User,
@@ -17,37 +17,44 @@ import {
   TrendingUp,
   Receipt,
   Trash2,
-} from 'lucide-react';
-import AppShell from '@/components/layout/AppShell';
-import Card from '@/components/ui/Card';
-import Button from '@/components/ui/Button';
-import Skeleton from '@/components/ui/Skeleton';
-import Modal from '@/components/ui/Modal';
-import { getMe, getMyPlan, getAnalytics, getBillingInfo, logout, deleteAccount } from '@/lib/api';
-import { ROUTES, PLAN_FEATURES, DATE_LOCALE } from '@/consts';
-import styles from './page.module.css';
+} from "lucide-react";
+import AppShell from "@/components/layout/AppShell";
+import Card from "@/components/ui/Card";
+import Button from "@/components/ui/Button";
+import Skeleton from "@/components/ui/Skeleton";
+import Modal from "@/components/ui/Modal";
+import {
+  getMe,
+  getMyPlan,
+  getAnalytics,
+  getBillingInfo,
+  logout,
+  deleteAccount,
+} from "@/lib/api";
+import { ROUTES, PLAN_FEATURES, DATE_LOCALE } from "@/consts";
+import styles from "./page.module.css";
 
 export default function SettingsPage() {
   const router = useRouter();
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
   const { data: user, isLoading: userLoading } = useQuery({
-    queryKey: ['me'],
+    queryKey: ["me"],
     queryFn: getMe,
   });
 
   const { data: planInfo, isLoading: planLoading } = useQuery({
-    queryKey: ['myPlan'],
+    queryKey: ["myPlan"],
     queryFn: getMyPlan,
   });
 
   const { data: analytics, isLoading: analyticsLoading } = useQuery({
-    queryKey: ['analytics'],
+    queryKey: ["analytics"],
     queryFn: getAnalytics,
   });
 
   const { data: billing, isLoading: billingLoading } = useQuery({
-    queryKey: ['billing'],
+    queryKey: ["billing"],
     queryFn: getBillingInfo,
   });
 
@@ -57,22 +64,22 @@ export default function SettingsPage() {
       router.push(ROUTES.login);
     },
     onError: () => {
-      toast.error('ログアウトに失敗しました');
+      toast.error("ログアウトに失敗しました");
     },
   });
 
   const deleteAccountMutation = useMutation({
     mutationFn: deleteAccount,
     onSuccess: () => {
-      toast.success('アカウントを削除しました');
+      toast.success("アカウントを削除しました");
       router.push(ROUTES.login);
     },
     onError: () => {
-      toast.error('アカウントの削除に失敗しました');
+      toast.error("アカウントの削除に失敗しました");
     },
   });
 
-  const currentPlan = PLAN_FEATURES[planInfo?.plan || 'free'];
+  const currentPlan = PLAN_FEATURES[planInfo?.plan || "free"];
 
   return (
     <AppShell>
@@ -107,9 +114,9 @@ export default function SettingsPage() {
                   <dt>登録日</dt>
                   <dd>
                     {new Date(user.createdAt).toLocaleDateString(DATE_LOCALE, {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric',
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
                     })}
                   </dd>
                 </div>
@@ -134,7 +141,10 @@ export default function SettingsPage() {
             ) : planInfo ? (
               <div className={styles.planInfo}>
                 <div className={styles.planHeader}>
-                  <div className={styles.planBadge} style={{ color: currentPlan.color }}>
+                  <div
+                    className={styles.planBadge}
+                    style={{ color: currentPlan.color }}
+                  >
                     <Crown size={16} />
                     {currentPlan.label}
                   </div>
@@ -151,7 +161,9 @@ export default function SettingsPage() {
                       className={styles.progressFill}
                       style={{
                         width: `${Math.min(
-                          (planInfo.generationCountMonth / planInfo.monthlyLimit) * 100,
+                          (planInfo.generationCountMonth /
+                            planInfo.monthlyLimit) *
+                            100,
                           100,
                         )}%`,
                       }}
@@ -196,28 +208,36 @@ export default function SettingsPage() {
                     <BarChart3 size={14} className={styles.statIcon} />
                     <span className={styles.statLabel}>総生成数</span>
                   </div>
-                  <span className={styles.statValue}>{analytics.totalGenerations}</span>
+                  <span className={styles.statValue}>
+                    {analytics.totalGenerations}
+                  </span>
                 </div>
                 <div className={styles.statCard}>
                   <div className={styles.statHeader}>
                     <Palette size={14} className={styles.statIcon} />
                     <span className={styles.statLabel}>総スタイル数</span>
                   </div>
-                  <span className={styles.statValue}>{analytics.totalStyles}</span>
+                  <span className={styles.statValue}>
+                    {analytics.totalStyles}
+                  </span>
                 </div>
                 <div className={styles.statCard}>
                   <div className={styles.statHeader}>
                     <Heart size={14} className={styles.statIcon} />
                     <span className={styles.statLabel}>お気に入り</span>
                   </div>
-                  <span className={styles.statValue}>{analytics.totalFavorites}</span>
+                  <span className={styles.statValue}>
+                    {analytics.totalFavorites}
+                  </span>
                 </div>
                 <div className={styles.statCard}>
                   <div className={styles.statHeader}>
                     <TrendingUp size={14} className={styles.statIcon} />
                     <span className={styles.statLabel}>今週の生成</span>
                   </div>
-                  <span className={styles.statValue}>{analytics.generationsThisWeek}</span>
+                  <span className={styles.statValue}>
+                    {analytics.generationsThisWeek}
+                  </span>
                 </div>
               </div>
             ) : null}
@@ -241,11 +261,13 @@ export default function SettingsPage() {
                 <dl className={styles.infoList}>
                   <div className={styles.infoRow}>
                     <dt>現在のプラン</dt>
-                    <dd>{PLAN_FEATURES[billing.plan]?.label ?? billing.plan}</dd>
+                    <dd>
+                      {PLAN_FEATURES[billing.plan]?.label ?? billing.plan}
+                    </dd>
                   </div>
                   <div className={styles.infoRow}>
                     <dt>サブスクリプション</dt>
-                    <dd>{billing.stripeSubscriptionId ? '有効' : '未登録'}</dd>
+                    <dd>{billing.stripeSubscriptionId ? "有効" : "未登録"}</dd>
                   </div>
                   {billing.currentPeriodEnd && (
                     <div className={styles.infoRow}>
@@ -253,7 +275,7 @@ export default function SettingsPage() {
                       <dd>
                         {new Date(billing.currentPeriodEnd).toLocaleDateString(
                           DATE_LOCALE,
-                          { year: 'numeric', month: 'long', day: 'numeric' },
+                          { year: "numeric", month: "long", day: "numeric" },
                         )}
                       </dd>
                     </div>
@@ -262,7 +284,7 @@ export default function SettingsPage() {
                 <div className={styles.billingAction}>
                   <Button
                     variant="secondary"
-                    onClick={() => toast.info('請求管理ポータルは準備中です')}
+                    onClick={() => toast.info("請求管理ポータルは準備中です")}
                   >
                     <CreditCard size={16} />
                     請求管理
@@ -299,10 +321,7 @@ export default function SettingsPage() {
                   全てのデータが完全に削除されます
                 </p>
               </div>
-              <Button
-                variant="danger"
-                onClick={() => setDeleteModalOpen(true)}
-              >
+              <Button variant="danger" onClick={() => setDeleteModalOpen(true)}>
                 <Trash2 size={16} />
                 アカウント削除
               </Button>
@@ -320,7 +339,10 @@ export default function SettingsPage() {
               この操作は元に戻せません。全てのデータが完全に削除されます。
             </p>
             <div className={styles.deleteActions}>
-              <Button variant="secondary" onClick={() => setDeleteModalOpen(false)}>
+              <Button
+                variant="secondary"
+                onClick={() => setDeleteModalOpen(false)}
+              >
                 キャンセル
               </Button>
               <Button

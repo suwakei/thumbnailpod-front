@@ -1,19 +1,19 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import Link from 'next/link';
-import { Heart, HeartOff, ImageIcon, Loader2 } from 'lucide-react';
-import { toast } from 'sonner';
-import AppShell from '@/components/layout/AppShell';
-import Card from '@/components/ui/Card';
-import Button from '@/components/ui/Button';
-import StatusBadge from '@/components/ui/StatusBadge';
-import EmptyState from '@/components/ui/EmptyState';
-import Skeleton from '@/components/ui/Skeleton';
-import { getFavorites, removeFavorite } from '@/lib/api';
-import { ROUTES, PAGE_SIZE, JOB_STATUS, DATE_LOCALE } from '@/consts';
-import styles from './page.module.css';
+import { useState } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import Link from "next/link";
+import { Heart, HeartOff, ImageIcon, Loader2 } from "lucide-react";
+import { toast } from "sonner";
+import AppShell from "@/components/layout/AppShell";
+import Card from "@/components/ui/Card";
+import Button from "@/components/ui/Button";
+import StatusBadge from "@/components/ui/StatusBadge";
+import EmptyState from "@/components/ui/EmptyState";
+import Skeleton from "@/components/ui/Skeleton";
+import { getFavorites, removeFavorite } from "@/lib/api";
+import { ROUTES, PAGE_SIZE, JOB_STATUS, DATE_LOCALE } from "@/consts";
+import styles from "./page.module.css";
 
 const FAVORITES_PAGE_SIZE: number = PAGE_SIZE.historyGrid;
 
@@ -22,18 +22,18 @@ export default function FavoritesPage() {
   const [displayCount, setDisplayCount] = useState(FAVORITES_PAGE_SIZE);
 
   const { data, isLoading } = useQuery({
-    queryKey: ['favorites', { limit: displayCount, offset: 0 }],
+    queryKey: ["favorites", { limit: displayCount, offset: 0 }],
     queryFn: () => getFavorites(displayCount, 0),
   });
 
   const removeMutation = useMutation({
     mutationFn: (jobId: string) => removeFavorite(jobId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['favorites'] });
-      toast.success('お気に入りを解除しました');
+      queryClient.invalidateQueries({ queryKey: ["favorites"] });
+      toast.success("お気に入りを解除しました");
     },
     onError: () => {
-      toast.error('お気に入りの解除に失敗しました');
+      toast.error("お気に入りの解除に失敗しました");
     },
   });
 
@@ -51,7 +51,7 @@ export default function FavoritesPage() {
         <header className={styles.header}>
           <h1 className={styles.title}>お気に入り</h1>
           <p className={styles.subtitle}>
-            {data ? `${data.totalCount} 件` : '読み込み中...'}
+            {data ? `${data.totalCount} 件` : "読み込み中..."}
           </p>
         </header>
 
@@ -60,7 +60,14 @@ export default function FavoritesPage() {
             {Array.from({ length: FAVORITES_PAGE_SIZE }).map((_, i) => (
               <Card key={i} padding="none">
                 <Skeleton height={160} borderRadius="0" />
-                <div style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: 8 }}>
+                <div
+                  style={{
+                    padding: 16,
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 8,
+                  }}
+                >
                   <Skeleton height={14} width="70%" />
                   <Skeleton height={12} width="40%" />
                 </div>
@@ -98,16 +105,19 @@ export default function FavoritesPage() {
                       </div>
                       <div className={styles.info}>
                         <p className={styles.prompt}>
-                          {fav.job?.prompt ?? '---'}
+                          {fav.job?.prompt ?? "---"}
                         </p>
                         <div className={styles.meta}>
                           {fav.job && <StatusBadge status={fav.job.status} />}
                           <time className={styles.date}>
-                            {new Date(fav.createdAt).toLocaleDateString(DATE_LOCALE, {
-                              year: 'numeric',
-                              month: 'short',
-                              day: 'numeric',
-                            })}
+                            {new Date(fav.createdAt).toLocaleDateString(
+                              DATE_LOCALE,
+                              {
+                                year: "numeric",
+                                month: "short",
+                                day: "numeric",
+                              },
+                            )}
                           </time>
                         </div>
                       </div>
@@ -121,7 +131,9 @@ export default function FavoritesPage() {
               <div className={styles.loadMoreWrap}>
                 <Button
                   variant="ghost"
-                  onClick={() => setDisplayCount((c) => c + FAVORITES_PAGE_SIZE)}
+                  onClick={() =>
+                    setDisplayCount((c) => c + FAVORITES_PAGE_SIZE)
+                  }
                 >
                   もっと見る
                 </Button>

@@ -1,33 +1,27 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { toast } from 'sonner';
-import {
-  FileText,
-  Plus,
-  Pencil,
-  Trash2,
-  Copy,
-} from 'lucide-react';
-import AppShell from '@/components/layout/AppShell';
-import Card from '@/components/ui/Card';
-import Button from '@/components/ui/Button';
-import Input from '@/components/ui/Input';
-import Textarea from '@/components/ui/Textarea';
-import Select from '@/components/ui/Select';
-import EmptyState from '@/components/ui/EmptyState';
-import Modal from '@/components/ui/Modal';
-import Skeleton from '@/components/ui/Skeleton';
+import { useState } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
+import { FileText, Plus, Pencil, Trash2, Copy } from "lucide-react";
+import AppShell from "@/components/layout/AppShell";
+import Card from "@/components/ui/Card";
+import Button from "@/components/ui/Button";
+import Input from "@/components/ui/Input";
+import Textarea from "@/components/ui/Textarea";
+import Select from "@/components/ui/Select";
+import EmptyState from "@/components/ui/EmptyState";
+import Modal from "@/components/ui/Modal";
+import Skeleton from "@/components/ui/Skeleton";
 import {
   getTemplates,
   createTemplate,
   updateTemplate,
   deleteTemplate,
-} from '@/lib/api';
-import { getStyleModels } from '@/lib/api';
-import { DATE_LOCALE } from '@/consts';
-import styles from './page.module.css';
+} from "@/lib/api";
+import { getStyleModels } from "@/lib/api";
+import { DATE_LOCALE } from "@/consts";
+import styles from "./page.module.css";
 
 interface Template {
   id: string;
@@ -47,34 +41,30 @@ export default function TemplatesPage() {
   const [editingTemplate, setEditingTemplate] = useState<Template | null>(null);
   const [deleteId, setDeleteId] = useState<string | null>(null);
 
-  const [formName, setFormName] = useState('');
-  const [formPrompt, setFormPrompt] = useState('');
-  const [formStyleModelId, setFormStyleModelId] = useState('');
+  const [formName, setFormName] = useState("");
+  const [formPrompt, setFormPrompt] = useState("");
+  const [formStyleModelId, setFormStyleModelId] = useState("");
 
   const { data, isLoading } = useQuery({
-    queryKey: ['templates'],
+    queryKey: ["templates"],
     queryFn: getTemplates,
   });
 
   const { data: styleData } = useQuery({
-    queryKey: ['styleModels'],
+    queryKey: ["styleModels"],
     queryFn: getStyleModels,
   });
 
   const createMutation = useMutation({
     mutationFn: () =>
-      createTemplate(
-        formName,
-        formPrompt,
-        formStyleModelId || undefined,
-      ),
+      createTemplate(formName, formPrompt, formStyleModelId || undefined),
     onSuccess: () => {
-      toast.success('テンプレートを作成しました');
+      toast.success("テンプレートを作成しました");
       closeForm();
-      queryClient.invalidateQueries({ queryKey: ['templates'] });
+      queryClient.invalidateQueries({ queryKey: ["templates"] });
     },
     onError: () => {
-      toast.error('テンプレートの作成に失敗しました');
+      toast.error("テンプレートの作成に失敗しました");
     },
   });
 
@@ -86,24 +76,24 @@ export default function TemplatesPage() {
         styleModelId: formStyleModelId || undefined,
       }),
     onSuccess: () => {
-      toast.success('テンプレートを更新しました');
+      toast.success("テンプレートを更新しました");
       closeForm();
-      queryClient.invalidateQueries({ queryKey: ['templates'] });
+      queryClient.invalidateQueries({ queryKey: ["templates"] });
     },
     onError: () => {
-      toast.error('テンプレートの更新に失敗しました');
+      toast.error("テンプレートの更新に失敗しました");
     },
   });
 
   const deleteMutation = useMutation({
     mutationFn: (id: string) => deleteTemplate(id),
     onSuccess: () => {
-      toast.success('テンプレートを削除しました');
+      toast.success("テンプレートを削除しました");
       setDeleteId(null);
-      queryClient.invalidateQueries({ queryKey: ['templates'] });
+      queryClient.invalidateQueries({ queryKey: ["templates"] });
     },
     onError: () => {
-      toast.error('削除に失敗しました');
+      toast.error("削除に失敗しました");
     },
   });
 
@@ -111,7 +101,7 @@ export default function TemplatesPage() {
   const styleModels = styleData?.models || [];
 
   const styleOptions = [
-    { value: '', label: 'スタイルモデルなし' },
+    { value: "", label: "スタイルモデルなし" },
     ...styleModels.map((m: { id: string; name: string }) => ({
       value: m.id,
       label: m.name,
@@ -120,9 +110,9 @@ export default function TemplatesPage() {
 
   function openCreateForm() {
     setEditingTemplate(null);
-    setFormName('');
-    setFormPrompt('');
-    setFormStyleModelId('');
+    setFormName("");
+    setFormPrompt("");
+    setFormStyleModelId("");
     setShowForm(true);
   }
 
@@ -130,16 +120,16 @@ export default function TemplatesPage() {
     setEditingTemplate(template);
     setFormName(template.name);
     setFormPrompt(template.prompt);
-    setFormStyleModelId(template.styleModelId || '');
+    setFormStyleModelId(template.styleModelId || "");
     setShowForm(true);
   }
 
   function closeForm() {
     setShowForm(false);
     setEditingTemplate(null);
-    setFormName('');
-    setFormPrompt('');
-    setFormStyleModelId('');
+    setFormName("");
+    setFormPrompt("");
+    setFormStyleModelId("");
   }
 
   function handleSubmit() {
@@ -152,7 +142,7 @@ export default function TemplatesPage() {
 
   function handleCopyPrompt(prompt: string) {
     navigator.clipboard.writeText(prompt).then(() => {
-      toast.success('プロンプトをコピーしました');
+      toast.success("プロンプトをコピーしました");
     });
   }
 
@@ -247,7 +237,9 @@ export default function TemplatesPage() {
         <Modal
           open={showForm}
           onClose={closeForm}
-          title={editingTemplate ? 'テンプレートを編集' : '新しいテンプレートを作成'}
+          title={
+            editingTemplate ? "テンプレートを編集" : "新しいテンプレートを作成"
+          }
         >
           <div className={styles.form}>
             <Input

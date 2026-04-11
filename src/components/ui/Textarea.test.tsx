@@ -1,33 +1,33 @@
-import { describe, it, expect, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import Textarea from './Textarea';
+import { describe, it, expect, vi } from "vitest";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import Textarea from "./Textarea";
 
-describe('Textarea', () => {
-  it('renders with label', () => {
+describe("Textarea", () => {
+  it("renders with label", () => {
     render(<Textarea label="Description" />);
-    expect(screen.getByLabelText('Description')).toBeInTheDocument();
+    expect(screen.getByLabelText("Description")).toBeInTheDocument();
   });
 
-  it('accepts user input', async () => {
+  it("accepts user input", async () => {
     render(<Textarea label="Prompt" />);
-    const textarea = screen.getByLabelText('Prompt');
-    await userEvent.type(textarea, 'hello world');
-    expect(textarea).toHaveValue('hello world');
+    const textarea = screen.getByLabelText("Prompt");
+    await userEvent.type(textarea, "hello world");
+    expect(textarea).toHaveValue("hello world");
   });
 
-  it('shows error message', () => {
+  it("shows error message", () => {
     render(<Textarea label="Prompt" error="Too short" />);
-    expect(screen.getByText('Too short')).toBeInTheDocument();
+    expect(screen.getByText("Too short")).toBeInTheDocument();
   });
 
-  it('shows hint when no error', () => {
+  it("shows hint when no error", () => {
     render(<Textarea label="Prompt" hint="Be descriptive" />);
-    expect(screen.getByText('Be descriptive')).toBeInTheDocument();
+    expect(screen.getByText("Be descriptive")).toBeInTheDocument();
   });
 
-  it('hides hint when error is present', () => {
+  it("hides hint when error is present", () => {
     render(<Textarea label="Prompt" error="Required" hint="Describe" />);
-    expect(screen.queryByText('Describe')).not.toBeInTheDocument();
+    expect(screen.queryByText("Describe")).not.toBeInTheDocument();
   });
 });

@@ -21,7 +21,9 @@
   color: var(--status-pending);
   background: var(--status-pending-bg);
 }
-.pending .dot { background: var(--status-pending); }
+.pending .dot {
+  background: var(--status-pending);
+}
 
 .processing {
   color: var(--status-processing);
@@ -36,18 +38,31 @@
   color: var(--status-completed);
   background: var(--status-completed-bg);
 }
-.completed .dot { background: var(--status-completed); }
+.completed .dot {
+  background: var(--status-completed);
+}
 
 .failed {
   color: var(--status-failed);
   background: var(--status-failed-bg);
 }
-.failed .dot { background: var(--status-failed); }
+.failed .dot {
+  background: var(--status-failed);
+}
 
-.training { composes: processing; }
-.ready { composes: completed; }
+.training {
+  composes: processing;
+}
+.ready {
+  composes: completed;
+}
 
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
 }

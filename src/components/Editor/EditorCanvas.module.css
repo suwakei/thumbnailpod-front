@@ -1,0 +1,15 @@
+.canvasContainer {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0a0a0a;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+}
+
+.canvasContainer canvas {
+  box-shadow: var(--shadow-lg);
+}

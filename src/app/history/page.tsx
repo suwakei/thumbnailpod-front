@@ -1,24 +1,24 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import Link from 'next/link';
+import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import Link from "next/link";
 import {
   Clock,
   ImageIcon,
   Loader2,
   ChevronLeft,
   ChevronRight,
-} from 'lucide-react';
-import AppShell from '@/components/layout/AppShell';
-import Card from '@/components/ui/Card';
-import Button from '@/components/ui/Button';
-import StatusBadge from '@/components/ui/StatusBadge';
-import EmptyState from '@/components/ui/EmptyState';
-import Skeleton from '@/components/ui/Skeleton';
-import { getHistory } from '@/lib/api';
-import { ROUTES, PAGE_SIZE, JOB_STATUS, DATE_LOCALE } from '@/consts';
-import styles from './page.module.css';
+} from "lucide-react";
+import AppShell from "@/components/layout/AppShell";
+import Card from "@/components/ui/Card";
+import Button from "@/components/ui/Button";
+import StatusBadge from "@/components/ui/StatusBadge";
+import EmptyState from "@/components/ui/EmptyState";
+import Skeleton from "@/components/ui/Skeleton";
+import { getHistory } from "@/lib/api";
+import { ROUTES, PAGE_SIZE, JOB_STATUS, DATE_LOCALE } from "@/consts";
+import styles from "./page.module.css";
 
 const HISTORY_PAGE_SIZE = PAGE_SIZE.historyGrid;
 
@@ -26,7 +26,10 @@ export default function HistoryPage() {
   const [page, setPage] = useState(0);
 
   const { data, isLoading } = useQuery({
-    queryKey: ['history', { limit: HISTORY_PAGE_SIZE, offset: page * HISTORY_PAGE_SIZE }],
+    queryKey: [
+      "history",
+      { limit: HISTORY_PAGE_SIZE, offset: page * HISTORY_PAGE_SIZE },
+    ],
     queryFn: () => getHistory(HISTORY_PAGE_SIZE, page * HISTORY_PAGE_SIZE),
   });
 
@@ -38,7 +41,7 @@ export default function HistoryPage() {
         <header className={styles.header}>
           <h1 className={styles.title}>生成履歴</h1>
           <p className={styles.subtitle}>
-            {data ? `${data.totalCount} 件` : '読み込み中...'}
+            {data ? `${data.totalCount} 件` : "読み込み中..."}
           </p>
         </header>
 
@@ -47,7 +50,14 @@ export default function HistoryPage() {
             {Array.from({ length: HISTORY_PAGE_SIZE }).map((_, i) => (
               <Card key={i} padding="none">
                 <Skeleton height={160} borderRadius="0" />
-                <div style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: 8 }}>
+                <div
+                  style={{
+                    padding: 16,
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 8,
+                  }}
+                >
                   <Skeleton height={14} width="70%" />
                   <Skeleton height={12} width="40%" />
                 </div>
@@ -80,11 +90,14 @@ export default function HistoryPage() {
                       <div className={styles.meta}>
                         <StatusBadge status={job.status} />
                         <time className={styles.date}>
-                          {new Date(job.createdAt).toLocaleDateString(DATE_LOCALE, {
-                            year: 'numeric',
-                            month: 'short',
-                            day: 'numeric',
-                          })}
+                          {new Date(job.createdAt).toLocaleDateString(
+                            DATE_LOCALE,
+                            {
+                              year: "numeric",
+                              month: "short",
+                              day: "numeric",
+                            },
+                          )}
                         </time>
                       </div>
                     </div>

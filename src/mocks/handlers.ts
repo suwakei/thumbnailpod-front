@@ -1,6 +1,6 @@
-import { http, HttpResponse } from 'msw';
-import { env } from '@/envs';
-import { API_PATHS, HTTP_STATUS } from '@/consts';
+import { http, HttpResponse } from "msw";
+import { env } from "@/envs";
+import { API_PATHS, HTTP_STATUS } from "@/consts";
 import {
   mockUser,
   mockPlanInfo,
@@ -14,14 +14,14 @@ import {
   mockWebhooks,
   mockBillingInfo,
   mockAnalytics,
-} from './data';
+} from "./data";
 
 const BASE = env.apiBaseUrl;
 
 export const handlers = [
   // Auth
   http.get(`${BASE}${API_PATHS.auth.oauthUrl}`, () => {
-    return HttpResponse.json({ url: '/login?mock=true' });
+    return HttpResponse.json({ url: "/login?mock=true" });
   }),
 
   http.post(`${BASE}${API_PATHS.auth.oauthCallback}`, () => {
@@ -33,7 +33,7 @@ export const handlers = [
   }),
 
   http.post(`${BASE}${API_PATHS.auth.refresh}`, () => {
-    return HttpResponse.json({ access_token: 'mock-token' });
+    return HttpResponse.json({ access_token: "mock-token" });
   }),
 
   http.delete(`${BASE}${API_PATHS.auth.logout}`, () => {
@@ -52,15 +52,15 @@ export const handlers = [
   // Generate
   http.post(`${BASE}${API_PATHS.generate.create}`, () => {
     return HttpResponse.json(
-      { job_id: `job-${Date.now()}`, status: 'pending' },
+      { job_id: `job-${Date.now()}`, status: "pending" },
       { status: HTTP_STATUS.created },
     );
   }),
 
   http.get(`${BASE}/generate/history`, ({ request }) => {
     const url = new URL(request.url);
-    const limit = Number(url.searchParams.get('limit') || 20);
-    const offset = Number(url.searchParams.get('offset') || 0);
+    const limit = Number(url.searchParams.get("limit") || 20);
+    const offset = Number(url.searchParams.get("offset") || 0);
     const sliced = mockJobs.slice(offset, offset + limit);
     return HttpResponse.json({
       jobs: sliced,
@@ -73,9 +73,7 @@ export const handlers = [
   http.get(`${BASE}/generate/:jobId`, ({ params }) => {
     const job = mockJobs.find((j) => j.id === params.jobId);
     if (!job) {
-      return HttpResponse.json(
-        { ...mockJobDetail, job_id: params.jobId },
-      );
+      return HttpResponse.json({ ...mockJobDetail, job_id: params.jobId });
     }
     return HttpResponse.json({
       job_id: job.id,
@@ -83,7 +81,7 @@ export const handlers = [
       prompt: job.prompt,
       created_at: job.created_at,
       image_url: null,
-      thumbnail_id: job.status === 'completed' ? `thumb-${job.id}` : null,
+      thumbnail_id: job.status === "completed" ? `thumb-${job.id}` : null,
       error: job.error_message,
     });
   }),
@@ -92,7 +90,10 @@ export const handlers = [
   http.post(`${BASE}/generate/:jobId/segment`, ({ params }) => {
     return HttpResponse.json({
       job_id: params.jobId,
-      layers: mockLayers.map((l) => ({ label: l.label, s3_key: `s3/${l.label}.png` })),
+      layers: mockLayers.map((l) => ({
+        label: l.label,
+        s3_key: `s3/${l.label}.png`,
+      })),
     });
   }),
 
@@ -119,13 +120,13 @@ export const handlers = [
 
   // Download
   http.get(`${BASE}/thumbnails/:id/download`, () => {
-    return HttpResponse.json({ download_url: '#mock-download' });
+    return HttpResponse.json({ download_url: "#mock-download" });
   }),
 
   // Style
   http.post(`${BASE}${API_PATHS.style.learn}`, () => {
     return HttpResponse.json(
-      { model_id: `model-${Date.now()}`, status: 'pending' },
+      { model_id: `model-${Date.now()}`, status: "pending" },
       { status: HTTP_STATUS.created },
     );
   }),
@@ -149,7 +150,7 @@ export const handlers = [
   }),
 
   http.put(`${BASE}/youtube/videos/:videoId/thumbnail`, () => {
-    return HttpResponse.json({ status: 'ok' });
+    return HttpResponse.json({ status: "ok" });
   }),
 
   // Templates
@@ -164,7 +165,17 @@ export const handlers = [
 
   http.post(`${BASE}/templates`, () => {
     return HttpResponse.json(
-      { id: `tpl-${Date.now()}`, user_id: 'user-001', name: 'New Template', prompt: 'test', style_model_id: null, source_job_id: null, preview_s3_key: null, created_at: new Date().toISOString(), updated_at: new Date().toISOString() },
+      {
+        id: `tpl-${Date.now()}`,
+        user_id: "user-001",
+        name: "New Template",
+        prompt: "test",
+        style_model_id: null,
+        source_job_id: null,
+        preview_s3_key: null,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      },
       { status: HTTP_STATUS.created },
     );
   }),
@@ -181,8 +192,8 @@ export const handlers = [
   // Favorites
   http.get(`${BASE}/favorites`, ({ request }) => {
     const url = new URL(request.url);
-    const limit = Number(url.searchParams.get('limit') || 20);
-    const offset = Number(url.searchParams.get('offset') || 0);
+    const limit = Number(url.searchParams.get("limit") || 20);
+    const offset = Number(url.searchParams.get("offset") || 0);
     const sliced = mockFavorites.slice(offset, offset + limit);
     return HttpResponse.json({
       favorites: sliced.map((f) => ({
@@ -196,7 +207,7 @@ export const handlers = [
   }),
 
   http.post(`${BASE}/generate/:jobId/favorite`, () => {
-    return HttpResponse.json({ status: 'ok' });
+    return HttpResponse.json({ status: "ok" });
   }),
 
   http.delete(`${BASE}/generate/:jobId/favorite`, () => {
@@ -210,7 +221,16 @@ export const handlers = [
 
   http.post(`${BASE}/webhooks`, () => {
     return HttpResponse.json(
-      { id: `wh-${Date.now()}`, user_id: 'user-001', url: 'https://example.com/new', events: ['job.completed'], secret: 'whsec_new', active: true, created_at: new Date().toISOString(), updated_at: new Date().toISOString() },
+      {
+        id: `wh-${Date.now()}`,
+        user_id: "user-001",
+        url: "https://example.com/new",
+        events: ["job.completed"],
+        secret: "whsec_new",
+        active: true,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      },
       { status: HTTP_STATUS.created },
     );
   }),
@@ -232,7 +252,7 @@ export const handlers = [
   // Upload presign
   http.post(`${BASE}/upload/presign`, () => {
     return HttpResponse.json({
-      upload_url: 'https://s3.example.com/presigned-upload',
+      upload_url: "https://s3.example.com/presigned-upload",
       s3_key: `uploads/${Date.now()}/file.png`,
     });
   }),
@@ -251,14 +271,14 @@ export const handlers = [
   http.post(`${BASE}/generate/batch`, () => {
     return HttpResponse.json({
       jobs: [
-        { job_id: `job-${Date.now()}`, status: 'pending' },
-        { job_id: `job-${Date.now() + 1}`, status: 'pending' },
+        { job_id: `job-${Date.now()}`, status: "pending" },
+        { job_id: `job-${Date.now() + 1}`, status: "pending" },
       ],
     });
   }),
 
   // SSE stream
   http.get(`${BASE}/generate/:jobId/stream`, () => {
-    return HttpResponse.json({ status: 'stream_not_available_in_mock' });
+    return HttpResponse.json({ status: "stream_not_available_in_mock" });
   }),
 ];

@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { forwardRef } from 'react';
-import styles from './Textarea.module.css';
+import { forwardRef } from "react";
+import styles from "./Textarea.module.css";
 
 interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   label?: string;
@@ -11,7 +11,7 @@ interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement
 
 const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
   ({ label, error, hint, className, id, ...props }, ref) => {
-    const textareaId = id || label?.toLowerCase().replace(/\s+/g, '-');
+    const textareaId = id || label?.toLowerCase().replace(/\s+/g, "-");
 
     return (
       <div className={styles.field}>
@@ -23,7 +23,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
         <textarea
           ref={ref}
           id={textareaId}
-          className={`${styles.textarea} ${error ? styles.textareaError : ''} ${className || ''}`}
+          className={`${styles.textarea} ${error ? styles.textareaError : ""} ${className || ""}`}
           {...props}
         />
         {error && <span className={styles.error}>{error}</span>}
@@ -33,5 +33,5 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
   },
 );
 
-Textarea.displayName = 'Textarea';
+Textarea.displayName = "Textarea";
 export default Textarea;

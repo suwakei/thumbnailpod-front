@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   Sparkles,
   Clock,
@@ -13,22 +13,24 @@ import {
   Heart,
   Webhook,
   Shield,
-} from 'lucide-react';
-import { ROUTES } from '@/consts';
-import styles from './Sidebar.module.css';
+  BookOpen,
+} from "lucide-react";
+import { ROUTES } from "@/consts";
+import styles from "./Sidebar.module.css";
 
 const navItems = [
-  { href: ROUTES.dashboard, label: 'Dashboard', icon: LayoutDashboard },
-  { href: ROUTES.history, label: 'History', icon: Clock },
-  { href: ROUTES.favorites, label: 'Favorites', icon: Heart },
-  { href: ROUTES.templates, label: 'Templates', icon: FileText },
-  { href: ROUTES.style, label: 'Style Models', icon: Palette },
-  { href: ROUTES.youtube, label: 'YouTube', icon: MonitorPlay },
-  { href: ROUTES.webhooks, label: 'Webhooks', icon: Webhook },
-  { href: ROUTES.settings, label: 'Settings', icon: Settings },
+  { href: ROUTES.dashboard, label: "Dashboard", icon: LayoutDashboard },
+  { href: ROUTES.history, label: "History", icon: Clock },
+  { href: ROUTES.favorites, label: "Favorites", icon: Heart },
+  { href: ROUTES.templates, label: "Templates", icon: FileText },
+  { href: ROUTES.style, label: "Style Models", icon: Palette },
+  { href: ROUTES.youtube, label: "YouTube", icon: MonitorPlay },
+  { href: ROUTES.webhooks, label: "Webhooks", icon: Webhook },
+  { href: ROUTES.guide, label: "使い方", icon: BookOpen },
+  { href: ROUTES.settings, label: "Settings", icon: Settings },
 ];
 
-const adminItem = { href: ROUTES.admin, label: 'Admin', icon: Shield };
+const adminItem = { href: ROUTES.admin, label: "Admin", icon: Shield };
 
 interface SidebarProps {
   channelName?: string;
@@ -38,7 +40,7 @@ interface SidebarProps {
 
 export default function Sidebar({ channelName, plan, role }: SidebarProps) {
   const pathname = usePathname();
-  const isAdmin = role === 'admin';
+  const isAdmin = role === "admin";
 
   const items = isAdmin ? [...navItems, adminItem] : navItems;
 
@@ -58,8 +60,8 @@ export default function Sidebar({ channelName, plan, role }: SidebarProps) {
         <div className={styles.section}>Main</div>
         {items.map((item) => {
           const isActive =
-            item.href === '/'
-              ? pathname === '/'
+            item.href === "/"
+              ? pathname === "/"
               : pathname.startsWith(item.href);
           const Icon = item.icon;
 
@@ -79,11 +81,11 @@ export default function Sidebar({ channelName, plan, role }: SidebarProps) {
       <div className={styles.footer}>
         <Link href={ROUTES.settings} className={styles.userCard}>
           <div className={styles.avatar}>
-            {(channelName || 'U')[0].toUpperCase()}
+            {(channelName || "U")[0].toUpperCase()}
           </div>
           <div>
-            <div className={styles.userName}>{channelName || 'User'}</div>
-            <div className={styles.userPlan}>{plan || 'free'} plan</div>
+            <div className={styles.userName}>{channelName || "User"}</div>
+            <div className={styles.userPlan}>{plan || "free"} plan</div>
           </div>
         </Link>
       </div>

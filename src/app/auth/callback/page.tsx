@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import { Suspense, useEffect, useRef, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { Loader2, AlertCircle } from 'lucide-react';
-import { postOAuthCallback } from '@/lib/api';
-import { ROUTES } from '@/consts';
-import Button from '@/components/ui/Button';
-import styles from './page.module.css';
+import { Suspense, useEffect, useRef, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Loader2, AlertCircle } from "lucide-react";
+import { postOAuthCallback } from "@/lib/api";
+import { ROUTES } from "@/consts";
+import Button from "@/components/ui/Button";
+import styles from "./page.module.css";
 
 function CallbackHandler() {
   const router = useRouter();
@@ -18,11 +18,11 @@ function CallbackHandler() {
     if (calledRef.current) return;
     calledRef.current = true;
 
-    const code = searchParams.get('code');
-    const state = searchParams.get('state');
+    const code = searchParams.get("code");
+    const state = searchParams.get("state");
 
     if (!code || !state) {
-      setError('認証パラメータが不足しています');
+      setError("認証パラメータが不足しています");
       return;
     }
 
@@ -31,8 +31,8 @@ function CallbackHandler() {
         router.replace(ROUTES.dashboard);
       })
       .catch((err) => {
-        console.error('OAuth callback failed:', err, err?.body);
-        setError('認証に失敗しました。もう一度お試しください。');
+        console.error("OAuth callback failed:", err, err?.body);
+        setError("認証に失敗しました。もう一度お試しください。");
       });
   }, [searchParams, router]);
 
@@ -42,7 +42,9 @@ function CallbackHandler() {
         <AlertCircle size={32} className={styles.errorIcon} />
         <h2 className={styles.title}>認証エラー</h2>
         <p className={styles.message}>{error}</p>
-        <Button onClick={() => router.push(ROUTES.login)}>ログイン画面に戻る</Button>
+        <Button onClick={() => router.push(ROUTES.login)}>
+          ログイン画面に戻る
+        </Button>
       </div>
     );
   }
