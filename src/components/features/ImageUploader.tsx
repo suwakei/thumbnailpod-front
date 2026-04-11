@@ -158,12 +158,8 @@ export default function ImageUploader({
           onClick={() => inputRef.current?.click()}
         >
           <ImagePlus size={20} />
-          <span>
-            ドラッグ&ドロップ または クリックして画像を追加
-          </span>
-          <span className={styles.hint}>
-            PNG / JPEG / WebP, 最大10MB
-          </span>
+          <span>ドラッグ&ドロップ または クリックして画像を追加</span>
+          <span className={styles.hint}>PNG / JPEG / WebP, 最大10MB</span>
           <input
             ref={inputRef}
             type="file"

@@ -74,18 +74,13 @@ export default function DashboardPage() {
                 const pending = prev.filter((img) => img.status !== "done");
                 if (pending[index]) {
                   return prev.map((img) =>
-                    img.id === pending[index].id
-                      ? { ...img, status }
-                      : img,
+                    img.id === pending[index].id ? { ...img, status } : img,
                   );
                 }
                 return prev;
               });
             });
-            imageKeys = [
-              ...alreadyUploaded,
-              ...results.map((r) => r.s3Key),
-            ];
+            imageKeys = [...alreadyUploaded, ...results.map((r) => r.s3Key)];
           } else {
             imageKeys = alreadyUploaded;
           }
@@ -94,11 +89,7 @@ export default function DashboardPage() {
         }
       }
 
-      return createGenerationJob(
-        prompt,
-        styleModelId || undefined,
-        imageKeys,
-      );
+      return createGenerationJob(prompt, styleModelId || undefined, imageKeys);
     },
     onSuccess: () => {
       toast.success("サムネイル生成を開始しました");
