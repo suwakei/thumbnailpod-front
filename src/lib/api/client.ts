@@ -1,5 +1,5 @@
-import { env } from '@/envs';
-import { HTTP_STATUS } from '@/consts';
+import { env } from "@/envs";
+import { HTTP_STATUS } from "@/consts";
 
 const API_BASE = env.apiBaseUrl;
 
@@ -9,7 +9,7 @@ export class ApiError extends Error {
     public body: unknown,
   ) {
     super(`API Error ${status}`);
-    this.name = 'ApiError';
+    this.name = "ApiError";
   }
 }
 
@@ -25,7 +25,7 @@ function convertKeys<T>(obj: unknown, converter: (s: string) => string): T {
   if (Array.isArray(obj)) {
     return obj.map((item) => convertKeys(item, converter)) as T;
   }
-  if (obj !== null && typeof obj === 'object' && !(obj instanceof Date)) {
+  if (obj !== null && typeof obj === "object" && !(obj instanceof Date)) {
     const result: Record<string, unknown> = {};
     for (const [key, value] of Object.entries(obj as Record<string, unknown>)) {
       result[converter(key)] = convertKeys(value, converter);
@@ -43,17 +43,14 @@ function toSnakeCase(obj: unknown): unknown {
   return convertKeys(obj, camelToSnake);
 }
 
-async function request<T>(
-  path: string,
-  options: RequestInit = {},
-): Promise<T> {
+async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
   const url = `${API_BASE}${path}`;
 
   const res = await fetch(url, {
     ...options,
-    credentials: 'include',
+    credentials: "include",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       ...options.headers,
     },
   });
@@ -67,8 +64,8 @@ async function request<T>(
     throw new ApiError(res.status, body);
   }
 
-  const contentType = res.headers.get('content-type') || '';
-  if (contentType.includes('application/json')) {
+  const contentType = res.headers.get("content-type") || "";
+  if (contentType.includes("application/json")) {
     const json = await res.json();
     return toCamelCase<T>(json);
   }
@@ -82,18 +79,18 @@ export function get<T>(path: string): Promise<T> {
 
 export function post<T>(path: string, body?: unknown): Promise<T> {
   return request<T>(path, {
-    method: 'POST',
+    method: "POST",
     body: body ? JSON.stringify(toSnakeCase(body)) : undefined,
   });
 }
 
 export function put<T>(path: string, body?: unknown): Promise<T> {
   return request<T>(path, {
-    method: 'PUT',
+    method: "PUT",
     body: body ? JSON.stringify(toSnakeCase(body)) : undefined,
   });
 }
 
 export function del<T>(path: string): Promise<T> {
-  return request<T>(path, { method: 'DELETE' });
+  return request<T>(path, { method: "DELETE" });
 }

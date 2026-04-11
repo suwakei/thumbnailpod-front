@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { use, useState } from 'react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { toast } from 'sonner';
-import Link from 'next/link';
+import { use, useState } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
+import Link from "next/link";
 import {
   ArrowLeft,
   Download,
@@ -13,26 +13,21 @@ import {
   Copy,
   FileArchive,
   FileImage,
-} from 'lucide-react';
-import AppShell from '@/components/layout/AppShell';
-import Card from '@/components/ui/Card';
-import Button from '@/components/ui/Button';
-import StatusBadge from '@/components/ui/StatusBadge';
-import Skeleton from '@/components/ui/Skeleton';
-import {
-  getJobStatus,
-  segmentJob,
-  getLayers,
-  getDownloadURL,
-} from '@/lib/api';
+} from "lucide-react";
+import AppShell from "@/components/layout/AppShell";
+import Card from "@/components/ui/Card";
+import Button from "@/components/ui/Button";
+import StatusBadge from "@/components/ui/StatusBadge";
+import Skeleton from "@/components/ui/Skeleton";
+import { getJobStatus, segmentJob, getLayers, getDownloadURL } from "@/lib/api";
 import {
   ROUTES,
   JOB_STATUS,
   JOB_POLLING_INTERVAL_MS,
   DATE_LOCALE,
   DOWNLOAD_FORMAT,
-} from '@/consts';
-import styles from './page.module.css';
+} from "@/consts";
+import styles from "./page.module.css";
 
 interface PageProps {
   params: Promise<{ jobId: string }>;
@@ -41,19 +36,21 @@ interface PageProps {
 export default function JobDetailPage({ params }: PageProps) {
   const { jobId } = use(params);
   const queryClient = useQueryClient();
-  const [activeTab, setActiveTab] = useState<'preview' | 'layers'>('preview');
+  const [activeTab, setActiveTab] = useState<"preview" | "layers">("preview");
 
   const { data: job, isLoading } = useQuery({
-    queryKey: ['job', jobId],
+    queryKey: ["job", jobId],
     queryFn: () => getJobStatus(jobId),
     refetchInterval: (query) => {
       const status = query.state.data?.status;
-      return status === JOB_STATUS.pending || status === JOB_STATUS.processing ? JOB_POLLING_INTERVAL_MS : false;
+      return status === JOB_STATUS.pending || status === JOB_STATUS.processing
+        ? JOB_POLLING_INTERVAL_MS
+        : false;
     },
   });
 
   const { data: layersData } = useQuery({
-    queryKey: ['layers', jobId],
+    queryKey: ["layers", jobId],
     queryFn: () => getLayers(jobId),
     enabled: job?.status === JOB_STATUS.completed,
   });
@@ -61,21 +58,25 @@ export default function JobDetailPage({ params }: PageProps) {
   const segmentMutation = useMutation({
     mutationFn: () => segmentJob(jobId),
     onSuccess: () => {
-      toast.success('レイヤー分離が完了しました');
-      queryClient.invalidateQueries({ queryKey: ['layers', jobId] });
+      toast.success("レイヤー分離が完了しました");
+      queryClient.invalidateQueries({ queryKey: ["layers", jobId] });
     },
     onError: () => {
-      toast.error('レイヤー分離に失敗しました');
+      toast.error("レイヤー分離に失敗しました");
     },
   });
 
   async function handleDownload(format: string, layer?: string) {
     if (!job?.thumbnailId) return;
     try {
-      const { downloadUrl } = await getDownloadURL(job.thumbnailId, format, layer);
-      window.open(downloadUrl, '_blank');
+      const { downloadUrl } = await getDownloadURL(
+        job.thumbnailId,
+        format,
+        layer,
+      );
+      window.open(downloadUrl, "_blank");
     } catch {
-      toast.error('ダウンロードに失敗しました');
+      toast.error("ダウンロードに失敗しました");
     }
   }
 
@@ -115,22 +116,26 @@ export default function JobDetailPage({ params }: PageProps) {
           <div className={styles.previewArea}>
             <div className={styles.tabs}>
               <button
-                className={activeTab === 'preview' ? styles.tabActive : styles.tab}
-                onClick={() => setActiveTab('preview')}
+                className={
+                  activeTab === "preview" ? styles.tabActive : styles.tab
+                }
+                onClick={() => setActiveTab("preview")}
               >
                 <ImageIcon size={14} />
                 プレビュー
               </button>
               <button
-                className={activeTab === 'layers' ? styles.tabActive : styles.tab}
-                onClick={() => setActiveTab('layers')}
+                className={
+                  activeTab === "layers" ? styles.tabActive : styles.tab
+                }
+                onClick={() => setActiveTab("layers")}
               >
                 <Layers size={14} />
                 レイヤー
               </button>
             </div>
 
-            {activeTab === 'preview' ? (
+            {activeTab === "preview" ? (
               <Card padding="none">
                 <div className={styles.preview}>
                   {job.status === JOB_STATUS.completed && job.imageUrl ? (
@@ -169,11 +174,13 @@ export default function JobDetailPage({ params }: PageProps) {
                           <img src={layer.url} alt={layer.label} />
                         </div>
                         <div className={styles.layerInfo}>
-                          <span className={styles.layerLabel}>{layer.label}</span>
+                          <span className={styles.layerLabel}>
+                            {layer.label}
+                          </span>
                           <Button
                             variant="ghost"
                             size="sm"
-                            onClick={() => handleDownload('png', layer.label)}
+                            onClick={() => handleDownload("png", layer.label)}
                           >
                             <Download size={14} />
                           </Button>
@@ -209,7 +216,7 @@ export default function JobDetailPage({ params }: PageProps) {
                 className={styles.copyBtn}
                 onClick={() => {
                   navigator.clipboard.writeText(job.prompt);
-                  toast.success('コピーしました');
+                  toast.success("コピーしました");
                 }}
               >
                 <Copy size={14} />
@@ -228,17 +235,19 @@ export default function JobDetailPage({ params }: PageProps) {
                   <dt>作成日</dt>
                   <dd>
                     {new Date(job.createdAt).toLocaleDateString(DATE_LOCALE, {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric',
-                      hour: '2-digit',
-                      minute: '2-digit',
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                      hour: "2-digit",
+                      minute: "2-digit",
                     })}
                   </dd>
                 </div>
                 <div className={styles.detailRow}>
                   <dt>ステータス</dt>
-                  <dd><StatusBadge status={job.status} /></dd>
+                  <dd>
+                    <StatusBadge status={job.status} />
+                  </dd>
                 </div>
               </dl>
             </Card>

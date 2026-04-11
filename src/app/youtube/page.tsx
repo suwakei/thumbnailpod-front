@@ -1,55 +1,55 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { toast } from 'sonner';
+import { useState } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 import {
   MonitorPlay,
   RefreshCw,
   ImageIcon,
   ExternalLink,
   Check,
-} from 'lucide-react';
-import AppShell from '@/components/layout/AppShell';
-import Card from '@/components/ui/Card';
-import Button from '@/components/ui/Button';
-import EmptyState from '@/components/ui/EmptyState';
-import Modal from '@/components/ui/Modal';
-import Skeleton from '@/components/ui/Skeleton';
-import { getYouTubeVideos, updateVideoThumbnail, getHistory } from '@/lib/api';
-import { PAGE_SIZE, JOB_STATUS, EXTERNAL_URLS, DATE_LOCALE } from '@/consts';
-import type { YouTubeVideo } from '@/types/api';
-import styles from './page.module.css';
+} from "lucide-react";
+import AppShell from "@/components/layout/AppShell";
+import Card from "@/components/ui/Card";
+import Button from "@/components/ui/Button";
+import EmptyState from "@/components/ui/EmptyState";
+import Modal from "@/components/ui/Modal";
+import Skeleton from "@/components/ui/Skeleton";
+import { getYouTubeVideos, updateVideoThumbnail, getHistory } from "@/lib/api";
+import { PAGE_SIZE, JOB_STATUS, EXTERNAL_URLS, DATE_LOCALE } from "@/consts";
+import type { YouTubeVideo } from "@/types/api";
+import styles from "./page.module.css";
 
 export default function YouTubePage() {
   const queryClient = useQueryClient();
   const [replaceTarget, setReplaceTarget] = useState<YouTubeVideo | null>(null);
-  const [selectedJobId, setSelectedJobId] = useState('');
+  const [selectedJobId, setSelectedJobId] = useState("");
 
   const { data: videosData, isLoading } = useQuery({
-    queryKey: ['youtubeVideos'],
+    queryKey: ["youtubeVideos"],
     queryFn: getYouTubeVideos,
   });
 
   const { data: historyData } = useQuery({
-    queryKey: ['history', { limit: PAGE_SIZE.youtubeHistory, offset: 0 }],
+    queryKey: ["history", { limit: PAGE_SIZE.youtubeHistory, offset: 0 }],
     queryFn: () => getHistory(PAGE_SIZE.youtubeHistory, 0),
     enabled: replaceTarget !== null,
   });
 
   const replaceMutation = useMutation({
     mutationFn: () => {
-      if (!replaceTarget) throw new Error('No target');
+      if (!replaceTarget) throw new Error("No target");
       return updateVideoThumbnail(replaceTarget.videoId, selectedJobId);
     },
     onSuccess: () => {
-      toast.success('サムネイルを更新しました');
+      toast.success("サムネイルを更新しました");
       setReplaceTarget(null);
-      setSelectedJobId('');
-      queryClient.invalidateQueries({ queryKey: ['youtubeVideos'] });
+      setSelectedJobId("");
+      queryClient.invalidateQueries({ queryKey: ["youtubeVideos"] });
     },
     onError: () => {
-      toast.error('サムネイルの更新に失敗しました');
+      toast.error("サムネイルの更新に失敗しました");
     },
   });
 
@@ -77,7 +77,14 @@ export default function YouTubePage() {
               <Card key={i} padding="md">
                 <div className={styles.videoRow}>
                   <Skeleton width={160} height={90} />
-                  <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 8 }}>
+                  <div
+                    style={{
+                      flex: 1,
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: 8,
+                    }}
+                  >
                     <Skeleton height={16} width="80%" />
                     <Skeleton height={12} width="40%" />
                   </div>
@@ -106,11 +113,14 @@ export default function YouTubePage() {
                   <div className={styles.videoInfo}>
                     <h3 className={styles.videoTitle}>{video.title}</h3>
                     <time className={styles.videoDate}>
-                      {new Date(video.publishedAt).toLocaleDateString(DATE_LOCALE, {
-                        year: 'numeric',
-                        month: 'short',
-                        day: 'numeric',
-                      })}
+                      {new Date(video.publishedAt).toLocaleDateString(
+                        DATE_LOCALE,
+                        {
+                          year: "numeric",
+                          month: "short",
+                          day: "numeric",
+                        },
+                      )}
                     </time>
                   </div>
                   <div className={styles.videoActions}>
@@ -149,7 +159,7 @@ export default function YouTubePage() {
           open={replaceTarget !== null}
           onClose={() => {
             setReplaceTarget(null);
-            setSelectedJobId('');
+            setSelectedJobId("");
           }}
           title="サムネイルを差し替え"
         >
@@ -163,23 +173,25 @@ export default function YouTubePage() {
                 <p className={styles.jobListLabel}>適用するサムネイルを選択:</p>
                 {completedJobs.length > 0 ? (
                   <div className={styles.jobGrid}>
-                    {completedJobs.slice(0, PAGE_SIZE.youtubeJobPicker).map((job) => (
-                      <button
-                        key={job.id}
-                        className={`${styles.jobOption} ${selectedJobId === job.id ? styles.jobOptionSelected : ''}`}
-                        onClick={() => setSelectedJobId(job.id)}
-                      >
-                        <div className={styles.jobOptionThumb}>
-                          <ImageIcon size={16} />
-                        </div>
-                        <span className={styles.jobOptionPrompt}>
-                          {job.prompt}
-                        </span>
-                        {selectedJobId === job.id && (
-                          <Check size={14} className={styles.checkIcon} />
-                        )}
-                      </button>
-                    ))}
+                    {completedJobs
+                      .slice(0, PAGE_SIZE.youtubeJobPicker)
+                      .map((job) => (
+                        <button
+                          key={job.id}
+                          className={`${styles.jobOption} ${selectedJobId === job.id ? styles.jobOptionSelected : ""}`}
+                          onClick={() => setSelectedJobId(job.id)}
+                        >
+                          <div className={styles.jobOptionThumb}>
+                            <ImageIcon size={16} />
+                          </div>
+                          <span className={styles.jobOptionPrompt}>
+                            {job.prompt}
+                          </span>
+                          {selectedJobId === job.id && (
+                            <Check size={14} className={styles.checkIcon} />
+                          )}
+                        </button>
+                      ))}
                   </div>
                 ) : (
                   <p className={styles.noJobs}>
@@ -193,7 +205,7 @@ export default function YouTubePage() {
                   variant="ghost"
                   onClick={() => {
                     setReplaceTarget(null);
-                    setSelectedJobId('');
+                    setSelectedJobId("");
                   }}
                 >
                   キャンセル

@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { toast } from 'sonner';
+import { useState } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 import {
   Webhook as WebhookIcon,
   Plus,
@@ -12,23 +12,23 @@ import {
   EyeOff,
   Copy,
   Power,
-} from 'lucide-react';
-import AppShell from '@/components/layout/AppShell';
-import Card from '@/components/ui/Card';
-import Button from '@/components/ui/Button';
-import Input from '@/components/ui/Input';
-import Modal from '@/components/ui/Modal';
-import EmptyState from '@/components/ui/EmptyState';
-import Skeleton from '@/components/ui/Skeleton';
+} from "lucide-react";
+import AppShell from "@/components/layout/AppShell";
+import Card from "@/components/ui/Card";
+import Button from "@/components/ui/Button";
+import Input from "@/components/ui/Input";
+import Modal from "@/components/ui/Modal";
+import EmptyState from "@/components/ui/EmptyState";
+import Skeleton from "@/components/ui/Skeleton";
 import {
   getWebhooks,
   createWebhook,
   updateWebhook,
   deleteWebhook,
-} from '@/lib/api';
-import { WEBHOOK_EVENTS } from '@/consts';
-import type { Webhook } from '@/types/api';
-import styles from './page.module.css';
+} from "@/lib/api";
+import { WEBHOOK_EVENTS } from "@/consts";
+import type { Webhook } from "@/types/api";
+import styles from "./page.module.css";
 
 export default function WebhooksPage() {
   const queryClient = useQueryClient();
@@ -36,14 +36,16 @@ export default function WebhooksPage() {
   const [createOpen, setCreateOpen] = useState(false);
   const [editTarget, setEditTarget] = useState<Webhook | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<Webhook | null>(null);
-  const [revealedSecrets, setRevealedSecrets] = useState<Set<string>>(new Set());
+  const [revealedSecrets, setRevealedSecrets] = useState<Set<string>>(
+    new Set(),
+  );
 
   // Form state
-  const [formUrl, setFormUrl] = useState('');
+  const [formUrl, setFormUrl] = useState("");
   const [formEvents, setFormEvents] = useState<Set<string>>(new Set());
 
   const { data, isLoading } = useQuery({
-    queryKey: ['webhooks'],
+    queryKey: ["webhooks"],
     queryFn: getWebhooks,
   });
 
@@ -52,11 +54,11 @@ export default function WebhooksPage() {
   const createMutation = useMutation({
     mutationFn: () => createWebhook(formUrl, Array.from(formEvents)),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['webhooks'] });
-      toast.success('Webhook を作成しました');
+      queryClient.invalidateQueries({ queryKey: ["webhooks"] });
+      toast.success("Webhook を作成しました");
       closeCreateModal();
     },
-    onError: () => toast.error('Webhook の作成に失敗しました'),
+    onError: () => toast.error("Webhook の作成に失敗しました"),
   });
 
   const editMutation = useMutation({
@@ -66,41 +68,40 @@ export default function WebhooksPage() {
         events: Array.from(formEvents),
       }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['webhooks'] });
-      toast.success('Webhook を更新しました');
+      queryClient.invalidateQueries({ queryKey: ["webhooks"] });
+      toast.success("Webhook を更新しました");
       closeEditModal();
     },
-    onError: () => toast.error('Webhook の更新に失敗しました'),
+    onError: () => toast.error("Webhook の更新に失敗しました"),
   });
 
   const deleteMutation = useMutation({
     mutationFn: () => deleteWebhook(deleteTarget!.id),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['webhooks'] });
-      toast.success('Webhook を削除しました');
+      queryClient.invalidateQueries({ queryKey: ["webhooks"] });
+      toast.success("Webhook を削除しました");
       setDeleteTarget(null);
     },
-    onError: () => toast.error('Webhook の削除に失敗しました'),
+    onError: () => toast.error("Webhook の削除に失敗しました"),
   });
 
   const toggleMutation = useMutation({
-    mutationFn: (wh: Webhook) =>
-      updateWebhook(wh.id, { active: !wh.active }),
+    mutationFn: (wh: Webhook) => updateWebhook(wh.id, { active: !wh.active }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['webhooks'] });
+      queryClient.invalidateQueries({ queryKey: ["webhooks"] });
     },
-    onError: () => toast.error('状態の変更に失敗しました'),
+    onError: () => toast.error("状態の変更に失敗しました"),
   });
 
   function openCreateModal() {
-    setFormUrl('');
+    setFormUrl("");
     setFormEvents(new Set());
     setCreateOpen(true);
   }
 
   function closeCreateModal() {
     setCreateOpen(false);
-    setFormUrl('');
+    setFormUrl("");
     setFormEvents(new Set());
   }
 
@@ -112,7 +113,7 @@ export default function WebhooksPage() {
 
   function closeEditModal() {
     setEditTarget(null);
-    setFormUrl('');
+    setFormUrl("");
     setFormEvents(new Set());
   }
 
@@ -137,9 +138,9 @@ export default function WebhooksPage() {
   async function copySecret(secret: string) {
     try {
       await navigator.clipboard.writeText(secret);
-      toast.success('シークレットをコピーしました');
+      toast.success("シークレットをコピーしました");
     } catch {
-      toast.error('コピーに失敗しました');
+      toast.error("コピーに失敗しました");
     }
   }
 
@@ -202,10 +203,10 @@ export default function WebhooksPage() {
                       <button
                         className={`${styles.statusToggle} ${wh.active ? styles.active : styles.inactive}`}
                         onClick={() => toggleMutation.mutate(wh)}
-                        title={wh.active ? '有効' : '無効'}
+                        title={wh.active ? "有効" : "無効"}
                       >
                         <Power size={14} />
-                        {wh.active ? '有効' : '無効'}
+                        {wh.active ? "有効" : "無効"}
                       </button>
                       <Button
                         variant="icon"
@@ -228,12 +229,14 @@ export default function WebhooksPage() {
                   <div className={styles.secretRow}>
                     <span className={styles.secretLabel}>Secret:</span>
                     <code className={styles.secretValue}>
-                      {revealedSecrets.has(wh.id) ? wh.secret : '••••••••••••••••'}
+                      {revealedSecrets.has(wh.id)
+                        ? wh.secret
+                        : "••••••••••••••••"}
                     </code>
                     <button
                       className={styles.iconBtn}
                       onClick={() => toggleSecretReveal(wh.id)}
-                      title={revealedSecrets.has(wh.id) ? '隠す' : '表示'}
+                      title={revealedSecrets.has(wh.id) ? "隠す" : "表示"}
                     >
                       {revealedSecrets.has(wh.id) ? (
                         <EyeOff size={14} />
@@ -256,7 +259,11 @@ export default function WebhooksPage() {
         )}
 
         {/* Create Modal */}
-        <Modal open={createOpen} onClose={closeCreateModal} title="Webhook を作成">
+        <Modal
+          open={createOpen}
+          onClose={closeCreateModal}
+          title="Webhook を作成"
+        >
           <div className={styles.modalForm}>
             <Input
               label="Endpoint URL"

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap");
 
 :root {
   /* Surfaces — YouTube Dark */
@@ -66,9 +66,9 @@
   --shadow-glow: 0 0 0 transparent;
 
   /* Typography — Roboto (YouTube's font) */
-  --font-display: 'Roboto', system-ui, sans-serif;
-  --font-body: 'Roboto', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --font-display: "Roboto", system-ui, sans-serif;
+  --font-body: "Roboto", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
   /* Sidebar */
   --sidebar-width: 240px;
@@ -90,7 +90,8 @@ html {
   color-scheme: dark;
 }
 
-html, body {
+html,
+body {
   max-width: 100vw;
   overflow-x: hidden;
 }
@@ -118,7 +119,9 @@ button {
   cursor: pointer;
 }
 
-input, textarea, select {
+input,
+textarea,
+select {
   font-family: inherit;
 }
 

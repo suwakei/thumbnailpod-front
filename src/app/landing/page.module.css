@@ -23,7 +23,11 @@
   left: -12%;
   width: 700px;
   height: 700px;
-  background: radial-gradient(circle, rgba(255, 0, 0, 0.04) 0%, transparent 65%);
+  background: radial-gradient(
+    circle,
+    rgba(255, 0, 0, 0.04) 0%,
+    transparent 65%
+  );
   animation: orbFloat 18s ease-in-out infinite alternate;
 }
 
@@ -33,7 +37,11 @@
   right: -8%;
   width: 600px;
   height: 600px;
-  background: radial-gradient(circle, rgba(62, 166, 255, 0.03) 0%, transparent 65%);
+  background: radial-gradient(
+    circle,
+    rgba(62, 166, 255, 0.03) 0%,
+    transparent 65%
+  );
   animation: orbFloat 22s ease-in-out infinite alternate-reverse;
 }
 
@@ -44,7 +52,11 @@
   transform: translate(-50%, -50%);
   width: 900px;
   height: 900px;
-  background: radial-gradient(circle, rgba(255, 0, 0, 0.02) 0%, transparent 50%);
+  background: radial-gradient(
+    circle,
+    rgba(255, 0, 0, 0.02) 0%,
+    transparent 50%
+  );
 }
 
 .bgGrid {
@@ -54,12 +66,20 @@
     linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
   background-size: 72px 72px;
-  mask-image: radial-gradient(ellipse 70% 50% at 50% 30%, black 10%, transparent 100%);
+  mask-image: radial-gradient(
+    ellipse 70% 50% at 50% 30%,
+    black 10%,
+    transparent 100%
+  );
 }
 
 @keyframes orbFloat {
-  from { transform: translate(0, 0) scale(1); }
-  to { transform: translate(30px, -20px) scale(1.05); }
+  from {
+    transform: translate(0, 0) scale(1);
+  }
+  to {
+    transform: translate(30px, -20px) scale(1.05);
+  }
 }
 
 /* ===== Header ===== */
@@ -299,9 +319,15 @@
   background: var(--bg-active);
 }
 
-.mockDots span:first-child { background: #ff5f57; }
-.mockDots span:nth-child(2) { background: #febc2e; }
-.mockDots span:nth-child(3) { background: #28c840; }
+.mockDots span:first-child {
+  background: #ff5f57;
+}
+.mockDots span:nth-child(2) {
+  background: #febc2e;
+}
+.mockDots span:nth-child(3) {
+  background: #28c840;
+}
 
 .mockTitle {
   font-family: var(--font-mono);
@@ -327,13 +353,21 @@
 }
 
 .mockLayer[data-label="person"] {
-  background: linear-gradient(180deg, transparent 0%, rgba(255, 0, 0, 0.03) 100%);
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(255, 0, 0, 0.03) 100%
+  );
   border-left: 1px dashed rgba(255, 0, 0, 0.15);
   border-right: 1px dashed rgba(255, 0, 0, 0.15);
 }
 
 .mockLayer[data-label="text"] {
-  background: linear-gradient(135deg, rgba(62, 166, 255, 0.03) 0%, transparent 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(62, 166, 255, 0.03) 0%,
+    transparent 100%
+  );
   display: flex;
   align-items: center;
   justify-content: center;
@@ -375,7 +409,11 @@
   transform: translateX(-50%);
   width: 60%;
   height: 80px;
-  background: radial-gradient(ellipse, rgba(255, 0, 0, 0.06) 0%, transparent 70%);
+  background: radial-gradient(
+    ellipse,
+    rgba(255, 0, 0, 0.06) 0%,
+    transparent 70%
+  );
   pointer-events: none;
 }
 
@@ -701,7 +739,7 @@
 }
 
 .planFeatures li::before {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   top: 7px;
@@ -813,7 +851,9 @@
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* ===== Animations ===== */
@@ -841,7 +881,9 @@
     gap: var(--space-xl);
   }
 
-  .stepArrow { display: none; }
+  .stepArrow {
+    display: none;
+  }
 
   .pricingGrid {
     grid-template-columns: repeat(3, 1fr);
@@ -849,16 +891,24 @@
 }
 
 @media (max-width: 768px) {
-  .headerNav { display: none; }
+  .headerNav {
+    display: none;
+  }
 
   .hero {
     padding: 64px var(--space-md) 40px;
   }
 
-  .heroSub br { display: none; }
+  .heroSub br {
+    display: none;
+  }
 
-  .mockCanvas { height: 220px; }
-  .mockLayerPanel { display: none; }
+  .mockCanvas {
+    height: 220px;
+  }
+  .mockLayerPanel {
+    display: none;
+  }
 
   .features,
   .howSection,

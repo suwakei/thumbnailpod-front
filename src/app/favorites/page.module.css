@@ -60,7 +60,11 @@
 
 .thumbProcessing {
   composes: thumbPlaceholder;
-  background: linear-gradient(135deg, var(--bg-elevated), rgba(62, 166, 255, 0.05));
+  background: linear-gradient(
+    135deg,
+    var(--bg-elevated),
+    rgba(62, 166, 255, 0.05)
+  );
 }
 
 .spin {
@@ -83,7 +87,10 @@
   color: var(--text-secondary);
   cursor: pointer;
   opacity: 0;
-  transition: opacity 0.15s ease, color 0.15s ease, background 0.15s ease;
+  transition:
+    opacity 0.15s ease,
+    color 0.15s ease,
+    background 0.15s ease;
   z-index: 1;
 }
 
@@ -130,12 +137,20 @@
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @media (max-width: 768px) {
