@@ -13,6 +13,7 @@ import {
   Copy,
   FileArchive,
   FileImage,
+  Pencil,
 } from "lucide-react";
 import AppShell from "@/components/layout/AppShell";
 import Card from "@/components/ui/Card";
@@ -251,6 +252,18 @@ export default function JobDetailPage({ params }: PageProps) {
                 </div>
               </dl>
             </Card>
+
+            {job.status === JOB_STATUS.completed && (
+              <Card padding="md">
+                <h3 className={styles.sideTitle}>編集</h3>
+                <Link href={ROUTES.editor(jobId)}>
+                  <Button variant="primary" size="sm">
+                    <Pencil size={14} />
+                    エディタで編集
+                  </Button>
+                </Link>
+              </Card>
+            )}
 
             {job.status === JOB_STATUS.completed && job.thumbnailId && (
               <Card padding="md">

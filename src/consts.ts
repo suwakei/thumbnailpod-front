@@ -3,6 +3,7 @@ export const ROUTES = {
   dashboard: "/",
   history: "/history",
   historyDetail: (jobId: string) => `/history/${jobId}`,
+  editor: (jobId: string) => `/editor/${jobId}`,
   style: "/style",
   youtube: "/youtube",
   settings: "/settings",
