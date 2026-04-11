@@ -21,7 +21,7 @@
   font-family: inherit;
   min-height: 100px;
   resize: vertical;
-  transition: all 0.15s var(--ease-out);
+  transition: all 0.15s ease;
 }
 
 .textarea::placeholder {
@@ -30,8 +30,8 @@
 
 .textarea:focus {
   outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px var(--accent-muted);
+  border-color: var(--action);
+  box-shadow: 0 0 0 2px var(--action-muted);
 }
 
 .textareaError {

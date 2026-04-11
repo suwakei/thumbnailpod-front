@@ -1,47 +1,47 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
 
 :root {
-  /* Surfaces */
-  --bg-root: #08080b;
-  --bg-surface: #0f0f14;
-  --bg-elevated: #16161d;
-  --bg-overlay: #1c1c25;
-  --bg-hover: #22222d;
-  --bg-active: #2a2a36;
+  /* Surfaces — YouTube Dark */
+  --bg-root: #0f0f0f;
+  --bg-surface: #212121;
+  --bg-elevated: #272727;
+  --bg-overlay: #313131;
+  --bg-hover: #3a3a3a;
+  --bg-active: #454545;
 
   /* Borders */
-  --border-subtle: rgba(255, 255, 255, 0.06);
-  --border-default: rgba(255, 255, 255, 0.1);
-  --border-strong: rgba(255, 255, 255, 0.16);
-  --border-accent: rgba(0, 212, 255, 0.3);
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-default: rgba(255, 255, 255, 0.12);
+  --border-strong: rgba(255, 255, 255, 0.2);
+  --border-accent: rgba(255, 0, 0, 0.3);
 
   /* Text */
-  --text-primary: #f0f0f5;
-  --text-secondary: #9898a8;
-  --text-tertiary: #606070;
-  --text-inverse: #08080b;
+  --text-primary: #f1f1f1;
+  --text-secondary: #aaaaaa;
+  --text-tertiary: #717171;
+  --text-inverse: #0f0f0f;
 
-  /* Accent — Electric Cyan */
-  --accent: #00d4ff;
-  --accent-hover: #33ddff;
-  --accent-muted: rgba(0, 212, 255, 0.12);
-  --accent-strong: rgba(0, 212, 255, 0.2);
+  /* Accent — YouTube Red */
+  --accent: #ff0000;
+  --accent-hover: #cc0000;
+  --accent-muted: rgba(255, 0, 0, 0.12);
+  --accent-strong: rgba(255, 0, 0, 0.2);
 
-  /* Action — Warm Coral */
-  --action: #ff6b4a;
-  --action-hover: #ff8570;
-  --action-muted: rgba(255, 107, 74, 0.12);
+  /* Action — YouTube Blue (links, CTAs) */
+  --action: #3ea6ff;
+  --action-hover: #6bbfff;
+  --action-muted: rgba(62, 166, 255, 0.12);
 
   /* Status */
   --status-pending: #f5a623;
-  --status-processing: #4a9eff;
-  --status-completed: #34d399;
-  --status-failed: #f87171;
+  --status-processing: #3ea6ff;
+  --status-completed: #2ba640;
+  --status-failed: #ff4e45;
 
   --status-pending-bg: rgba(245, 166, 35, 0.1);
-  --status-processing-bg: rgba(74, 158, 255, 0.1);
-  --status-completed-bg: rgba(52, 211, 153, 0.1);
-  --status-failed-bg: rgba(248, 113, 113, 0.1);
+  --status-processing-bg: rgba(62, 166, 255, 0.1);
+  --status-completed-bg: rgba(43, 166, 64, 0.1);
+  --status-failed-bg: rgba(255, 78, 69, 0.1);
 
   /* Spacing */
   --space-xs: 4px;
@@ -52,22 +52,22 @@
   --space-2xl: 48px;
   --space-3xl: 64px;
 
-  /* Radius */
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 14px;
-  --radius-xl: 20px;
+  /* Radius — YouTube uses flatter, less rounded */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
   --radius-full: 9999px;
 
-  /* Shadows */
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.5);
-  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.6);
-  --shadow-glow: 0 0 24px rgba(0, 212, 255, 0.15);
+  /* Shadows — minimal, YouTube is flat */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 0 transparent;
 
-  /* Typography */
-  --font-display: 'Outfit', system-ui, sans-serif;
-  --font-body: 'DM Sans', system-ui, sans-serif;
+  /* Typography — Roboto (YouTube's font) */
+  --font-display: 'Roboto', system-ui, sans-serif;
+  --font-body: 'Roboto', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 
   /* Sidebar */
@@ -124,8 +124,8 @@ input, textarea, select {
 
 /* Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
@@ -134,29 +134,16 @@ input, textarea, select {
 
 ::-webkit-scrollbar-thumb {
   background: var(--border-strong);
-  border-radius: 3px;
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--text-tertiary);
 }
 
-/* Film grain overlay */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 9999;
-  opacity: 0.015;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  background-repeat: repeat;
-  background-size: 256px;
-}
-
 /* Focus styles */
 :focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--action);
   outline-offset: 2px;
 }
 

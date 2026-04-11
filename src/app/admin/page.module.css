@@ -5,7 +5,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-xl);
-  animation: fadeIn 0.4s var(--ease-out);
+  animation: fadeIn 0.3s ease;
 }
 
 .header {
@@ -23,10 +23,9 @@
 
 .title {
   font-family: var(--font-display);
-  font-size: 28px;
-  font-weight: 700;
+  font-size: 24px;
+  font-weight: 500;
   color: var(--text-primary);
-  letter-spacing: -0.02em;
 }
 
 .subtitle {
@@ -50,7 +49,7 @@
 .sectionTitle {
   font-family: var(--font-display);
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--text-primary);
   display: flex;
   align-items: center;
@@ -80,13 +79,11 @@
 .healthDotOk {
   composes: healthDot;
   background: var(--status-completed);
-  box-shadow: 0 0 8px rgba(52, 211, 153, 0.4);
 }
 
 .healthDotError {
   composes: healthDot;
   background: var(--status-failed);
-  box-shadow: 0 0 8px rgba(248, 113, 113, 0.4);
 }
 
 .healthDotUnknown {
@@ -104,7 +101,7 @@
 .healthName {
   font-family: var(--font-display);
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--text-primary);
   text-transform: capitalize;
 }
@@ -233,14 +230,14 @@
 .breakdownCount {
   font-family: var(--font-mono);
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--text-primary);
 }
 
 /* Bar */
 .barContainer {
   width: 100%;
-  height: 6px;
+  height: 4px;
   background: var(--bg-elevated);
   border-radius: var(--radius-full);
   overflow: hidden;
@@ -249,7 +246,7 @@
 
 .barSegment {
   height: 100%;
-  transition: width 0.4s var(--ease-out);
+  transition: width 0.4s ease;
 }
 
 .barCompleted {
@@ -292,7 +289,7 @@
   padding: 6px 14px;
   font-family: var(--font-display);
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   border-radius: var(--radius-full);
@@ -302,14 +299,12 @@
   composes: maintenanceBadge;
   color: var(--status-pending);
   background: var(--status-pending-bg);
-  border: 1px solid rgba(245, 166, 35, 0.2);
 }
 
 .maintenanceOff {
   composes: maintenanceBadge;
   color: var(--status-completed);
   background: var(--status-completed-bg);
-  border: 1px solid rgba(52, 211, 153, 0.2);
 }
 
 .maintenanceForm {

@@ -2,7 +2,7 @@
   background: var(--bg-surface);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
-  transition: all 0.2s var(--ease-out);
+  transition: all 0.15s ease;
 }
 
 .interactive:hover {
@@ -13,7 +13,6 @@
 
 .highlighted {
   border-color: var(--border-accent);
-  box-shadow: var(--shadow-glow);
 }
 
 .padnone { padding: 0; }
