@@ -150,12 +150,9 @@ export default function EditorPage({ params }: PageProps) {
     setState((s) => ({ ...s, selectedLayerId: layerId }));
   }, []);
 
-  const handleObjectModified = useCallback(
-    (_layerId: string, _type: string, _data: Record<string, unknown>) => {
-      setState((s) => ({ ...s, isDirty: true }));
-    },
-    [],
-  );
+  const handleObjectModified = useCallback(() => {
+    setState((s) => ({ ...s, isDirty: true }));
+  }, []);
 
   const handleZoomChange = useCallback((zoom: number) => {
     setState((s) => ({ ...s, zoom }));
@@ -294,7 +291,9 @@ export default function EditorPage({ params }: PageProps) {
     canvasRef.current?.zoomToFit();
   }, []);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- intentionally recalculate when isDirty changes
   const canUndo = useMemo(() => historyRef.current.canUndo(), [state.isDirty]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- intentionally recalculate when isDirty changes
   const canRedo = useMemo(() => historyRef.current.canRedo(), [state.isDirty]);
 
   // Loading state

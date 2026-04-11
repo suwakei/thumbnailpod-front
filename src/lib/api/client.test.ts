@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect, beforeEach } from "vitest";
 import { toCamelCase, ApiError } from "./client";
 import { server } from "@/test/setup";
 import { http, HttpResponse } from "msw";

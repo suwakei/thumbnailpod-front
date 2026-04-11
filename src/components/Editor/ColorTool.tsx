@@ -18,7 +18,8 @@ export default function ColorTool({
   const [filters, setFilters] = useState<ColorFilters>(DEFAULT_FILTERS);
 
   useEffect(() => {
-    setFilters(DEFAULT_FILTERS);
+    // Defer state update to avoid synchronous setState in effect
+    queueMicrotask(() => setFilters(DEFAULT_FILTERS));
   }, [selectedLayerId]);
 
   const handleChange = useCallback(
