@@ -3,8 +3,16 @@
 import { useState, useCallback } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { Sparkles, Clock, ImageIcon, ArrowRight, Loader2 } from "lucide-react";
+import {
+  Sparkles,
+  Clock,
+  ImageIcon,
+  ArrowRight,
+  Loader2,
+  Pencil,
+} from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import AppShell from "@/components/layout/AppShell";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
@@ -32,11 +40,15 @@ import {
 import styles from "./page.module.css";
 
 export default function DashboardPage() {
+  const router = useRouter();
   const queryClient = useQueryClient();
   const [prompt, setPrompt] = useState("");
   const [styleModelId, setStyleModelId] = useState("");
   const [refImages, setRefImages] = useState<UploadedImage[]>([]);
   const [isUploading, setIsUploading] = useState(false);
+  const [lastGeneratedJobId, setLastGeneratedJobId] = useState<string | null>(
+    null,
+  );
 
   const { data: history, isLoading: historyLoading } = useQuery({
     queryKey: ["history", { limit: PAGE_SIZE.dashboardRecent, offset: 0 }],
@@ -91,8 +103,14 @@ export default function DashboardPage() {
 
       return createGenerationJob(prompt, styleModelId || undefined, imageKeys);
     },
-    onSuccess: () => {
-      toast.success("サムネイル生成を開始しました");
+    onSuccess: (data) => {
+      setLastGeneratedJobId(data.jobId);
+      toast.success("サムネイル生成を開始しました", {
+        action: {
+          label: "エディタで開く",
+          onClick: () => router.push(ROUTES.editor(data.jobId)),
+        },
+      });
       setPrompt("");
       setRefImages([]);
       queryClient.invalidateQueries({ queryKey: ["history"] });
@@ -172,6 +190,36 @@ export default function DashboardPage() {
             </div>
           </div>
         </Card>
+
+        {lastGeneratedJobId && (
+          <div className={styles.generatedBanner}>
+            <div className={styles.bannerContent}>
+              <Sparkles size={16} className={styles.bannerIcon} />
+              <div>
+                <p className={styles.bannerTitle}>
+                  サムネイルを生成しました！
+                </p>
+                <p className={styles.bannerDesc}>
+                  気に入らなかったらすぐ編集できます
+                </p>
+              </div>
+            </div>
+            <div className={styles.bannerActions}>
+              <Link href={ROUTES.historyDetail(lastGeneratedJobId)}>
+                <Button variant="ghost" size="sm">
+                  <ImageIcon size={14} />
+                  詳細を見る
+                </Button>
+              </Link>
+              <Link href={ROUTES.editor(lastGeneratedJobId)}>
+                <Button variant="primary" size="sm">
+                  <Pencil size={14} />
+                  エディタで編集
+                </Button>
+              </Link>
+            </div>
+          </div>
+        )}
 
         <section className={styles.recentSection}>
           <div className={styles.sectionHeader}>

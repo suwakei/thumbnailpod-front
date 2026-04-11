@@ -66,8 +66,8 @@ const features = [
   },
   {
     icon: Pencil,
-    title: "ブラウザ完結エディタ",
-    desc: "テキスト編集・色調補正・レイヤー管理をCanvasエディタで。Photoshopを開く必要なし。",
+    title: "気に入らなかったら、すぐ編集",
+    desc: "生成結果からワンクリックでCanvasエディタへ。テキスト・色調・レイヤーをその場で調整。Photoshopを開く必要なし。",
     accent: "cyan",
   },
   {
@@ -108,8 +108,8 @@ const steps = [
   },
   {
     num: "04",
-    title: "即座に完成",
-    desc: "数秒で複数バリエーションを生成・編集・適用",
+    title: "即座に完成、すぐ編集",
+    desc: "数秒で生成。気に入らなければワンクリックでエディタへ。納得いくまで調整して適用",
   },
 ];
 
@@ -237,9 +237,10 @@ export default function LandingPage() {
         </h1>
 
         <p className={styles.heroSub}>
-          自分の写真 + テキスト指示で、チャンネルの雰囲気に合ったサムネイルをAIが自動生成。
+          自分の写真 +
+          テキスト指示で、チャンネルの雰囲気に合ったサムネイルをAIが自動生成。
           <br />
-          外注コスト月5万円を、月2,980円に。
+          気に入らなかったらすぐ編集。外注コスト月5万円を、月2,980円に。
         </p>
 
         <div className={styles.heroCta}>
@@ -412,8 +413,8 @@ export default function LandingPage() {
                 </div>
               </div>
               <div className={styles.ctrImprovement}>
-                <TrendingUp size={14} />
-                +{Math.round(((r.after - r.before) / r.before) * 100)}%
+                <TrendingUp size={14} />+
+                {Math.round(((r.after - r.before) / r.before) * 100)}%
               </div>
             </div>
           ))}
@@ -560,9 +561,7 @@ export default function LandingPage() {
                 className={`${styles.planCard} ${key === "creator" ? styles.planCardFeatured : ""}`}
               >
                 {key === "creator" && (
-                  <div className={styles.planBadge}>
-                    週3本投稿に最適
-                  </div>
+                  <div className={styles.planBadge}>週3本投稿に最適</div>
                 )}
                 <h3 className={styles.planName} style={{ color: plan.color }}>
                   {plan.label}
@@ -602,7 +601,7 @@ export default function LandingPage() {
           サムネイルに時間を使うのは、もう終わり
         </h2>
         <p className={styles.footerCtaSub}>
-          月12時間のサムネイル制作を10分に。まずは無料で体験。
+          生成10秒、気に入らなければすぐ編集。月12時間を10分に。まずは無料で体験。
         </p>
         <button
           className={styles.ctaPrimary}
