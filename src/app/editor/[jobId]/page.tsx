@@ -150,12 +150,9 @@ export default function EditorPage({ params }: PageProps) {
     setState((s) => ({ ...s, selectedLayerId: layerId }));
   }, []);
 
-  const handleObjectModified = useCallback(
-    () => {
-      setState((s) => ({ ...s, isDirty: true }));
-    },
-    [],
-  );
+  const handleObjectModified = useCallback(() => {
+    setState((s) => ({ ...s, isDirty: true }));
+  }, []);
 
   const handleZoomChange = useCallback((zoom: number) => {
     setState((s) => ({ ...s, zoom }));
